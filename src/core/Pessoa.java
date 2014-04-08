@@ -1,3 +1,5 @@
+package core;
+
 public class Pessoa {
 
 	private String nome;

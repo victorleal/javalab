@@ -1,3 +1,5 @@
+package core;
+
 public class Endereco {
 
 	private String rua;
