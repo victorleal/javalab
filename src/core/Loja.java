@@ -2,8 +2,9 @@ package core;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import auxiliar.GerenciadorPedidos;
 
 public class Loja {
 
@@ -11,6 +12,10 @@ public class Loja {
 	private Map<Integer, Pedido> pedidos;
 	private Map<String, Transportadora> transportadoras;
 	private Map<Integer, Produto> produtos;
+	
+	private Map<Produto, Integer> itensPedidoTemp;
+	
+	private GerenciadorPedidos gerenciadorPedidos;
 
 	private enum Categorias {
 		COMPUTADORES, TELEFONIA, VIDEOSOM, TABLETS, GAMES
@@ -21,6 +26,8 @@ public class Loja {
 		pedidos = new HashMap<Integer, Pedido>();
 		transportadoras = new HashMap<String, Transportadora>();
 		produtos = new HashMap<Integer, Produto>();
+		itensPedidoTemp = new HashMap<Produto, Integer>();
+		gerenciadorPedidos = new GerenciadorPedidos();
 	}
 
 	/********** CLIENTES **********/
@@ -84,11 +91,11 @@ public class Loja {
 		Cliente cliente = clientes.get("879465231");
 		Transportadora transportadora = transportadoras.get("6451238465");
 		Produto prod = produtos.get(1);
+		itensPedidoTemp.clear();
+		itensPedidoTemp.put(prod, 2);
 		Pedido p = new Pedido(1, 78.00, "Crediário", cal, cal2, endereco,
-				cliente, , transportadora);
-
-		cliente.adicionaPedido(p);
-		transportadora.adicionaPedido(p);
+				cliente, itensPedidoTemp, transportadora);
+		gerenciadorPedidos.adicionaPedido(cliente, transportadora, prod, p);
 		pedidos.put(1, p);
 	}
 
@@ -102,12 +109,10 @@ public class Loja {
 
 	public void cancelarPedido(Integer numero) {
 		if (pedidos.containsKey(numero)) {
-			List<ItemPedido> lista = pedidos.get(numero).getProdutosPedido();
-			for (ItemPedido ip : lista) {
-				Produto p = ip.getProdutosPedido();
-				this.devolverQuantidadeEstoque(p, ip.getQtde());
-			}
-
+			Pedido p = pedidos.get(numero);
+			Cliente cliente = p.getCliente();
+			Transportadora transportadora = p.getTransportadora();
+			gerenciadorPedidos.removePedido(cliente, transportadora, itensPedidoTemp.keySet(), p);
 			pedidos.remove(numero);
 		}
 	}

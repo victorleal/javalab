@@ -1,7 +1,7 @@
 package core;
 
 import java.util.Calendar;
-import java.util.List;
+import java.util.Map;
 
 public class Pedido {
 
@@ -12,7 +12,7 @@ public class Pedido {
 	private Calendar dataEntrega;
 	private Endereco endereco;
 	private Cliente cliente;
-	private List<ItemPedido> produtosPedido;
+	private Map<Produto, Integer> produtosPedido;
 	private Transportadora transportadora;
 
 	public Integer getNumero() {
@@ -35,7 +35,7 @@ public class Pedido {
 		return cliente;
 	}
 
-	public List<ItemPedido> getProdutosPedido() {
+	public Map<Produto, Integer> getProdutosPedido() {
 		return produtosPedido;
 	}
 
@@ -53,7 +53,7 @@ public class Pedido {
 
 	public Pedido(Integer numero, double valorTotal, String formaPagamento,
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
-			Cliente cliente, List<ItemPedido> produtosPedido,
+			Cliente cliente, Map<Produto, Integer> produtosPedido,
 			Transportadora transportadora) {
 		super();
 		this.numero = numero;
