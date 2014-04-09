@@ -244,6 +244,11 @@ public class Loja {
 		Calendar dataAtual = Calendar.getInstance();
 		for (Pedido pedido : pedidos.values()) {
 			if (pedido.getDataEntrega().before(dataAtual.getTime())) {
+				Cliente cliente = pedido.getCliente();
+				Transportadora transportadora = pedido.getTransportadora();
+				itensPedidoTemp = pedido.getProdutosPedido();
+				gerenciadorPedidos.removePedido(cliente, transportadora,
+						itensPedidoTemp.keySet(), pedido);
 				pedidos.remove(pedido);
 			}
 		}
