@@ -25,6 +25,8 @@ public class GerenciadorPedidos {
 		temp = new ArrayList<Pedido>();
 	}
 
+	/***** Adições ****/
+	
 	public void adicionaPedido(Cliente c, Transportadora t, Produto prod,
 			Pedido p) {
 		adicionaClienteXPedido(c, p);
@@ -72,6 +74,8 @@ public class GerenciadorPedidos {
 		clienteXPedido.put(c, temp);
 	}
 
+	/***** Remoções ****/
+	
 	public void removeClienteXPedido(Cliente c, Pedido p) {
 		if (clienteXPedido.containsKey(c)) {
 			temp = clienteXPedido.get(c);

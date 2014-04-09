@@ -1,0 +1,27 @@
+-----------------ALTERAÇÕES-----------------
+--PEDIDO
+-Não pode sofrer alterações em nenhum dos campos, e pode ser cancelado.
+
+--CLIENTE
+-Somente o CPF não pode ser alterado.
+
+--TRANSPORTADORA
+-Só Prazo de Entrega e Valor do Frete podem ser alterados.
+
+--PRODUTO
+-Mudanças apenas no valor unitário e na quantidade em estoque.
+
+
+
+-----------------REMOÇÕES-----------------
+--PEDIDO
+-Ao remover um pedido, tem que tirar ele da lista de pedidos de clientes, transportadoras e produtos.
+
+--CLIENTE
+-Remoção apenas se não houver um pedido.
+
+--TRANSPORTADORA
+-Remoção apenas se não houver um pedido.
+
+--PRODUTO
+-Remoção apenas se não houver um pedido.(?)

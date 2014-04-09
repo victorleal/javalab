@@ -91,12 +91,12 @@ public class Loja {
 		Cliente cliente = clientes.get("879465231");
 		Transportadora transportadora = transportadoras.get("6451238465");
 		Produto prod = produtos.get(1);
-		itensPedidoTemp.clear();
 		itensPedidoTemp.put(prod, 2);
 		Pedido p = new Pedido(1, 78.00, "Crediário", cal, cal2, endereco,
 				cliente, itensPedidoTemp, transportadora);
 		gerenciadorPedidos.adicionaPedido(cliente, transportadora, prod, p);
 		pedidos.put(1, p);
+		itensPedidoTemp.clear();
 	}
 
 	public Pedido consultarPedido(Integer numero) {
@@ -112,6 +112,7 @@ public class Loja {
 			Pedido p = pedidos.get(numero);
 			Cliente cliente = p.getCliente();
 			Transportadora transportadora = p.getTransportadora();
+			itensPedidoTemp = p.getProdutosPedido();
 			gerenciadorPedidos.removePedido(cliente, transportadora, itensPedidoTemp.keySet(), p);
 			pedidos.remove(numero);
 		}
