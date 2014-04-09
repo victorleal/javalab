@@ -83,7 +83,7 @@ public class GerenciadorPedidos {
 		}
 	}
 
-	public void adicionaTransportadoraXPedido(Transportadora t, Pedido p) {
+	protected void adicionaTransportadoraXPedido(Transportadora t, Pedido p) {
 		if (transportadoraXPedido.containsKey(t)) {
 			temp = transportadoraXPedido.get(t);
 			temp.add(p);
@@ -93,7 +93,7 @@ public class GerenciadorPedidos {
 		transportadoraXPedido.put(t, temp);
 	}
 
-	public void adicionaProdutoXPedido(Produto prod, Pedido p) {
+	protected void adicionaProdutoXPedido(Produto prod, Pedido p) {
 		if (produtoXPedido.containsKey(prod)) {
 			temp = produtoXPedido.get(prod);
 			temp.add(p);
@@ -103,7 +103,7 @@ public class GerenciadorPedidos {
 		produtoXPedido.put(prod, temp);
 	}
 
-	public void adicionaClienteXPedido(Cliente c, Pedido p) {
+	protected void adicionaClienteXPedido(Cliente c, Pedido p) {
 		if (clienteXPedido.containsKey(c)) {
 			temp = clienteXPedido.get(c);
 			temp.add(p);
@@ -115,7 +115,7 @@ public class GerenciadorPedidos {
 
 	/***** Remoções ****/
 
-	public void removeClienteXPedido(Cliente c, Pedido p) {
+	protected void removeClienteXPedido(Cliente c, Pedido p) {
 		if (clienteXPedido.containsKey(c)) {
 			temp = clienteXPedido.get(c);
 			for (Pedido ped : temp) {
@@ -127,7 +127,7 @@ public class GerenciadorPedidos {
 		}
 	}
 
-	public void removeTransportadoraXPedido(Transportadora t, Pedido p) {
+	protected void removeTransportadoraXPedido(Transportadora t, Pedido p) {
 		if (transportadoraXPedido.containsKey(t)) {
 			temp = transportadoraXPedido.get(t);
 			for (Pedido ped : temp) {
@@ -139,7 +139,7 @@ public class GerenciadorPedidos {
 		}
 	}
 
-	public void removeProdutoXPedido(Produto prod, Pedido p) {
+	protected void removeProdutoXPedido(Produto prod, Pedido p) {
 		if (produtoXPedido.containsKey(prod)) {
 			temp = produtoXPedido.get(prod);
 			for (Pedido ped : temp) {

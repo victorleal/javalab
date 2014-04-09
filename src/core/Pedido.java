@@ -70,4 +70,42 @@ public class Pedido {
 		this.transportadora = transportadora;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
+		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+		result = prime * result
+				+ ((transportadora == null) ? 0 : transportadora.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pedido other = (Pedido) obj;
+		if (cliente == null) {
+			if (other.cliente != null)
+				return false;
+		} else if (!cliente.equals(other.cliente))
+			return false;
+		if (numero == null) {
+			if (other.numero != null)
+				return false;
+		} else if (!numero.equals(other.numero))
+			return false;
+		if (transportadora == null) {
+			if (other.transportadora != null)
+				return false;
+		} else if (!transportadora.equals(other.transportadora))
+			return false;
+		return true;
+	}
+
 }
