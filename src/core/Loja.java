@@ -170,7 +170,10 @@ public class Loja {
 				"78445-989", "Limeira", "São Paulo", "Brasil");
 		Transportadora t = new Transportadora("6451238465", "Belo Transportes",
 				"Transportadora S/A", 90, 645.00, endereco);
-		transportadoras.put("6451238465", t);
+
+		if (!transportadoras.containsKey(t.getCnpj())) {
+			transportadoras.put("6451238465", t);
+		}
 	}
 
 	public void removerTransportadora(String cnpj) {
