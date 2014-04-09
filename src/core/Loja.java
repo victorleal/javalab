@@ -12,9 +12,9 @@ public class Loja {
 	private Map<Integer, Pedido> pedidos;
 	private Map<String, Transportadora> transportadoras;
 	private Map<Integer, Produto> produtos;
-	
+
 	private Map<Produto, Integer> itensPedidoTemp;
-	
+
 	private GerenciadorPedidos gerenciadorPedidos;
 
 	private enum Categorias {
@@ -52,7 +52,7 @@ public class Loja {
 
 	public void removerCliente(String cpf) {
 		if (clientes.containsKey(cpf)
-				&& clientes.get(cpf).getPedidosCliente().isEmpty()) {
+				&& gerenciadorPedidos.consultaPedidosCliente(clientes.get(cpf))) {
 			clientes.remove(cpf);
 		} else {
 			System.out.println("O Cliente com o CPF " + cpf
@@ -94,7 +94,8 @@ public class Loja {
 		itensPedidoTemp.put(prod, 2);
 		Pedido p = new Pedido(1, 78.00, "Crediário", cal, cal2, endereco,
 				cliente, itensPedidoTemp, transportadora);
-		gerenciadorPedidos.adicionaPedido(cliente, transportadora, prod, p);
+		gerenciadorPedidos.adicionaPedido(cliente, transportadora,
+				itensPedidoTemp.keySet(), p);
 		pedidos.put(1, p);
 		itensPedidoTemp.clear();
 	}
@@ -113,7 +114,8 @@ public class Loja {
 			Cliente cliente = p.getCliente();
 			Transportadora transportadora = p.getTransportadora();
 			itensPedidoTemp = p.getProdutosPedido();
-			gerenciadorPedidos.removePedido(cliente, transportadora, itensPedidoTemp.keySet(), p);
+			gerenciadorPedidos.removePedido(cliente, transportadora,
+					itensPedidoTemp.keySet(), p);
 			pedidos.remove(numero);
 		}
 	}
@@ -126,7 +128,8 @@ public class Loja {
 	}
 
 	public void removerProduto(Integer id) {
-		if (produtos.containsKey(id)) {
+		if (produtos.containsKey(id)
+				&& gerenciadorPedidos.consultaPedidosProduto(produtos.get(id))) {
 			produtos.remove(id);
 		}
 	}
@@ -171,7 +174,10 @@ public class Loja {
 	}
 
 	public void removerTransportadora(String cnpj) {
-		if (transportadoras.containsKey(cnpj)) {
+		if (transportadoras.containsKey(cnpj)
+				&& gerenciadorPedidos
+						.consultaPedidosTransportadora(transportadoras
+								.get(cnpj))) {
 			transportadoras.remove(cnpj);
 		}
 	}

@@ -11,6 +11,12 @@ import core.Pedido;
 import core.Produto;
 import core.Transportadora;
 
+/**
+ * 
+ * Esta classe gerencia os pedidos realizados. Ela relaciona um pedido com a
+ * respectiva transportadora, o respectivo cliente, e com os produtos do pedido.
+ * 
+ */
 public class GerenciadorPedidos {
 
 	private Map<Cliente, List<Pedido>> clienteXPedido;
@@ -25,13 +31,46 @@ public class GerenciadorPedidos {
 		temp = new ArrayList<Pedido>();
 	}
 
+	/***** Consultas ****/
+
+	/**
+	 * @param c
+	 * @return true se a lista de pedidos do cliente estiver vazia
+	 */
+	public boolean consultaPedidosCliente(Cliente c) {
+		temp = clienteXPedido.get(c);
+		if (temp != null && !temp.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean consultaPedidosTransportadora(Transportadora t) {
+		temp = transportadoraXPedido.get(t);
+		if (temp != null && !temp.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean consultaPedidosProduto(Produto p) {
+		temp = produtoXPedido.get(p);
+		if (temp != null && !temp.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
 	/***** Adições ****/
-	
-	public void adicionaPedido(Cliente c, Transportadora t, Produto prod,
-			Pedido p) {
+
+	public void adicionaPedido(Cliente c, Transportadora t,
+			Set<Produto> produtos, Pedido p) {
 		adicionaClienteXPedido(c, p);
 		adicionaTransportadoraXPedido(t, p);
-		adicionaProdutoXPedido(prod, p);
+
+		for (Produto prod : produtos) {
+			adicionaProdutoXPedido(prod, p);
+		}
 	}
 
 	public void removePedido(Cliente c, Transportadora t,
@@ -75,7 +114,7 @@ public class GerenciadorPedidos {
 	}
 
 	/***** Remoções ****/
-	
+
 	public void removeClienteXPedido(Cliente c, Pedido p) {
 		if (clienteXPedido.containsKey(c)) {
 			temp = clienteXPedido.get(c);
