@@ -1,11 +1,11 @@
 package interfaces;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -25,37 +25,52 @@ public class TelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	public JPanel contentPane;
-	static TelaPrincipal frame;
+	private JFrame frame;
+	private Map<String, JPanel> panels = new HashMap<String, JPanel>();
 
-	final static TelaConsultaTransportadora tcontrans = new TelaConsultaTransportadora();
-	final static TelaCadastroTransportadora tcadtrans = new TelaCadastroTransportadora();
-	final static TelaConsultaPedido tconped = new TelaConsultaPedido();
-	final static TelaControle tcont = new TelaControle();
-	final static TelaConsultaCliente tconcli = new TelaConsultaCliente();
-	final static TelaCadastroProduto tcadprod = new TelaCadastroProduto();
-	final static TelaCadastroPedido tcadped = new TelaCadastroPedido();
-	final static TelaConsultaProduto tconprod = new TelaConsultaProduto();
-	final static TelaCadastroCliente tcadcli = new TelaCadastroCliente();
-
-	final static TelaAlterarCliente taltcli = new TelaAlterarCliente();
-	final static TelaAlterarProduto taltprod = new TelaAlterarProduto();
-	final static TelaAlterarTransportadora talttrans = new TelaAlterarTransportadora();
+	// Este JPanel é usado como variavel temporaria para mostrar os Panels
+	private JPanel p;
 
 	/**
-	 * Launch the application.
+	 * Create the frame.
+	 * 
+	 * @param titulo
 	 */
-	public static void main(String[] args) {
+	public TelaPrincipal(String titulo) {
+		/*
+		 * addWindowListener(new WindowAdapter() {
+		 * 
+		 * @Override public void windowOpened(WindowEvent arg0) {
+		 * frame.setIconImage(new ImageIcon(getClass().getResource(
+		 * "computer.png")).getImage()); } });
+		 */
+
+		frame = this;
+
+		this.setIconImage(new ImageIcon(getClass().getResource("computer.png"))
+				.getImage());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 600, 350);
+		setTitle(titulo);
+
+		adicionarMenus();
+
+		contentPane = new JPanel(new CardLayout());
+		instanciarPanels();
+		contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null,
+				null, null));
+		//contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+
 		setLookAndFeel();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frame = new TelaPrincipal("ByteForte - Sistema de Vendas");
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+
+		/*
+		 * EventQueue.invokeLater(new Runnable() { public void run() { try {
+		 * 
+		 * } catch (Exception e) { e.printStackTrace(); } } });
+		 */
+		this.setVisible(true);
 	}
 
 	public static void setLookAndFeel() {
@@ -72,24 +87,25 @@ public class TelaPrincipal extends JFrame {
 		}
 	}
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @param titulo
-	 */
-	public TelaPrincipal(String titulo) {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				frame.setIconImage(new ImageIcon(getClass().getResource(
-						"computer.png")).getImage());
-			}
-		});
+	public void instanciarPanels() {
+		contentPane.add(new TelaInicial(),"Inicial");
+		contentPane.add(new TelaCadastroCliente(), "CadastrarCliente");
+		contentPane.add(new TelaControle(), "Controle");
+		/*panels.put("CadastrarCliente", new TelaCadastroCliente());
+		panels.put("CadastrarTransportadora", new TelaCadastroTransportadora());
+		panels.put("CadastrarProduto", new TelaCadastroProduto());
+		panels.put("CadastrarPedido", new TelaCadastroPedido());
+		panels.put("ConsultarCliente", new TelaConsultaCliente());
+		panels.put("ConsultarTransportadora", new TelaConsultaTransportadora());
+		panels.put("ConsultarProduto", new TelaConsultaProduto());
+		panels.put("ConsultarPedido", new TelaConsultaPedido());
+		panels.put("AlterarCliente", new TelaAlterarCliente());
+		panels.put("AlterarProduto", new TelaAlterarProduto());
+		panels.put("AlterarTransportadora", new TelaAlterarTransportadora());
+		panels.put("Controle", new TelaControle());*/
+	}
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 350);
-		setTitle(titulo);
-
+	public void adicionarMenus() {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -106,9 +122,12 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmGerenciamento = new JMenuItem("Gerenciamento");
 		mntmGerenciamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscondePaineis();
-				frame.getContentPane().add(tcont);
-				tcont.setVisible(true);
+				/*escondePaineis();
+				p = panels.get("Controle");
+				frame.getContentPane().add(p);
+				p.setVisible(true);*/
+				CardLayout cl = (CardLayout)(contentPane.getLayout());
+			    cl.show(contentPane, "Controle");
 				frame.validate();
 			}
 		});
@@ -121,11 +140,9 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscondePaineis();
-				frame.getContentPane().add(tcadcli);
-				tcadcli.setVisible(true);
+				CardLayout cl = (CardLayout)(contentPane.getLayout());
+			    cl.show(contentPane, "CadastrarCliente");
 				frame.validate();
-
 			}
 		});
 		mnCliente.add(mntmCadastrar);
@@ -133,9 +150,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmConsultar_3 = new JMenuItem("Consultar");
 		mntmConsultar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscondePaineis();
-				frame.getContentPane().add(tconcli);
-				tconcli.setVisible(true);
+				escondePaineis();
+				p = panels.get("ConsultarCliente");
+				frame.getContentPane().add(p);
+				p.setVisible(true);
 				frame.validate();
 
 			}
@@ -148,9 +166,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar_1 = new JMenuItem("Cadastrar");
 		mntmCadastrar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EscondePaineis();
-				frame.getContentPane().add(tcadprod);
-				tcadprod.setVisible(true);
+				escondePaineis();
+				p = panels.get("CadastrarProduto");
+				frame.getContentPane().add(p);
+				p.setVisible(true);
 				frame.validate();
 
 			}
@@ -160,9 +179,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmConsultar_2 = new JMenuItem("Consultar");
 		mntmConsultar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscondePaineis();
-				frame.getContentPane().add(tconprod);
-				tconprod.setVisible(true);
+				escondePaineis();
+				p = panels.get("ConsultarProduto");
+				frame.getContentPane().add(p);
+				p.setVisible(true);
 				frame.validate();
 			}
 		});
@@ -174,9 +194,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar_2 = new JMenuItem("Cadastrar");
 		mntmCadastrar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscondePaineis();
-				frame.getContentPane().add(tcadped);
-				tcadped.setVisible(true);
+				escondePaineis();
+				p = panels.get("CadastrarPedido");
+				frame.getContentPane().add(p);
+				p.setVisible(true);
 				frame.validate();
 			}
 		});
@@ -185,9 +206,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmConsultar_1 = new JMenuItem("Consultar");
 		mntmConsultar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscondePaineis();
-				frame.getContentPane().add(tconped);
-				tconped.setVisible(true);
+				escondePaineis();
+				p = panels.get("ConsultarPedido");
+				frame.getContentPane().add(p);
+				p.setVisible(true);
 				frame.validate();
 			}
 		});
@@ -199,9 +221,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar_3 = new JMenuItem("Cadastrar");
 		mntmCadastrar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscondePaineis();
-				frame.getContentPane().add(tcadtrans);
-				tconped.setVisible(true);
+				escondePaineis();
+				p = panels.get("CadastrarTransportadora");
+				frame.getContentPane().add(p);
+				p.setVisible(true);
 				frame.validate();
 			}
 		});
@@ -210,9 +233,10 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmConsultar = new JMenuItem("Consultar");
 		mntmConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscondePaineis();
-				frame.getContentPane().add(tcontrans);
-				tconped.setVisible(true);
+				escondePaineis();
+				p = panels.get("ConsultarTransportadora");
+				frame.getContentPane().add(p);
+				p.setVisible(true);
 				frame.validate();
 			}
 		});
@@ -220,27 +244,14 @@ public class TelaPrincipal extends JFrame {
 
 		JMenu mnSobre = new JMenu("Sobre");
 		menuBar.add(mnSobre);
-		contentPane = new JPanel();
-		contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null,
-				null, null));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
 	}
 
-	public static void EscondePaineis() {
-		frame.remove(tcontrans);
-		frame.remove(tcadtrans);
-		frame.remove(tconped);
-		frame.remove(tcadped);
-		frame.remove(tcadprod);
-		frame.remove(tconprod);
-		frame.remove(tconcli);
-		frame.remove(tcadcli);
-		frame.remove(tcont);
-		frame.remove(taltcli);
-		frame.remove(talttrans);
-		frame.remove(taltprod);
-
+	public void escondePaineis() {
+		for (JPanel p : panels.values()) {
+			if (p.isShowing()) {
+				frame.remove(p);
+			}
+		}
 		frame.repaint();
 	}
 

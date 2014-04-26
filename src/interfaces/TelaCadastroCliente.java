@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.awt.CardLayout;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -196,7 +198,9 @@ public class TelaCadastroCliente extends JPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal.EscondePaineis();
+				Container parent = btnCancelar.getParent().getParent();
+				CardLayout cl = (CardLayout)parent.getLayout();
+				cl.show(parent, "Inicial");
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 10 6 1,alignx right");
