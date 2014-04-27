@@ -1,18 +1,16 @@
 package interfaces;
 
-import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import core.Loja;
 
 public class TelaConsultaTransportadora extends JPanel {
 	private JTextField textField;
@@ -22,7 +20,7 @@ public class TelaConsultaTransportadora extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TelaConsultaTransportadora() {
+	public TelaConsultaTransportadora(Loja loja) {
 
 		setLayout(new MigLayout("", "[1.00][grow]", "[][][][][][][][grow][]"));
 		

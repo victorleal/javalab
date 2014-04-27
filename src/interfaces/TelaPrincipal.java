@@ -1,6 +1,5 @@
 package interfaces;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +16,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 
+import core.Loja;
+
 public class TelaPrincipal extends JFrame {
 
 	/**
@@ -28,8 +29,7 @@ public class TelaPrincipal extends JFrame {
 	private JFrame frame;
 	private Map<String, JPanel> panels = new HashMap<String, JPanel>();
 
-	// Este JPanel é usado como variavel temporaria para mostrar os Panels
-	private JPanel p;
+	private Loja loja;
 
 	/**
 	 * Create the frame.
@@ -37,14 +37,7 @@ public class TelaPrincipal extends JFrame {
 	 * @param titulo
 	 */
 	public TelaPrincipal(String titulo) {
-		/*
-		 * addWindowListener(new WindowAdapter() {
-		 * 
-		 * @Override public void windowOpened(WindowEvent arg0) {
-		 * frame.setIconImage(new ImageIcon(getClass().getResource(
-		 * "computer.png")).getImage()); } });
-		 */
-
+		loja = new Loja();
 		frame = this;
 
 		this.setIconImage(new ImageIcon(getClass().getResource("computer.png"))
@@ -57,23 +50,17 @@ public class TelaPrincipal extends JFrame {
 
 		contentPane = new JPanel(new CardLayout());
 		instanciarPanels();
+
 		contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null,
 				null, null));
-		//contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
 
 		setLookAndFeel();
 
-		/*
-		 * EventQueue.invokeLater(new Runnable() { public void run() { try {
-		 * 
-		 * } catch (Exception e) { e.printStackTrace(); } } });
-		 */
 		this.setVisible(true);
 	}
 
-	public static void setLookAndFeel() {
+	public void setLookAndFeel() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e1) {
@@ -88,21 +75,22 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	public void instanciarPanels() {
-		contentPane.add(new TelaInicial(),"Inicial");
-		contentPane.add(new TelaCadastroCliente(), "CadastrarCliente");
-		contentPane.add(new TelaControle(), "Controle");
-		/*panels.put("CadastrarCliente", new TelaCadastroCliente());
-		panels.put("CadastrarTransportadora", new TelaCadastroTransportadora());
-		panels.put("CadastrarProduto", new TelaCadastroProduto());
-		panels.put("CadastrarPedido", new TelaCadastroPedido());
-		panels.put("ConsultarCliente", new TelaConsultaCliente());
-		panels.put("ConsultarTransportadora", new TelaConsultaTransportadora());
-		panels.put("ConsultarProduto", new TelaConsultaProduto());
-		panels.put("ConsultarPedido", new TelaConsultaPedido());
-		panels.put("AlterarCliente", new TelaAlterarCliente());
-		panels.put("AlterarProduto", new TelaAlterarProduto());
-		panels.put("AlterarTransportadora", new TelaAlterarTransportadora());
-		panels.put("Controle", new TelaControle());*/
+		contentPane.add(new TelaInicial(), "Inicial");
+		contentPane.add(new TelaCadastroCliente(loja), "CadastrarCliente");
+		contentPane.add(new TelaCadastroProduto(loja), "CadastrarProduto");
+		contentPane.add(new TelaCadastroTransportadora(loja),
+				"CadastrarTransportadora");
+		contentPane.add(new TelaCadastroPedido(loja), "CadastrarPedido");
+		contentPane.add(new TelaConsultaCliente(loja), "ConsultarCliente");
+		contentPane.add(new TelaConsultaTransportadora(loja),
+				"ConsultarTransportadora");
+		contentPane.add(new TelaConsultaProduto(loja), "ConsultarProduto");
+		contentPane.add(new TelaConsultaPedido(loja), "ConsultarPedido");
+		contentPane.add(new TelaAlterarCliente(loja), "AlterarCliente");
+		contentPane.add(new TelaAlterarProduto(loja), "AlterarProduto");
+		contentPane.add(new TelaAlterarTransportadora(loja),
+				"AlterarTransportadora");
+		contentPane.add(new TelaControle(loja), "Controle");
 	}
 
 	public void adicionarMenus() {
@@ -122,12 +110,8 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmGerenciamento = new JMenuItem("Gerenciamento");
 		mntmGerenciamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*escondePaineis();
-				p = panels.get("Controle");
-				frame.getContentPane().add(p);
-				p.setVisible(true);*/
-				CardLayout cl = (CardLayout)(contentPane.getLayout());
-			    cl.show(contentPane, "Controle");
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "Controle");
 				frame.validate();
 			}
 		});
@@ -140,8 +124,8 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)(contentPane.getLayout());
-			    cl.show(contentPane, "CadastrarCliente");
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "CadastrarCliente");
 				frame.validate();
 			}
 		});
@@ -150,10 +134,8 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmConsultar_3 = new JMenuItem("Consultar");
 		mntmConsultar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				escondePaineis();
-				p = panels.get("ConsultarCliente");
-				frame.getContentPane().add(p);
-				p.setVisible(true);
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "ConsultarCliente");
 				frame.validate();
 
 			}
@@ -166,12 +148,9 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar_1 = new JMenuItem("Cadastrar");
 		mntmCadastrar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				escondePaineis();
-				p = panels.get("CadastrarProduto");
-				frame.getContentPane().add(p);
-				p.setVisible(true);
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "CadastrarProduto");
 				frame.validate();
-
 			}
 		});
 		mnProduto.add(mntmCadastrar_1);
@@ -179,10 +158,8 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmConsultar_2 = new JMenuItem("Consultar");
 		mntmConsultar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				escondePaineis();
-				p = panels.get("ConsultarProduto");
-				frame.getContentPane().add(p);
-				p.setVisible(true);
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "ConsultarProduto");
 				frame.validate();
 			}
 		});
@@ -194,10 +171,8 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar_2 = new JMenuItem("Cadastrar");
 		mntmCadastrar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				escondePaineis();
-				p = panels.get("CadastrarPedido");
-				frame.getContentPane().add(p);
-				p.setVisible(true);
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "CadastrarPedido");
 				frame.validate();
 			}
 		});
@@ -206,10 +181,8 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmConsultar_1 = new JMenuItem("Consultar");
 		mntmConsultar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				escondePaineis();
-				p = panels.get("ConsultarPedido");
-				frame.getContentPane().add(p);
-				p.setVisible(true);
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "ConsultarPedido");
 				frame.validate();
 			}
 		});
@@ -221,10 +194,8 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar_3 = new JMenuItem("Cadastrar");
 		mntmCadastrar_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				escondePaineis();
-				p = panels.get("CadastrarTransportadora");
-				frame.getContentPane().add(p);
-				p.setVisible(true);
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "CadastrarTransportadora");
 				frame.validate();
 			}
 		});
@@ -233,10 +204,8 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmConsultar = new JMenuItem("Consultar");
 		mntmConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				escondePaineis();
-				p = panels.get("ConsultarTransportadora");
-				frame.getContentPane().add(p);
-				p.setVisible(true);
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "ConsultarTransportadora");
 				frame.validate();
 			}
 		});

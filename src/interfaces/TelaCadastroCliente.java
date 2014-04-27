@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 
 import listeners.SelectListener;
 import net.miginfocom.swing.MigLayout;
+import core.Endereco;
+import core.Loja;
 
 public class TelaCadastroCliente extends JPanel {
 	/**
@@ -66,11 +68,22 @@ public class TelaCadastroCliente extends JPanel {
 	private JButton btnCancelar;
 	private JButton btnCadastrar;
 
+	// Controla o panel
+	private JPanel panel;
+
+	// Controla a loja
+	private Loja loja;
+
 	/**
 	 * Create the panel.
 	 */
-	public TelaCadastroCliente() {
-		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][30.00][][][][][][][][43.00][]"));
+	public TelaCadastroCliente(Loja l) {
+		panel = this;
+		this.loja = l      ;
+
+		setLayout(new MigLayout("",
+				"[69.00][114.00,grow][][grow][][91.00,grow]",
+				"[][30.00][][][][][][][][43.00][]"));
 
 		lblCadastrarCliente = new JLabel("Cadastrar Cliente");
 		lblCadastrarCliente.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -184,7 +197,7 @@ public class TelaCadastroCliente extends JPanel {
 		textFieldNumeroFidelidade.setEnabled(false);
 		add(textFieldNumeroFidelidade, "cell 5 8,growx");
 		textFieldNumeroFidelidade.setColumns(10);
-		
+
 		comboBoxFidelidade = new JComboBox<String>();
 		comboBoxFidelidade.addItem("Não");
 		comboBoxFidelidade.addItem("Sim");
@@ -198,15 +211,48 @@ public class TelaCadastroCliente extends JPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Container parent = btnCancelar.getParent().getParent();
-				CardLayout cl = (CardLayout)parent.getLayout();
+				Container parent = panel.getParent();
+				CardLayout cl = (CardLayout) parent.getLayout();
 				cl.show(parent, "Inicial");
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 10 6 1,alignx right");
 
 		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nome = textFieldNome.getText();
+				String cpf = textFieldCpf.getText();
+				String email = textFieldEmail.getText();
+				String telefone = textFieldTelefone.getText();
+				String celular = textFieldCelular.getText();
+				String clienteFidelidade = (String) comboBoxFidelidade
+						.getSelectedItem();
+				boolean isClienteFidelidade = false;
+				if (clienteFidelidade.equals("Sim")) {
+					isClienteFidelidade = true;
+				}
+				String programaFidelidade = (String) comboBoxFidelidade
+						.getSelectedItem();
+				String numeroFidelidade = textFieldNumeroFidelidade.getText();
+
+				// Endereco
+				String rua = textFieldEndereco.getText();
+				String bairro = textFieldBairro.getText();
+				String numero = textFieldNumero.getText();
+				String cidade = textFieldBairro.getText();
+				String estado = textFieldEstado.getText();
+				String pais = textFieldPais.getText();
+				String complemento = textFieldComplemento.getText();
+				String cep = textFieldCep.getText();
+				Endereco endereco = new Endereco(rua, bairro, complemento,
+						numero, cep, cidade, estado, pais);
+
+				loja.cadastrarCliente(nome, cpf, email, telefone, celular,
+						isClienteFidelidade, programaFidelidade,
+						numeroFidelidade, endereco);
+			}
+		});
 		add(btnCadastrar, "cell 0 10 6 1,alignx right");
 	}
-
 }

@@ -31,11 +31,12 @@ public class Loja {
 	}
 
 	/********** CLIENTES **********/
-	public void cadastrarCliente() {
-		Endereco endereco = new Endereco("Rua r", "Bairro", "", "546",
-				"78445-989", "Limeira", "São Paulo", "Brasil");
-		Cliente c = new Cliente("Paulo", "879465231", "paulo@gmail.com",
-				"3232-9898", "9898-3232", endereco, true, "Gold", "45123");
+	public void cadastrarCliente(String nome, String cpf, String email,
+			String telefone, String celular, boolean isClienteFidelidade,
+			String programaFidelidade, String numeroFidelidade,
+			Endereco endereco) {
+		Cliente c = new Cliente(nome, cpf, email, telefone, celular, endereco,
+				isClienteFidelidade, programaFidelidade, numeroFidelidade);
 
 		if (!clientes.containsKey(c.getCpf())) {
 			clientes.put(c.getCpf(), c);

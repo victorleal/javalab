@@ -1,20 +1,23 @@
 package interfaces;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JTree;
-import javax.swing.JTable;
-import javax.swing.JComboBox;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import core.Loja;
 
 public class TelaCadastroPedido extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -28,7 +31,7 @@ public class TelaCadastroPedido extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TelaCadastroPedido() {
+	public TelaCadastroPedido(Loja loja) {
 		setLayout(new MigLayout("", "[][grow][grow][grow][grow][grow]", "[][][][][][][24.00,grow][][][][][]"));
 		
 		JLabel lblCadastrarPedido = new JLabel("Cadastrar Pedido");
