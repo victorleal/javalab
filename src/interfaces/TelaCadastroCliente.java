@@ -11,11 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import listeners.SelectListener;
 import net.miginfocom.swing.MigLayout;
+import auxiliar.SelectListener;
 import core.Endereco;
 import core.Loja;
 
@@ -211,9 +212,7 @@ public class TelaCadastroCliente extends JPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Container parent = panel.getParent();
-				CardLayout cl = (CardLayout) parent.getLayout();
-				cl.show(parent, "Inicial");
+				showTelaPrincipal();
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 10 6 1,alignx right");
@@ -251,8 +250,19 @@ public class TelaCadastroCliente extends JPanel {
 				loja.cadastrarCliente(nome, cpf, email, telefone, celular,
 						isClienteFidelidade, programaFidelidade,
 						numeroFidelidade, endereco);
+
+				JOptionPane.showMessageDialog(panel,
+						"Cliente cadastrado com sucesso!", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+				showTelaPrincipal();
 			}
 		});
 		add(btnCadastrar, "cell 0 10 6 1,alignx right");
+	}
+
+	public void showTelaPrincipal() {
+		Container parent = panel.getParent();
+		CardLayout cl = (CardLayout) parent.getLayout();
+		cl.show(parent, "Inicial");
 	}
 }

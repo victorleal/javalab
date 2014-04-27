@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
-import core.Produto;
 
 public class TelaCadastroProduto extends JPanel {
 	/**
@@ -71,6 +70,9 @@ public class TelaCadastroProduto extends JPanel {
 		add(lblId, "flowx,cell 0 2,alignx right");
 
 		textFieldId = new JTextField();
+		Integer id = loja.getIdPedido();
+		String idPedido = id.toString();
+		textFieldId.setText(idPedido);
 		add(textFieldId, "cell 1 2,growx");
 		textFieldId.setColumns(10);
 
@@ -131,9 +133,8 @@ public class TelaCadastroProduto extends JPanel {
 		add(btnCancelar, "flowx,cell 2 10,alignx right,aligny bottom");
 
 		btnCadastrar = new JButton("Cadastrar");
-		btnCancelar.addActionListener(new ActionListener() {
+		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int id = Integer.parseInt(textFieldId.getText());
 				String categoria = (String) comboBoxCategoria.getSelectedItem();
 				String conteudodaCaixa = textFieldConteudo.getText();
 				String descricao = textFieldDescricao.getText();
@@ -142,9 +143,8 @@ public class TelaCadastroProduto extends JPanel {
 						.parseDouble(textFieldValorUnitario.getText());
 				int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
 						.getText());
-				Produto p = new Produto(id, categoria, conteudodaCaixa,
+				loja.cadastrarProduto(categoria, conteudodaCaixa,
 						descricao, peso, valorUnitario, qtdeEstoque);
-				loja.cadastrarProduto(p);
 			}
 		});
 		add(btnCadastrar, "cell 2 10");

@@ -1,6 +1,7 @@
 package core;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,9 @@ public class Loja {
 
 	private GerenciadorPedidos gerenciadorPedidos;
 
+	private static int idPedido;
+	private static int idProduto;
+
 	public enum Categorias {
 		COMPUTADORES, TELEFONIA, VIDEOSOM, TABLETS, GAMES
 	};
@@ -28,6 +32,8 @@ public class Loja {
 		produtos = new HashMap<Integer, Produto>();
 		itensPedidoTemp = new HashMap<Produto, Integer>();
 		gerenciadorPedidos = new GerenciadorPedidos();
+		idPedido = 1;
+		create();
 	}
 
 	/********** CLIENTES **********/
@@ -82,23 +88,21 @@ public class Loja {
 	}
 
 	/********** PEDIDOS **********/
-	public void cadastrarPedido() {
+	public void cadastrarPedido(double valorTotal, String formaPagamento,
+			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
+			Cliente cliente, Map<Produto, Integer> produtosPedido,
+			Transportadora transportadora) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(2014, 3, 25);
 		Calendar cal2 = Calendar.getInstance();
 		cal2.set(2014, 4, 5);
-		Endereco endereco = new Endereco("Rua r", "Bairro", "", "546",
-				"78445-989", "Limeira", "São Paulo", "Brasil");
-		Cliente cliente = clientes.get("879465231");
-		Transportadora transportadora = transportadoras.get("6451238465");
-		Produto prod = produtos.get(1);
-		itensPedidoTemp.put(prod, 2);
-		Pedido p = new Pedido(1, 78.00, "Crediário", cal, cal2, endereco,
-				cliente, itensPedidoTemp, transportadora);
+
+		Pedido p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
+				endereco, cliente, produtosPedido, transportadora);
 		gerenciadorPedidos.adicionaPedido(cliente, transportadora,
-				itensPedidoTemp.keySet(), p);
-		pedidos.put(1, p);
-		itensPedidoTemp.clear();
+				produtosPedido.keySet(), p);
+		pedidos.put(idPedido, p);
+		idPedido++;
 	}
 
 	public Pedido consultarPedido(Integer numero) {
@@ -122,9 +126,13 @@ public class Loja {
 	}
 
 	/********** PRODUTOS **********/
-	public void cadastrarProduto(Produto p) {
-		if(!produtos.containsKey(p.getId())){
+	public void cadastrarProduto(String categoria, String conteudodaCaixa,
+			String descricao, double peso, double valorUnitario, int qtdeEstoque) {
+		Produto p = new Produto(idProduto, categoria, conteudodaCaixa,
+				descricao, peso, valorUnitario, qtdeEstoque);
+		if (!produtos.containsKey(p.getId())) {
 			produtos.put(p.getId(), p);
+			idProduto++;
 		}
 	}
 
@@ -166,14 +174,14 @@ public class Loja {
 	}
 
 	/********** TRANSPORTADORA **********/
-	public void cadastrarTransportadora() {
-		Endereco endereco = new Endereco("Rua r", "Bairro", "", "546",
-				"78445-989", "Limeira", "São Paulo", "Brasil");
-		Transportadora t = new Transportadora("6451238465", "Belo Transportes",
-				"Transportadora S/A", 90, 645.00, endereco);
+	public void cadastrarTransportadora(String cnpj, String nomeFantasia,
+			String razaoSocial, int prazoEntrega, double taxaEntrega,
+			Endereco endereco) {
+		Transportadora t = new Transportadora(cnpj, nomeFantasia, razaoSocial,
+				prazoEntrega, taxaEntrega, endereco);
 
 		if (!transportadoras.containsKey(t.getCnpj())) {
-			transportadoras.put("6451238465", t);
+			transportadoras.put(cnpj, t);
 		}
 	}
 
@@ -208,6 +216,10 @@ public class Loja {
 			t = transportadoras.get(transp.getCnpj());
 			t.setTaxaEntrega(taxa);
 		}
+	}
+
+	public Collection<Transportadora> getTransportadoras() {
+		return this.transportadoras.values();
 	}
 
 	/********** METODOS ADICIONAIS **********/
@@ -256,5 +268,41 @@ public class Loja {
 				pedidos.remove(pedido);
 			}
 		}
+	}
+
+	public int getIdPedido() {
+		return idPedido;
+	}
+
+	public int getIdProduto() {
+		return idProduto;
+	}
+
+	public void create() {
+		Endereco enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
+				"546", "78445-989", "Limeira", "São Paulo", "Brasil");
+		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
+				"78", "13000-000", "Campinas", "SP", "Brasil");
+		cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
+				"9999-9898", true, "Gold", "1234", enderecoCliente);
+		cadastrarCliente("Paulo Paraluppi", "2", "paulo@email.com",
+				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
+		cadastrarCliente("Guilherme Nogueira", "3", "guilherme@email.com",
+				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
+		cadastrarTransportadora("1", "Transportadora Java", "JSE Transportes",
+				90, 125.00, enderecoTransportadora);
+		cadastrarTransportadora("2", "Transportadora Oracle",
+				"JSE Transportes", 90, 125.00, enderecoTransportadora);
+		cadastrarProduto(Categorias.TABLETS.name(), "Tablet e carregador",
+				"Tablet Samsung Galaxy Note", 500, 798.00, 10);
+		cadastrarProduto(Categorias.TELEFONIA.name(), "Celular e carregador",
+				"Smartphone iPhone 5S 32GB", 450, 2500.00, 10);
+		cadastrarProduto(Categorias.GAMES.name(), "DVD game e manual",
+				"FIFA 14", 100, 98.00, 10);
+		cadastrarProduto(Categorias.VIDEOSOM.name(),
+				"Leitor de Bluray e cabos conexão", "Leitor de Bluray Sony",
+				420, 300.00, 10);
+		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexão",
+				"HD SATA III Western Digital 1TB", 320, 210.00, 10);
 	}
 }

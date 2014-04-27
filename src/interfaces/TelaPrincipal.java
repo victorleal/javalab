@@ -43,7 +43,7 @@ public class TelaPrincipal extends JFrame {
 		this.setIconImage(new ImageIcon(getClass().getResource("computer.png"))
 				.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 350);
+		setBounds(100, 50, 600, 600);
 		setTitle(titulo);
 
 		adicionarMenus();
