@@ -79,7 +79,7 @@ public class TelaCadastroCliente extends JPanel {
 	 */
 	public TelaCadastroCliente(Loja l) {
 		panel = this;
-		this.loja = l      ;
+		this.loja = l;
 
 		setLayout(new MigLayout("",
 				"[69.00][114.00,grow][][grow][][91.00,grow]",
@@ -90,14 +90,14 @@ public class TelaCadastroCliente extends JPanel {
 		add(lblCadastrarCliente, "cell 0 0 6 1,alignx center");
 
 		lblNome = new JLabel("Nome:");
-		add(lblNome, "cell 0 2,alignx left");
+		add(lblNome, "cell 0 2,alignx right");
 
 		textFieldNome = new JTextField();
 		add(textFieldNome, "cell 1 2 3 1,growx");
 		textFieldNome.setColumns(10);
 
 		lblCpf = new JLabel("CPF:");
-		add(lblCpf, "cell 0 3,alignx left");
+		add(lblCpf, "cell 0 3,alignx right");
 
 		textFieldCpf = new JTextField();
 		add(textFieldCpf, "cell 1 3,growx");
@@ -118,14 +118,14 @@ public class TelaCadastroCliente extends JPanel {
 		textFieldTelefone.setColumns(10);
 
 		lblEmail = new JLabel("Email:");
-		add(lblEmail, "cell 0 4,alignx left");
+		add(lblEmail, "cell 0 4,alignx right");
 
 		textFieldEmail = new JTextField();
 		add(textFieldEmail, "cell 1 4 3 1,growx");
 		textFieldEmail.setColumns(10);
 
 		lblEndereco = new JLabel("Endere\u00E7o:");
-		add(lblEndereco, "cell 0 5,alignx left");
+		add(lblEndereco, "cell 0 5,alignx right");
 
 		textFieldEndereco = new JTextField();
 		add(textFieldEndereco, "cell 1 5 3 1,growx");
@@ -139,7 +139,7 @@ public class TelaCadastroCliente extends JPanel {
 		textFieldNumero.setColumns(10);
 
 		lblComplemento = new JLabel("Complemento:");
-		add(lblComplemento, "cell 0 6,alignx left");
+		add(lblComplemento, "cell 0 6,alignx right");
 
 		textFieldComplemento = new JTextField();
 		add(textFieldComplemento, "cell 1 6,growx");
@@ -160,7 +160,7 @@ public class TelaCadastroCliente extends JPanel {
 		textFieldCep.setColumns(10);
 
 		lblCidade = new JLabel("Cidade:");
-		add(lblCidade, "cell 0 7,alignx left");
+		add(lblCidade, "cell 0 7,alignx right");
 
 		textFieldCidade = new JTextField();
 		add(textFieldCidade, "cell 1 7,growx");
@@ -181,7 +181,7 @@ public class TelaCadastroCliente extends JPanel {
 		textFieldPais.setColumns(10);
 
 		lblClienteFidelidade = new JLabel("Cliente Fidelidade?");
-		add(lblClienteFidelidade, "cell 0 8,alignx left");
+		add(lblClienteFidelidade, "cell 0 8,alignx right");
 
 		lblPrograma = new JLabel("Programa:");
 		add(lblPrograma, "cell 2 8,alignx right");

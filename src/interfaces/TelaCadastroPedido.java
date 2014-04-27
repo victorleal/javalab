@@ -120,7 +120,6 @@ public class TelaCadastroPedido extends JPanel {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal.EscondePaineis();
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 11 5 1,alignx right");

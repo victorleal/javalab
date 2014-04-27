@@ -52,7 +52,6 @@ public class TelaConsultaCliente extends JPanel {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal.EscondePaineis();
 			}
 		});
 		add(btnCancelar, "flowx,cell 1 7,alignx right,aligny bottom");
@@ -60,10 +59,6 @@ public class TelaConsultaCliente extends JPanel {
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TelaPrincipal.EscondePaineis();
-				TelaPrincipal.frame.getContentPane().add(TelaPrincipal.taltcli);
-				TelaPrincipal.taltcli.setVisible(true);
-				TelaPrincipal.frame.validate();
 			}
 		});
 		add(btnAlterar, "cell 1 7");

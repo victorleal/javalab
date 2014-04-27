@@ -17,7 +17,7 @@ public class Loja {
 
 	private GerenciadorPedidos gerenciadorPedidos;
 
-	private enum Categorias {
+	public enum Categorias {
 		COMPUTADORES, TELEFONIA, VIDEOSOM, TABLETS, GAMES
 	};
 
@@ -122,10 +122,10 @@ public class Loja {
 	}
 
 	/********** PRODUTOS **********/
-	public void cadastrarProduto() {
-		Produto p = new Produto(1, Categorias.COMPUTADORES.name(),
-				"Processador e Cooler", "Processador AMD", 200.0, 155.0, 5);
-		produtos.put(1, p);
+	public void cadastrarProduto(Produto p) {
+		if(!produtos.containsKey(p.getId())){
+			produtos.put(p.getId(), p);
+		}
 	}
 
 	public void removerProduto(Integer id) {

@@ -119,7 +119,6 @@ setLayout(new MigLayout("", "[55.00,grow][113.00,grow][][pref!][][91.00,grow]", 
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal.EscondePaineis();
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 10 6 1,alignx right");

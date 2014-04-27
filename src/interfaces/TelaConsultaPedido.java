@@ -52,7 +52,6 @@ public class TelaConsultaPedido extends JPanel {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal.EscondePaineis();
 			}
 		});
 		add(btnCancelar, "flowx,cell 1 7,alignx right,aligny bottom");

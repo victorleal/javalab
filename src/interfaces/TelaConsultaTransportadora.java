@@ -60,7 +60,6 @@ public class TelaConsultaTransportadora extends JPanel {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal.EscondePaineis();
 			}
 		});
 		add(btnCancelar, "flowx,cell 1 8,alignx right,aligny bottom");
@@ -68,10 +67,6 @@ public class TelaConsultaTransportadora extends JPanel {
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal.EscondePaineis();
-				TelaPrincipal.frame.getContentPane().add(TelaPrincipal.talttrans);
-				TelaPrincipal.talttrans.setVisible(true);
-				TelaPrincipal.frame.validate();
 			}
 		});
 		add(btnAlterar, "cell 1 8");
