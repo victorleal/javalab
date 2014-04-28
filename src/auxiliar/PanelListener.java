@@ -1,21 +1,22 @@
 package auxiliar;
 
-import javax.swing.JPanel;
+import java.awt.CardLayout;
+
+import javax.swing.JComponent;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 public class PanelListener implements AncestorListener {
 
-	private JPanel panel;
+	private CardLayout cl;
 
-	public PanelListener(JPanel panel) {
-		this.panel = panel;
+	public PanelListener(CardLayout card) {
+		this.cl = card;
 	}
 
 	@Override
-	public void ancestorAdded(AncestorEvent arg0) {System.out.println("Added");
-		panel.invalidate();
-		panel.revalidate();
+	public void ancestorAdded(AncestorEvent event) {
+		JComponent c = event.getComponent();
 	}
 
 	@Override

@@ -80,7 +80,6 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(new TelaCadastroProduto(loja), "CadastrarProduto");
 		contentPane.add(new TelaCadastroTransportadora(loja),
 				"CadastrarTransportadora");
-		contentPane.add(new TelaCadastroPedido(loja), "CadastrarPedido");
 		contentPane.add(new TelaConsultaCliente(loja), "ConsultarCliente");
 		contentPane.add(new TelaConsultaTransportadora(loja),
 				"ConsultarTransportadora");
@@ -124,6 +123,7 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				contentPane.add(new TelaCadastroPedido(loja), "CadastrarPedido");
 				CardLayout cl = (CardLayout) (contentPane.getLayout());
 				cl.show(contentPane, "CadastrarCliente");
 				frame.validate();
@@ -171,6 +171,7 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar_2 = new JMenuItem("Cadastrar");
 		mntmCadastrar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				contentPane.add(new TelaCadastroPedido(loja), "CadastrarPedido");
 				CardLayout cl = (CardLayout) (contentPane.getLayout());
 				cl.show(contentPane, "CadastrarPedido");
 				frame.validate();
