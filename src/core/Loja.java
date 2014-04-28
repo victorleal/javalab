@@ -182,6 +182,7 @@ public class Loja {
 
 		if (!transportadoras.containsKey(t.getCnpj())) {
 			transportadoras.put(cnpj, t);
+			System.out.println("Transportadora cadastrada");
 		}
 	}
 

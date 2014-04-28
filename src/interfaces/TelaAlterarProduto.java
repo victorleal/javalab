@@ -7,46 +7,45 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
 
 public class TelaAlterarProduto extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtValorUnitario;
+	private JTextField txtQtdeEstoque;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaAlterarProduto(Loja loja) {
-		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][]"));
-
-		JLabel lblAlterarProduto = new JLabel("Alterar Produto");
-		add(lblAlterarProduto, "cell 0 0 2 1,alignx center");
-
+		setBorder(new TitledBorder(null, "Alterar Produto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]"));
+		
 		JLabel lblValorUnitrio = new JLabel("Valor Unitário:");
-		add(lblValorUnitrio, "cell 0 2,alignx trailing");
-
-		textField = new JTextField();
-		add(textField, "cell 1 2,growx");
-		textField.setColumns(10);
-
+		add(lblValorUnitrio, "cell 0 0,alignx trailing");
+		
+		txtValorUnitario = new JTextField();
+		add(txtValorUnitario, "cell 1 0,growx");
+		txtValorUnitario.setColumns(10);
+		
 		JLabel lblQuantidadeNoEstoque = new JLabel("Quantidade no Estoque:");
-		add(lblQuantidadeNoEstoque, "cell 0 3,alignx trailing");
-
-		textField_1 = new JTextField();
-		add(textField_1, "cell 1 3,growx");
-		textField_1.setColumns(10);
-
+		add(lblQuantidadeNoEstoque, "cell 0 1,alignx trailing");
+		
+		txtQtdeEstoque = new JTextField();
+		add(txtQtdeEstoque, "cell 1 1,growx");
+		txtQtdeEstoque.setColumns(10);
+		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		add(btnCancelar, "flowx,cell 0 9 2 1,alignx right");
-
+		add(btnCancelar, "flowx,cell 0 7 2 1,alignx right");
+		
 		JButton btnSalvar = new JButton("Salvar");
-		add(btnSalvar, "cell 0 9,alignx right");
+		add(btnSalvar, "cell 0 7,alignx right");
 
 	}
 

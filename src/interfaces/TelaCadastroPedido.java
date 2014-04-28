@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,6 +23,7 @@ import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 import auxiliar.ComboBoxTransportadoraRenderer;
+import auxiliar.PanelListener;
 import auxiliar.TabelaPedidosCellRenderer;
 import auxiliar.TableModel;
 import core.Cliente;
@@ -34,9 +37,6 @@ public class TelaCadastroPedido extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	// Labels
-	private JLabel lblCadastrarPedido;
 	private JLabel lblNumero;
 	private JLabel lblCpfCliente;
 	private JLabel lblNome;
@@ -92,13 +92,14 @@ public class TelaCadastroPedido extends JPanel {
 		this.loja = l;
 		te = new TelaEnderecoEntregaPedido();
 
+		this.addAncestorListener(new PanelListener(this));
+
+		setBorder(new TitledBorder(null, "Cadastrar Pedido",
+				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
+						Font.PLAIN, 16)));
 		setLayout(new MigLayout("",
 				"[][][][grow][grow][][grow][][45.00,grow][67.00]",
 				"[][][][14.00][][][][][][]"));
-
-		lblCadastrarPedido = new JLabel("Cadastrar Pedido");
-		lblCadastrarPedido.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(lblCadastrarPedido, "cell 0 0 10 1,alignx center");
 
 		lblNumero = new JLabel("Número:");
 		add(lblNumero, "cell 0 1,alignx right");
@@ -213,14 +214,19 @@ public class TelaCadastroPedido extends JPanel {
 		panelTransportadora.setLayout(new MigLayout("",
 				"[][grow][grow][grow][][45.00,grow][67.00]", "[]"));
 		panelTransportadora.setVisible(false);
+		panelTransportadora.addComponentListener(new ComponentAdapter() {
+			public void componentShown(ComponentEvent e) {
+				for (Transportadora trans : loja.getTransportadoras()) {
+					System.out.println(trans.getNomeFantasia());
+					comboBoxTransportadora.addItem(trans);
+				}
+			}
+		});
 
 		lblNomeTransportadora = new JLabel("Nome:");
 		panelTransportadora.add(lblNomeTransportadora, "cell 0 0,alignx right");
 
 		comboBoxTransportadora = new JComboBox<Transportadora>();
-		for (Transportadora trans : loja.getTransportadoras()) {
-			comboBoxTransportadora.addItem(trans);
-		}
 		comboBoxTransportadora
 				.setRenderer(new ComboBoxTransportadoraRenderer());
 		panelTransportadora.add(comboBoxTransportadora, "cell 1 0 3 1,growx");

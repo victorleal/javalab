@@ -212,6 +212,12 @@ public class TelaPrincipal extends JFrame {
 		mnTransportadora.add(mntmConsultar);
 
 		JMenu mnSobre = new JMenu("Sobre");
+		mnSobre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaSobre tsobre = new TelaSobre();  
+			    tsobre.setVisible(true);   
+			}
+		});
 		menuBar.add(mnSobre);
 	}
 

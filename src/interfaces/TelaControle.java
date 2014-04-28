@@ -1,8 +1,11 @@
 package interfaces;
 
+import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
@@ -13,6 +16,8 @@ public class TelaControle extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaControle(Loja loja) {
+		setBorder(new TitledBorder(null, "Gerenciamento do Sistema",
+				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 16)));
 		setLayout(new MigLayout("", "[grow]", "[][][][][][][][][][][]"));
 
 		JLabel lblGerenciamento = new JLabel("Gerenciamento");

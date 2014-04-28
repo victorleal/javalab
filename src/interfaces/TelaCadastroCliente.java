@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 import auxiliar.SelectListener;
@@ -25,9 +26,6 @@ public class TelaCadastroCliente extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	// Labels
-	private JLabel lblCadastrarCliente;
 	private JLabel lblNome;
 	private JLabel lblCpf;
 	private JLabel lblCelular;
@@ -81,122 +79,118 @@ public class TelaCadastroCliente extends JPanel {
 	public TelaCadastroCliente(Loja l) {
 		panel = this;
 		this.loja = l;
-
-		setLayout(new MigLayout("",
-				"[69.00][114.00,grow][][grow][][91.00,grow]",
-				"[][30.00][][][][][][][][43.00][]"));
-
-		lblCadastrarCliente = new JLabel("Cadastrar Cliente");
-		lblCadastrarCliente.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(lblCadastrarCliente, "cell 0 0 6 1,alignx center");
+		
+		setBorder(new TitledBorder(null, "Cadastrar Cliente",
+				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 16)));
+		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][][][][][][][43.00][]"));
 
 		lblNome = new JLabel("Nome:");
-		add(lblNome, "cell 0 2,alignx right");
+		add(lblNome, "cell 0 0,alignx right");
 
 		textFieldNome = new JTextField();
-		add(textFieldNome, "cell 1 2 3 1,growx");
+		add(textFieldNome, "cell 1 0 3 1,growx");
 		textFieldNome.setColumns(10);
 
 		lblCpf = new JLabel("CPF:");
-		add(lblCpf, "cell 0 3,alignx right");
+		add(lblCpf, "cell 0 1,alignx right");
 
 		textFieldCpf = new JTextField();
-		add(textFieldCpf, "cell 1 3,growx");
+		add(textFieldCpf, "cell 1 1,growx");
 		textFieldCpf.setColumns(10);
 
 		lblCelular = new JLabel("Celular:");
-		add(lblCelular, "cell 2 3,alignx right");
+		add(lblCelular, "cell 2 1,alignx right");
 
 		textFieldCelular = new JTextField();
-		add(textFieldCelular, "cell 3 3,growx");
+		add(textFieldCelular, "cell 3 1,growx");
 		textFieldCelular.setColumns(10);
 
 		lblTelefone = new JLabel("Telefone:");
-		add(lblTelefone, "cell 4 3,alignx right");
+		add(lblTelefone, "cell 4 1,alignx right");
 
 		textFieldTelefone = new JTextField();
-		add(textFieldTelefone, "cell 5 3,growx");
+		add(textFieldTelefone, "cell 5 1,growx");
 		textFieldTelefone.setColumns(10);
 
 		lblEmail = new JLabel("Email:");
-		add(lblEmail, "cell 0 4,alignx right");
+		add(lblEmail, "cell 0 2,alignx right");
 
 		textFieldEmail = new JTextField();
-		add(textFieldEmail, "cell 1 4 3 1,growx");
+		add(textFieldEmail, "cell 1 2 3 1,growx");
 		textFieldEmail.setColumns(10);
 
 		lblEndereco = new JLabel("Endere\u00E7o:");
-		add(lblEndereco, "cell 0 5,alignx right");
+		add(lblEndereco, "cell 0 3,alignx right");
 
 		textFieldEndereco = new JTextField();
-		add(textFieldEndereco, "cell 1 5 3 1,growx");
+		add(textFieldEndereco, "cell 1 3 3 1,growx");
 		textFieldEndereco.setColumns(10);
 
 		lblNumero = new JLabel("N\u00FAmero:");
-		add(lblNumero, "cell 4 5,alignx trailing");
+		add(lblNumero, "cell 4 3,alignx trailing");
 
 		textFieldNumero = new JTextField();
-		add(textFieldNumero, "cell 5 5,growx");
+		add(textFieldNumero, "cell 5 3,growx");
 		textFieldNumero.setColumns(10);
 
 		lblComplemento = new JLabel("Complemento:");
-		add(lblComplemento, "cell 0 6,alignx right");
+		add(lblComplemento, "cell 0 4,alignx right");
 
 		textFieldComplemento = new JTextField();
-		add(textFieldComplemento, "cell 1 6,growx");
+		add(textFieldComplemento, "cell 1 4,growx");
 		textFieldComplemento.setColumns(10);
 
 		lblBairro = new JLabel("Bairro:");
-		add(lblBairro, "cell 2 6,alignx trailing");
+		add(lblBairro, "cell 2 4,alignx trailing");
 
 		textFieldBairro = new JTextField();
-		add(textFieldBairro, "cell 3 6,growx");
+		add(textFieldBairro, "cell 3 4,growx");
 		textFieldBairro.setColumns(10);
 
 		lblCep = new JLabel("CEP:");
-		add(lblCep, "cell 4 6,alignx trailing");
+		add(lblCep, "cell 4 4,alignx trailing");
 
 		textFieldCep = new JTextField();
-		add(textFieldCep, "cell 5 6,growx");
+		add(textFieldCep, "cell 5 4,growx");
 		textFieldCep.setColumns(10);
 
 		lblCidade = new JLabel("Cidade:");
-		add(lblCidade, "cell 0 7,alignx right");
+		add(lblCidade, "cell 0 5,alignx right");
 
 		textFieldCidade = new JTextField();
-		add(textFieldCidade, "cell 1 7,growx");
+		add(textFieldCidade, "cell 1 5,growx");
 		textFieldCidade.setColumns(10);
 
 		lblEstado = new JLabel("Estado:");
-		add(lblEstado, "cell 2 7,alignx trailing");
+		add(lblEstado, "cell 2 5,alignx trailing");
 
 		textFieldEstado = new JTextField();
-		add(textFieldEstado, "cell 3 7,growx");
+		add(textFieldEstado, "cell 3 5,growx");
 		textFieldEstado.setColumns(10);
 
 		lblPais = new JLabel("País:");
-		add(lblPais, "cell 4 7,alignx trailing");
+		add(lblPais, "cell 4 5,alignx trailing");
 
 		textFieldPais = new JTextField();
-		add(textFieldPais, "cell 5 7,growx");
+		add(textFieldPais, "cell 5 5,growx");
 		textFieldPais.setColumns(10);
 
 		lblClienteFidelidade = new JLabel("Cliente Fidelidade?");
-		add(lblClienteFidelidade, "cell 0 8,alignx right");
+		add(lblClienteFidelidade, "cell 0 6,alignx right");
 
 		lblPrograma = new JLabel("Programa:");
-		add(lblPrograma, "cell 2 8,alignx right");
+		add(lblPrograma, "cell 2 6,alignx right");
 
 		comboBoxPrograma = new JComboBox<Integer>();
 		comboBoxPrograma.setEnabled(false);
-		add(comboBoxPrograma, "cell 3 8,growx");
+		add(comboBoxPrograma, "cell 3 6,growx");
 
 		lblNumeroFidelidade = new JLabel("Número:");
-		add(lblNumeroFidelidade, "cell 4 8,alignx right");
+		add(lblNumeroFidelidade, "cell 4 6,alignx right");
 
 		textFieldNumeroFidelidade = new JTextField();
 		textFieldNumeroFidelidade.setEnabled(false);
-		add(textFieldNumeroFidelidade, "cell 5 8,growx");
+		add(textFieldNumeroFidelidade, "cell 5 6,growx");
 		textFieldNumeroFidelidade.setColumns(10);
 
 		comboBoxFidelidade = new JComboBox<String>();
@@ -207,7 +201,7 @@ public class TelaCadastroCliente extends JPanel {
 		components.add(textFieldNumeroFidelidade);
 		comboBoxFidelidade
 				.addItemListener(new SelectListener("Sim", components));
-		add(comboBoxFidelidade, "cell 1 8,growx");
+		add(comboBoxFidelidade, "cell 1 6,growx");
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -215,7 +209,7 @@ public class TelaCadastroCliente extends JPanel {
 				showTelaPrincipal();
 			}
 		});
-		add(btnCancelar, "flowx,cell 0 10 6 1,alignx right");
+		add(btnCancelar, "flowx,cell 0 8 6 1,alignx right");
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -257,7 +251,7 @@ public class TelaCadastroCliente extends JPanel {
 				showTelaPrincipal();
 			}
 		});
-		add(btnCadastrar, "cell 0 10 6 1,alignx right");
+		add(btnCadastrar, "cell 0 8 6 1,alignx right");
 	}
 
 	public void showTelaPrincipal() {

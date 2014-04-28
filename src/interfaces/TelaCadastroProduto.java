@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
@@ -20,9 +21,6 @@ public class TelaCadastroProduto extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	// Labels
-	private JLabel lblCadastrarProduto;
 	private JLabel lblId;
 	private JLabel lblPeso;
 	private JLabel lblValorUnitario;
@@ -59,46 +57,44 @@ public class TelaCadastroProduto extends JPanel {
 		panel = this;
 		this.loja = l;
 
-		setLayout(new MigLayout("", "[][][grow]",
-				"[][30.00][][][][][][][][43.00][]"));
-
-		lblCadastrarProduto = new JLabel("Cadastrar Produto");
-		lblCadastrarProduto.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(lblCadastrarProduto, "cell 0 0 3 1,alignx center");
+		setBorder(new TitledBorder(null, "Cadastrar Produto",
+				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
+						Font.PLAIN, 16)));
+		setLayout(new MigLayout("", "[][][grow]", "[][][][][][][][43.00][]"));
 
 		lblId = new JLabel("ID:");
-		add(lblId, "flowx,cell 0 2,alignx right");
+		add(lblId, "flowx,cell 0 0,alignx right");
 
 		textFieldId = new JTextField();
 		Integer id = loja.getIdPedido();
 		String idPedido = id.toString();
 		textFieldId.setText(idPedido);
-		add(textFieldId, "cell 1 2,growx");
+		add(textFieldId, "cell 1 0,growx");
 		textFieldId.setColumns(10);
 
 		lblPeso = new JLabel("Peso:");
-		add(lblPeso, "cell 0 3,alignx right");
+		add(lblPeso, "cell 0 1,alignx right");
 
 		textFieldPeso = new JTextField();
-		add(textFieldPeso, "cell 1 3,growx");
+		add(textFieldPeso, "cell 1 1,growx");
 		textFieldPeso.setColumns(10);
 
 		lblValorUnitario = new JLabel("Valor Unitário:");
-		add(lblValorUnitario, "cell 0 4,alignx right");
+		add(lblValorUnitario, "cell 0 2,alignx right");
 
 		textFieldValorUnitario = new JTextField();
-		add(textFieldValorUnitario, "cell 1 4,growx");
+		add(textFieldValorUnitario, "cell 1 2,growx");
 		textFieldValorUnitario.setColumns(10);
 
 		lblQuantidadeNoEstoque = new JLabel("Quantidade no Estoque:");
-		add(lblQuantidadeNoEstoque, "cell 0 5,alignx right");
+		add(lblQuantidadeNoEstoque, "cell 0 3,alignx right");
 
 		textFieldQtdeEstoque = new JTextField();
-		add(textFieldQtdeEstoque, "cell 1 5,growx");
+		add(textFieldQtdeEstoque, "cell 1 3,growx");
 		textFieldQtdeEstoque.setColumns(10);
 
 		lblCategoria = new JLabel("Categoria:");
-		add(lblCategoria, "cell 0 6,alignx right");
+		add(lblCategoria, "cell 0 4,alignx right");
 
 		comboBoxCategoria = new JComboBox<String>();
 		comboBoxCategoria.addItem("COMPUTADORES");
@@ -106,20 +102,20 @@ public class TelaCadastroProduto extends JPanel {
 		comboBoxCategoria.addItem("VIDEOSOM");
 		comboBoxCategoria.addItem("TABLETS");
 		comboBoxCategoria.addItem("GAMES");
-		add(comboBoxCategoria, "cell 1 6 2 1,growx");
+		add(comboBoxCategoria, "cell 1 4 2 1,growx");
 
 		lblConteudo = new JLabel("Conteúdo da Caixa:");
-		add(lblConteudo, "cell 0 7,alignx right");
+		add(lblConteudo, "cell 0 5,alignx right");
 
 		textFieldConteudo = new JTextField();
-		add(textFieldConteudo, "cell 1 7 2 1,growx");
+		add(textFieldConteudo, "cell 1 5 2 1,growx");
 		textFieldConteudo.setColumns(10);
 
 		lblDescricao = new JLabel("Descrição:");
-		add(lblDescricao, "cell 0 8,alignx right");
+		add(lblDescricao, "cell 0 6,alignx right");
 
 		textFieldDescricao = new JTextField();
-		add(textFieldDescricao, "cell 1 8 2 1,growx");
+		add(textFieldDescricao, "cell 1 6 2 1,growx");
 		textFieldDescricao.setColumns(10);
 
 		btnCancelar = new JButton("Cancelar");
@@ -130,7 +126,7 @@ public class TelaCadastroProduto extends JPanel {
 				cl.show(parent, "Inicial");
 			}
 		});
-		add(btnCancelar, "flowx,cell 2 10,alignx right,aligny bottom");
+		add(btnCancelar, "flowx,cell 2 8,alignx right,aligny bottom");
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -143,11 +139,11 @@ public class TelaCadastroProduto extends JPanel {
 						.parseDouble(textFieldValorUnitario.getText());
 				int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
 						.getText());
-				loja.cadastrarProduto(categoria, conteudodaCaixa,
-						descricao, peso, valorUnitario, qtdeEstoque);
+				loja.cadastrarProduto(categoria, conteudodaCaixa, descricao,
+						peso, valorUnitario, qtdeEstoque);
 			}
 		});
-		add(btnCadastrar, "cell 2 10");
+		add(btnCadastrar, "cell 2 8");
 
 	}
 

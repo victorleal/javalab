@@ -20,7 +20,9 @@ public class ComboBoxTransportadoraRenderer extends JLabel implements
 			JList<? extends Transportadora> list, Transportadora value,
 			int index, boolean isSelected, boolean cellHasFocus) {
 		Transportadora t = (Transportadora) value;
-		setText(t.getNomeFantasia());
+		if (t != null) {
+			setText(t.getNomeFantasia());
+		}
 		return this;
 	}
 }
