@@ -53,6 +53,7 @@ public class TelaCadastroTransportadora extends JPanel {
 	// Buttons
 	private JButton btnCancelar;
 	private JButton btnCadastrar;
+	private JButton btnLimpar;
 
 	// Controla o panel
 	private JPanel panel;
@@ -71,22 +72,20 @@ public class TelaCadastroTransportadora extends JPanel {
 				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
 						Font.PLAIN, 16)));
 
-		setLayout(new MigLayout("",
-				"[55.00][113.00,grow][][pref!][][91.00,grow]",
-				"[][][][][][][][][]"));
+		setLayout(new MigLayout("", "[55.00][113.00,grow][][pref!][][91.00,grow]", "[][][][][][][grow,bottom]"));
 
 		lblNomeFantasia = new JLabel("Nome Fantasia:");
 		add(lblNomeFantasia, "cell 0 0,alignx right");
 
 		txtNomeFantasia = new JTextField();
-		add(txtNomeFantasia, "cell 1 0 3 1,growx");
+		add(txtNomeFantasia, "cell 1 0 5 1,growx");
 		txtNomeFantasia.setColumns(10);
 
 		lblRazaoSocial = new JLabel("Raz\u00E3o Social:");
 		add(lblRazaoSocial, "cell 0 1,alignx trailing");
 
 		txtRazaoSocial = new JTextField();
-		add(txtRazaoSocial, "cell 1 1 3 1,growx");
+		add(txtRazaoSocial, "cell 1 1 5 1,growx");
 		txtRazaoSocial.setColumns(10);
 
 		lblCnpj = new JLabel("CNPJ:");
@@ -174,7 +173,27 @@ public class TelaCadastroTransportadora extends JPanel {
 				cl.show(parent, "Inicial");
 			}
 		});
-		add(btnCancelar, "flowx,cell 0 8 6 1,alignx right");
+		add(btnCancelar, "flowx,cell 0 6 6 1,alignx right");
+		
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtCnpj.setText("");
+				txtPrazoEntrega.setText("");
+				txtTaxaEntrega.setText("");
+				textFieldEndereco.setText("");
+				txtEndNum.setText("");
+				txtComplemento.setText("");
+				txtBairro.setText("");
+				txtCidade.setText("");
+				txtEstado.setText("");
+				txtPais.setText("");
+				txtRazaoSocial.setText("");
+				txtCep.setText("");
+	
+			}
+		});
+		add(btnLimpar, "cell 0 6,alignx right,aligny bottom");
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -205,7 +224,7 @@ public class TelaCadastroTransportadora extends JPanel {
 				showTelaPrincipal();
 			}
 		});
-		add(btnCadastrar, "cell 0 8 6 1");
+		add(btnCadastrar, "cell 0 6 6 1,alignx right");
 	}
 	
 	public void showTelaPrincipal() {

@@ -13,12 +13,15 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import core.Endereco;
+import javax.swing.border.TitledBorder;
 
 public class TelaEnderecoEntregaPedido extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	//TextField
 	private JTextField textFieldRua;
 	private JTextField textFieldNumero;
 	private JTextField textFieldBairro;
@@ -28,6 +31,19 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	private JTextField textFieldComplemento;
 	private JTextField textFieldCep;
 
+	//Labels
+	private JLabel lblRua;
+	private JLabel lblNumero;
+	private JLabel lblBairro;
+	private JLabel lblCidade;
+	private JLabel lblEstado;
+	private JLabel lblPas;
+	private JLabel lblComplemento;
+	private JLabel lblCep;
+	
+	//Button
+	private JButton btnOk;
+	
 	// Controla o panel
 	private JPanel panel;
 
@@ -35,72 +51,69 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaEnderecoEntregaPedido() {
+		setBorder(new TitledBorder(null, "Endere\u00E7o de Entrega", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
+				Font.PLAIN, 16)));
 		panel = this;
 		
-		setLayout(new MigLayout("", "[45.00][222.00,grow][63.00][grow]",
-				"[][][][][][][][][][]"));
+		setLayout(new MigLayout("", "[45.00][222.00,grow][63.00][grow]", "[][][][][][grow,bottom]"));
 
-		JLabel lblEndereoEntrega = new JLabel("Endere\u00E7o Entrega");
-		lblEndereoEntrega.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(lblEndereoEntrega, "cell 0 0 4 1,alignx center");
-
-		JLabel lblRua = new JLabel("Rua:");
-		add(lblRua, "cell 0 2,alignx trailing");
+		lblRua = new JLabel("Rua:");
+		add(lblRua, "cell 0 0,alignx trailing");
 
 		textFieldRua = new JTextField();
-		add(textFieldRua, "cell 1 2,growx");
+		add(textFieldRua, "cell 1 0,growx");
 		textFieldRua.setColumns(10);
 
-		JLabel lblNumero = new JLabel("N\u00FAmero:");
-		add(lblNumero, "cell 2 2,alignx trailing");
+		lblNumero = new JLabel("N\u00FAmero:");
+		add(lblNumero, "cell 2 0,alignx trailing");
 
 		textFieldNumero = new JTextField();
-		add(textFieldNumero, "cell 3 2,growx");
+		add(textFieldNumero, "cell 3 0,growx");
 		textFieldNumero.setColumns(10);
 
-		JLabel lblBairro = new JLabel("Bairro:");
-		add(lblBairro, "cell 0 3,alignx trailing");
+		lblBairro = new JLabel("Bairro:");
+		add(lblBairro, "cell 0 1,alignx trailing");
 
 		textFieldBairro = new JTextField();
-		add(textFieldBairro, "cell 1 3,growx");
+		add(textFieldBairro, "cell 1 1,growx");
 		textFieldBairro.setColumns(10);
 
-		JLabel lblCidade = new JLabel("Cidade:");
-		add(lblCidade, "cell 0 4,alignx trailing");
+		lblCidade = new JLabel("Cidade:");
+		add(lblCidade, "cell 0 2,alignx trailing");
 
 		textFieldCidade = new JTextField();
-		add(textFieldCidade, "cell 1 4,growx");
+		add(textFieldCidade, "cell 1 2,growx");
 		textFieldCidade.setColumns(10);
 
-		JLabel lblEstado = new JLabel("Estado:");
-		add(lblEstado, "cell 2 4,alignx trailing");
+		lblEstado = new JLabel("Estado:");
+		add(lblEstado, "cell 2 2,alignx trailing");
 
 		textFieldEstado = new JTextField();
-		add(textFieldEstado, "cell 3 4,growx");
+		add(textFieldEstado, "cell 3 2,growx");
 		textFieldEstado.setColumns(10);
 
-		JLabel lblPas = new JLabel("Pa\u00EDs:");
-		add(lblPas, "cell 0 5,alignx trailing");
+		lblPas = new JLabel("Pa\u00EDs:");
+		add(lblPas, "cell 0 3,alignx trailing");
 
 		textFieldPais = new JTextField();
-		add(textFieldPais, "cell 1 5,growx");
+		add(textFieldPais, "cell 1 3,growx");
 		textFieldPais.setColumns(10);
 
-		JLabel lblComplemento = new JLabel("Complemento:");
-		add(lblComplemento, "cell 0 6,alignx trailing");
+		lblComplemento = new JLabel("Complemento:");
+		add(lblComplemento, "cell 0 4,alignx trailing");
 
 		textFieldComplemento = new JTextField();
-		add(textFieldComplemento, "cell 1 6,growx");
+		add(textFieldComplemento, "cell 1 4,growx");
 		textFieldComplemento.setColumns(10);
 
-		JLabel lblCep = new JLabel("CEP:");
-		add(lblCep, "cell 2 6,alignx trailing");
+		lblCep = new JLabel("CEP:");
+		add(lblCep, "cell 2 4,alignx trailing");
 
 		textFieldCep = new JTextField();
-		add(textFieldCep, "cell 3 6,growx");
+		add(textFieldCep, "cell 3 4,growx");
 		textFieldCep.setColumns(10);
-
-		JButton btnOk = new JButton("OK");
+		
+		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Container parent = panel.getParent();
@@ -108,7 +121,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 				cl.show(parent, "CadastrarPedido");
 			}
 		});
-		add(btnOk, "cell 3 9,growx");
+		add(btnOk, "cell 0 5 4 1,alignx right");
 
 	}
 

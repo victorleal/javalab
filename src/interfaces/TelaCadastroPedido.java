@@ -67,6 +67,7 @@ public class TelaCadastroPedido extends JPanel {
 	private JButton buttonAdicionarProduto;
 	private JButton btnCancelar;
 	private JButton btnCadastrar;
+	private JButton btnLimpar;
 	private JButton btnBuscaCliente;
 	private JButton btnAdicionarEndereco;
 
@@ -97,9 +98,7 @@ public class TelaCadastroPedido extends JPanel {
 		setBorder(new TitledBorder(null, "Cadastrar Pedido",
 				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
 						Font.PLAIN, 16)));
-		setLayout(new MigLayout("",
-				"[][][][grow][grow][][grow][][45.00,grow][67.00]",
-				"[][][][14.00][][][][][][]"));
+		setLayout(new MigLayout("", "[][][grow][][grow][67.00]", "[][][][14.00][][][][][][grow,bottom]"));
 
 		lblNumero = new JLabel("Número:");
 		add(lblNumero, "cell 0 1,alignx right");
@@ -113,10 +112,10 @@ public class TelaCadastroPedido extends JPanel {
 		textFieldNumero.setColumns(10);
 
 		lblCpfCliente = new JLabel("CPF Cliente:");
-		add(lblCpfCliente, "cell 4 1,alignx right");
+		add(lblCpfCliente, "cell 2 1,alignx right");
 
 		textFieldCpfCliente = new JTextField();
-		add(textFieldCpfCliente, "cell 5 1 4 1,growx");
+		add(textFieldCpfCliente, "cell 3 1 2 1,growx");
 		textFieldCpfCliente.setColumns(10);
 
 		btnBuscaCliente = new JButton("Buscar");
@@ -138,22 +137,21 @@ public class TelaCadastroPedido extends JPanel {
 				}
 			}
 		});
-		add(btnBuscaCliente, "cell 9 1,alignx center");
+		add(btnBuscaCliente, "cell 5 1,alignx center");
 
 		lblNome = new JLabel("Nome:");
 		add(lblNome, "cell 0 2,alignx right");
 
 		textFieldNome = new JTextField();
-		add(textFieldNome, "cell 1 2 8 1,growx");
+		add(textFieldNome, "cell 1 2 4 1,growx");
 		textFieldNome.setColumns(10);
 		textFieldNome.setEditable(false);
 
 		panelProdutos = new JPanel();
 		panelProdutos.setBorder(new TitledBorder(null, "Produtos",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		add(panelProdutos, "cell 0 3 10 2,grow");
-		panelProdutos.setLayout(new MigLayout("",
-				"[][grow][grow][grow][grow][grow][]", "[][][][][]"));
+		add(panelProdutos, "cell 0 3 6 2,grow");
+		panelProdutos.setLayout(new MigLayout("", "[][grow][grow][grow][grow]", "[][][][][]"));
 		panelProdutos.setVisible(false);
 
 		lblCdigoProduto = new JLabel("Código Produto:");
@@ -210,7 +208,7 @@ public class TelaCadastroPedido extends JPanel {
 		panelTransportadora = new JPanel();
 		panelTransportadora.setBorder(new TitledBorder(null, "Transportadora",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		add(panelTransportadora, "cell 0 5 10 1,grow");
+		add(panelTransportadora, "cell 0 5 6 1,grow");
 		panelTransportadora.setLayout(new MigLayout("",
 				"[][grow][grow][grow][][45.00,grow][67.00]", "[]"));
 		panelTransportadora.setVisible(false);
@@ -245,25 +243,16 @@ public class TelaCadastroPedido extends JPanel {
 		comboBoxFormaPagamento.addItem("A vista");
 		comboBoxFormaPagamento.addItem("Cartão Crédito");
 		comboBoxFormaPagamento.addItem("Parcelamento");
-		add(comboBoxFormaPagamento, "cell 1 7 4 1,growx");
+		add(comboBoxFormaPagamento, "cell 1 7 2 1,growx");
 		comboBoxFormaPagamento.setEnabled(false);
 
 		lblDataDeCompra = new JLabel("Data de Compra:");
-		add(lblDataDeCompra, "cell 5 7,alignx right");
+		add(lblDataDeCompra, "cell 3 7,alignx right");
 
 		textFieldDataCompra = new JTextField();
-		add(textFieldDataCompra, "cell 6 7 4 1,growx");
+		add(textFieldDataCompra, "cell 4 7 2 1,growx");
 		textFieldDataCompra.setColumns(10);
 		textFieldDataCompra.setEnabled(false);
-
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Container parent = panel.getParent();
-				CardLayout cl = (CardLayout) parent.getLayout();
-				cl.show(parent, "Inicial");
-			}
-		});
 
 		btnAdicionarEndereco = new JButton("Adicionar Endereço Entrega");
 		btnAdicionarEndereco.addActionListener(new ActionListener() {
@@ -274,9 +263,35 @@ public class TelaCadastroPedido extends JPanel {
 				cl.show(parent, "EnderecoEntrega");
 			}
 		});
-		add(btnAdicionarEndereco, "cell 5 8 5 1,growx");
-		add(btnCancelar, "cell 0 9 9 1,alignx right");
-
+		add(btnAdicionarEndereco, "cell 3 8 3 1,growx");
+				
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textFieldNome.setText("");
+			textFieldCodigoProduto.setText("");
+			textFieldCpfCliente.setText("");
+			textFieldDataCompra.setText("");
+			textFieldDataEntrega.setText("");
+			textFieldNumero.setText("");
+			textFieldQtdeProduto.setText("");
+			textFieldValorTotal.setText("");
+		
+			}
+		});
+		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					Container parent = panel.getParent();
+					CardLayout cl = (CardLayout) parent.getLayout();
+					cl.show(parent, "Inicial");
+				}
+			});
+			add(btnCancelar, "flowx,cell 0 9 6 1,alignx right");
+		add(btnLimpar, "cell 0 9 6 1,alignx right");
+		
+		
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -296,23 +311,24 @@ public class TelaCadastroPedido extends JPanel {
 						try {
 							SimpleDateFormat sdf = new SimpleDateFormat(
 									"dd/MM/yyyy");
-							calDataCompra.setTime(sdf.parse(dataCompra));
-							calDataEntrega.setTime(sdf.parse(dataEntrega));
-						} catch (ParseException ex) {
-							ex.printStackTrace();
-						}
-						loja.cadastrarPedido(valorTotal, formaPagamento,
-								calDataCompra, calDataEntrega, endereco, c,
-								null, t);
-					} else {
-						JOptionPane.showMessageDialog(panel,
-								"Nenhum endereço de entrega foi encontrado",
-								"Atenção", JOptionPane.ERROR_MESSAGE);
+						calDataCompra.setTime(sdf.parse(dataCompra));
+						calDataEntrega.setTime(sdf.parse(dataEntrega));
+					} catch (ParseException ex) {
+						ex.printStackTrace();
+					}
+					loja.cadastrarPedido(valorTotal, formaPagamento,
+							calDataCompra, calDataEntrega, endereco, c,
+							null, t);
+				} else {
+					JOptionPane.showMessageDialog(panel,
+							"Nenhum endereço de entrega foi encontrado",
+							"Atenção", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
+			
 		});
-		add(btnCadastrar, "cell 9 9,alignx right");
-	}
+		add(btnCadastrar, "cell 0 9 6 1,alignx right");
+		}
 
 }

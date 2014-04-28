@@ -43,6 +43,7 @@ public class TelaCadastroProduto extends JPanel {
 	// Buttons
 	private JButton btnCancelar;
 	private JButton btnCadastrar;
+	private JButton btnLimpar;
 
 	// Controla o panel
 	private JPanel panel;
@@ -60,7 +61,7 @@ public class TelaCadastroProduto extends JPanel {
 		setBorder(new TitledBorder(null, "Cadastrar Produto",
 				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
 						Font.PLAIN, 16)));
-		setLayout(new MigLayout("", "[][][grow]", "[][][][][][][][43.00][]"));
+		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][grow,bottom]"));
 
 		lblId = new JLabel("ID:");
 		add(lblId, "flowx,cell 0 0,alignx right");
@@ -102,22 +103,24 @@ public class TelaCadastroProduto extends JPanel {
 		comboBoxCategoria.addItem("VIDEOSOM");
 		comboBoxCategoria.addItem("TABLETS");
 		comboBoxCategoria.addItem("GAMES");
-		add(comboBoxCategoria, "cell 1 4 2 1,growx");
+		add(comboBoxCategoria, "cell 1 4,growx");
 
 		lblConteudo = new JLabel("Conteúdo da Caixa:");
 		add(lblConteudo, "cell 0 5,alignx right");
 
 		textFieldConteudo = new JTextField();
-		add(textFieldConteudo, "cell 1 5 2 1,growx");
+		add(textFieldConteudo, "cell 1 5,growx");
 		textFieldConteudo.setColumns(10);
 
 		lblDescricao = new JLabel("Descrição:");
 		add(lblDescricao, "cell 0 6,alignx right");
 
 		textFieldDescricao = new JTextField();
-		add(textFieldDescricao, "cell 1 6 2 1,growx");
+		add(textFieldDescricao, "cell 1 6,growx");
 		textFieldDescricao.setColumns(10);
-
+		
+		
+		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,8 +129,21 @@ public class TelaCadastroProduto extends JPanel {
 				cl.show(parent, "Inicial");
 			}
 		});
-		add(btnCancelar, "flowx,cell 2 8,alignx right,aligny bottom");
-
+		add(btnCancelar, "flowx,cell 0 7 2 1,alignx right,aligny bottom");
+		
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textFieldConteudo.setText("");
+				textFieldDescricao.setText("");
+				textFieldId.setText("");
+				textFieldPeso.setText("");
+				textFieldQtdeEstoque.setText("");
+				textFieldValorUnitario.setText("");		
+			}
+		});
+		add(btnLimpar, "cell 0 7,alignx right,aligny bottom");
+				
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,7 +159,13 @@ public class TelaCadastroProduto extends JPanel {
 						peso, valorUnitario, qtdeEstoque);
 			}
 		});
-		add(btnCadastrar, "cell 2 8");
+		add(btnCadastrar, "cell 0 7,alignx right,aligny bottom");
+		
+				
+
+				
+						
+						
 
 	}
 

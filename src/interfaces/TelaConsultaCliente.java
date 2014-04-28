@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,55 +15,69 @@ import net.miginfocom.swing.MigLayout;
 import core.Loja;
 
 public class TelaConsultaCliente extends JPanel {
+	//TextField
 	private JTextField txtCpf;
 	private JTextField txtNome;
+	
+	//Labels
+	private JLabel lblCpf;
+	private JLabel lblNome;
+	private JLabel lblClientesEncontrados;
+	
+	//Buttons
+	private JButton btnExcluir;
+	private JButton btnAlterar;
+	private JButton btnCancelar;
+	private JButton btnBuscar;
+	
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaConsultaCliente(Loja loja) {
-		setBorder(new TitledBorder(null, "Consultar Cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(null, "Consultar Cliente", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
+				Font.PLAIN, 16)));
 		
-setLayout(new MigLayout("", "[1.00][grow]", "[][][][][grow][]"));
+setLayout(new MigLayout("", "[1.00][grow]", "[][][][][grow][bottom]"));
 		
-		JLabel lblCpf = new JLabel("CPF:");
+		lblCpf = new JLabel("CPF:");
 		add(lblCpf, "cell 0 0,alignx trailing");
 		
 		txtCpf = new JTextField();
 		add(txtCpf, "cell 1 0,growx");
 		txtCpf.setColumns(10);
 		
-		JLabel lblNome = new JLabel("Nome:");
+		lblNome = new JLabel("Nome:");
 		add(lblNome, "cell 0 1,alignx trailing");
 		
 		txtNome = new JTextField();
 		add(txtNome, "cell 1 1,growx");
 		txtNome.setColumns(10);
 		
-		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar = new JButton("Buscar");
 		add(btnBuscar, "cell 1 2,alignx right");
 		
-		JLabel lblClientesEncontrados = new JLabel("Clientes Encontrados");
+		lblClientesEncontrados = new JLabel("Clientes Encontrados");
 		add(lblClientesEncontrados, "cell 0 3 2 1,alignx center");
 		
 		JList list = new JList();
 		add(list, "cell 0 4 2 1,grow");
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		add(btnCancelar, "flowx,cell 1 5,alignx right,aligny bottom");
 		
-		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		add(btnAlterar, "cell 1 5");
 		
-		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir = new JButton("Excluir");
 		add(btnExcluir, "cell 1 5,alignx right");	
 
 	}

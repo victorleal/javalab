@@ -66,6 +66,7 @@ public class TelaCadastroCliente extends JPanel {
 	// Buttons
 	private JButton btnCancelar;
 	private JButton btnCadastrar;
+	private JButton btnLimpar;
 
 	// Controla o panel
 	private JPanel panel;
@@ -82,13 +83,13 @@ public class TelaCadastroCliente extends JPanel {
 		
 		setBorder(new TitledBorder(null, "Cadastrar Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 16)));
-		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][][][][][][][43.00][]"));
+		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][][][][][][][grow,bottom]"));
 
 		lblNome = new JLabel("Nome:");
 		add(lblNome, "cell 0 0,alignx right");
 
 		textFieldNome = new JTextField();
-		add(textFieldNome, "cell 1 0 3 1,growx");
+		add(textFieldNome, "cell 1 0 5 1,growx");
 		textFieldNome.setColumns(10);
 
 		lblCpf = new JLabel("CPF:");
@@ -116,7 +117,7 @@ public class TelaCadastroCliente extends JPanel {
 		add(lblEmail, "cell 0 2,alignx right");
 
 		textFieldEmail = new JTextField();
-		add(textFieldEmail, "cell 1 2 3 1,growx");
+		add(textFieldEmail, "cell 1 2 5 1,growx");
 		textFieldEmail.setColumns(10);
 
 		lblEndereco = new JLabel("Endere\u00E7o:");
@@ -209,7 +210,28 @@ public class TelaCadastroCliente extends JPanel {
 				showTelaPrincipal();
 			}
 		});
-		add(btnCancelar, "flowx,cell 0 8 6 1,alignx right");
+		add(btnCancelar, "flowx,cell 0 7 6 1,alignx right");
+		
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textFieldNome.setText("");
+				textFieldCpf.setText("");
+				textFieldEmail.setText("");
+				textFieldTelefone.setText("");
+				textFieldCelular.setText("");
+				textFieldEndereco.setText("");
+				textFieldBairro.setText("");
+				textFieldNumero.setText("");
+				textFieldBairro.setText("");
+				textFieldEstado.setText("");
+				textFieldPais.setText("");
+				textFieldComplemento.setText("");
+				textFieldCep.setText("");
+			}
+		});
+		add(btnLimpar, "cell 0 7,alignx right");
+
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -251,7 +273,7 @@ public class TelaCadastroCliente extends JPanel {
 				showTelaPrincipal();
 			}
 		});
-		add(btnCadastrar, "cell 0 8 6 1,alignx right");
+		add(btnCadastrar, "cell 0 7 6 1,alignx right");
 	}
 
 	public void showTelaPrincipal() {
