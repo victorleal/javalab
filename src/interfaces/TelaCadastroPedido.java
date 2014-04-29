@@ -190,7 +190,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 		panelProdutos.add(lblValorTotal, "cell 3 4,alignx right");
 
 		textFieldValorTotal = new JTextField();
-		textFieldValorTotal.setText("0asdss");
+		textFieldValorTotal.setText("0");
 		textFieldValorTotal.setEditable(false);
 		panelProdutos.add(textFieldValorTotal, "cell 4 4,growx");
 		textFieldValorTotal.setColumns(10);

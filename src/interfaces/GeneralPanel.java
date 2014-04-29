@@ -82,7 +82,7 @@ public abstract class GeneralPanel extends JPanel {
 
 		@Override
 		public void ancestorAdded(AncestorEvent arg0) {
-			limparCampos();
+			//limparCampos();
 		}
 
 		@Override
