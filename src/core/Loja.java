@@ -21,6 +21,11 @@ public class Loja {
 	private static int idPedido;
 	private static int idProduto;
 
+	// Controla objetos entre as telas de alteracao
+	private Cliente clienteAlteracao;
+	private Produto produtoAlteracao;
+	private Transportadora transportadoraAlteracao;
+
 	public enum Categorias {
 		COMPUTADORES, TELEFONIA, VIDEOSOM, TABLETS, GAMES
 	};
@@ -67,10 +72,9 @@ public class Loja {
 		}
 	}
 
-	public void alterarCliente(String cpf) {
-		Cliente c = null;
-		if (clientes.containsKey(cpf)) {
-			c = clientes.get(cpf);
+	public void alterarCliente(Cliente c) {
+		if (clientes.containsKey(c.getCpf())) {
+			c = clientes.get(c.getCpf());
 			c.setCelular("8282-2929");
 			c.setEmail("email@email.com");
 			c.setEndereco(new Endereco("Rua Nova", "Bairro Novo",
@@ -81,10 +85,19 @@ public class Loja {
 			c.setNumeroFidelidade("7");
 			c.setProgramaFidelidade("Platinium");
 			c.setTelefone("7984-7856");
-		} else {
-			System.out.println("O Cliente com o CPF " + cpf
-					+ " não foi encontrado.");
 		}
+	}
+
+	public Collection<Cliente> getClientes() {
+		return this.clientes.values();
+	}
+
+	public void setClienteAlteracao(Cliente c) {
+		this.clienteAlteracao = c;
+	}
+
+	public Cliente getClienteAlteracao() {
+		return this.clienteAlteracao;
 	}
 
 	/********** PEDIDOS **********/
@@ -167,6 +180,14 @@ public class Loja {
 		}
 	}
 
+	public void setProdutoAlteracao(Produto p) {
+		this.produtoAlteracao = p;
+	}
+
+	public Produto getProdutoAlteracao() {
+		return this.produtoAlteracao;
+	}
+
 	public void devolverQuantidadeEstoque(Produto p, int qtde) {
 		int qtdeAtual = p.getQtdeEstoque();
 		int qtdeNova = qtdeAtual + qtde;
@@ -220,6 +241,14 @@ public class Loja {
 
 	public Collection<Transportadora> getTransportadoras() {
 		return this.transportadoras.values();
+	}
+
+	public void setTransportadoraAlteracao(Transportadora t) {
+		this.transportadoraAlteracao = t;
+	}
+
+	public Transportadora getTransportadoraAlteracao() {
+		return this.transportadoraAlteracao;
 	}
 
 	/********** METODOS ADICIONAIS **********/
@@ -283,9 +312,9 @@ public class Loja {
 				"546", "78445-989", "Limeira", "São Paulo", "Brasil");
 		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
 				"78", "13000-000", "Campinas", "SP", "Brasil");
-		cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
+		cadastrarCliente("Victor Leal", "51", "victor@email.com", "3232-3232",
 				"9999-9898", true, "Gold", "1234", enderecoCliente);
-		cadastrarCliente("Paulo Paraluppi", "2", "paulo@email.com",
+		cadastrarCliente("Paulo Paraluppi", "52", "paulo@email.com",
 				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
 		cadastrarCliente("Guilherme Nogueira", "3", "guilherme@email.com",
 				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
@@ -304,5 +333,11 @@ public class Loja {
 				420, 300.00, 10);
 		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexão",
 				"HD SATA III Western Digital 1TB", 320, 210.00, 10);
+
+		for (int i = 0; i < 30; i++) {
+			cadastrarCliente("Guilherme Nogueira", new Integer(i).toString(),
+					"guilherme@email.com", "3232-3232", "9999-9898", true,
+					"Gold", "1234", enderecoCliente);
+		}
 	}
 }

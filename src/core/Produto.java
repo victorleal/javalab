@@ -63,6 +63,9 @@ public class Produto {
 		this.pedidosProduto = new HashMap<Integer, Pedido>();
 	}
 
+	public Produto() {
+	}
+
 	public Map<Integer, Pedido> getPedidosProduto() {
 		return pedidosProduto;
 	}

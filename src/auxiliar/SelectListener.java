@@ -23,6 +23,14 @@ public class SelectListener implements ItemListener {
 			}
 		}
 	}
+	
+	public void disableComponents() {
+		if (components != null) {
+			for (JComponent component : components) {
+				component.setEnabled(false);
+			}
+		}
+	}
 
 	@Override
 	public void itemStateChanged(ItemEvent itemEvent) {
@@ -30,6 +38,8 @@ public class SelectListener implements ItemListener {
 			String item = (String) itemEvent.getItem();
 			if (item.equals(expectedAnswer)) {
 				enableComponents();
+			} else {
+				disableComponents();
 			}
 		}
 	}

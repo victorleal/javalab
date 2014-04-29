@@ -64,6 +64,10 @@ public class Pessoa {
 		this.endereco = endereco;
 	}
 
+	public Pessoa() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -82,10 +82,6 @@ public class TelaPrincipal extends JFrame {
 				"ConsultarTransportadora");
 		contentPane.add(new TelaConsultaProduto(loja), "ConsultarProduto");
 		contentPane.add(new TelaConsultaPedido(loja), "ConsultarPedido");
-		contentPane.add(new TelaAlterarCliente(loja), "AlterarCliente");
-		contentPane.add(new TelaAlterarProduto(loja), "AlterarProduto");
-		contentPane.add(new TelaAlterarTransportadora(loja),
-				"AlterarTransportadora");
 		contentPane.add(new TelaControle(loja), "Controle");
 	}
 

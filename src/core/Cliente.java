@@ -44,6 +44,10 @@ public class Cliente extends Pessoa {
 		this.pedidosCliente = new ArrayList<Pedido>();
 	}
 
+	public Cliente() {
+		super();
+	}
+
 	public List<Pedido> getPedidosCliente() {
 		return pedidosCliente;
 	}

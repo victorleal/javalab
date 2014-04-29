@@ -73,6 +73,7 @@ setLayout(new MigLayout("", "[1.00][grow]", "[][][][][grow][bottom]"));
 		btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//panel.add(new TelaAlterarProduto(loja), "AlterarProduto");
 			}
 		});
 		add(btnAlterar, "cell 1 5");

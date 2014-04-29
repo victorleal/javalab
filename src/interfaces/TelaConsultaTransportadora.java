@@ -82,6 +82,7 @@ public class TelaConsultaTransportadora extends JPanel {
 		btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//contentPane.add(new TelaAlterarTransportadora(loja),"AlterarTransportadora");
 			}
 		});
 		add(btnAlterar, "cell 1 6");

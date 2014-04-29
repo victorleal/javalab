@@ -61,6 +61,9 @@ public class Transportadora {
 		this.pedidosTransportadora = new HashMap<Integer, Pedido>();
 	}
 
+	public Transportadora() {
+	}
+
 	public void adicionaPedido(Pedido pedido) {
 		this.pedidosTransportadora.put(pedido.getNumero(), pedido);
 	}
