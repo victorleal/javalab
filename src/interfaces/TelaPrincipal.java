@@ -3,8 +3,6 @@ package interfaces;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -27,7 +25,6 @@ public class TelaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public JPanel contentPane;
 	private JFrame frame;
-	private Map<String, JPanel> panels = new HashMap<String, JPanel>();
 
 	private Loja loja;
 
@@ -221,14 +218,4 @@ public class TelaPrincipal extends JFrame {
 		});
 		menuBar.add(mnSobre);
 	}
-
-	public void escondePaineis() {
-		for (JPanel p : panels.values()) {
-			if (p.isShowing()) {
-				frame.remove(p);
-			}
-		}
-		frame.repaint();
-	}
-
 }

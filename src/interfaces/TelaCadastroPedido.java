@@ -2,7 +2,6 @@ package interfaces;
 
 import java.awt.CardLayout;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -14,7 +13,6 @@ import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,7 +29,7 @@ import core.Loja;
 import core.Produto;
 import core.Transportadora;
 
-public class TelaCadastroPedido extends JPanel {
+public class TelaCadastroPedido extends GeneralPanel {
 	/**
 	 * 
 	 */
@@ -70,13 +68,9 @@ public class TelaCadastroPedido extends JPanel {
 	private JButton btnBuscaCliente;
 	private JButton btnAdicionarEndereco;
 
-	// Controla o panel
-	private JPanel panel;
+	// Controla os panels
 	private JPanel panelProdutos;
 	private JPanel panelTransportadora;
-
-	// Controla a loja
-	private Loja loja;
 
 	// Controla cliente
 	private Cliente c;
@@ -88,13 +82,11 @@ public class TelaCadastroPedido extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaCadastroPedido(Loja l) {
-		panel = this;
-		this.loja = l;
+		super(l);
 		te = new TelaEnderecoEntregaPedido();
 
 		setBorder(new TitledBorder(null, "Cadastrar Pedido",
-				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
-						Font.PLAIN, 16)));
+				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][][grow][][grow][67.00]",
 				"[][][][14.00][][][][][][grow,bottom]"));
 
@@ -129,9 +121,7 @@ public class TelaCadastroPedido extends JPanel {
 					textFieldDataCompra.setEnabled(true);
 					btnCadastrar.setVisible(true);
 				} else {
-					JOptionPane.showMessageDialog(panel,
-							"Cliente não encontrado", "Atenção",
-							JOptionPane.ERROR_MESSAGE);
+					showMensagemErro("Cliente não encontrado");
 				}
 			}
 		});
@@ -266,22 +256,14 @@ public class TelaCadastroPedido extends JPanel {
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				textFieldNome.setText("");
-				textFieldCodigoProduto.setText("");
-				textFieldCpfCliente.setText("");
-				textFieldDataCompra.setText("");
-				textFieldDataEntrega.setText("");
-				textFieldNumero.setText("");
-				textFieldQtdeProduto.setText("");
-				textFieldValorTotal.setText("");
-
+				limparCampos();
 			}
 		});
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal();
+				showTelaPrincipal(true);
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 9 6 1,alignx right");
@@ -315,14 +297,10 @@ public class TelaCadastroPedido extends JPanel {
 								calDataCompra, calDataEntrega, endereco, c,
 								null, t);
 
-						JOptionPane.showMessageDialog(panel,
-								"Pedido cadastrado com sucesso!", "Sucesso",
-								JOptionPane.INFORMATION_MESSAGE);
-						showTelaPrincipal();
+						showMensagemSucesso("Pedido cadastrado com sucesso!");
+						showTelaPrincipal(true);
 					} else {
-						JOptionPane.showMessageDialog(panel,
-								"Nenhum endereço de entrega foi encontrado",
-								"Atenção", JOptionPane.ERROR_MESSAGE);
+						showMensagemErro("Endereço não cadastrado!");
 					}
 				}
 			}
@@ -331,10 +309,15 @@ public class TelaCadastroPedido extends JPanel {
 		add(btnCadastrar, "cell 0 9 6 1,alignx right");
 	}
 
-	public void showTelaPrincipal() {
-		Container parent = panel.getParent();
-		CardLayout cl = (CardLayout) parent.getLayout();
-		cl.show(parent, "Inicial");
-		cl.removeLayoutComponent(panel);
+	@Override
+	public void limparCampos() {
+		textFieldNome.setText("");
+		textFieldCodigoProduto.setText("");
+		textFieldCpfCliente.setText("");
+		textFieldDataCompra.setText("");
+		textFieldDataEntrega.setText("");
+		textFieldNumero.setText("");
+		textFieldQtdeProduto.setText("");
+		textFieldValorTotal.setText("");
 	}
 }

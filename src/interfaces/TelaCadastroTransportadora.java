@@ -1,15 +1,10 @@
 package interfaces;
 
-import java.awt.CardLayout;
-import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -17,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
 import core.Endereco;
 import core.Loja;
 
-public class TelaCadastroTransportadora extends JPanel {
+public class TelaCadastroTransportadora extends GeneralPanel {
 	private static final long serialVersionUID = 1L;
 
 	// Labels
@@ -55,22 +50,14 @@ public class TelaCadastroTransportadora extends JPanel {
 	private JButton btnCadastrar;
 	private JButton btnLimpar;
 
-	// Controla o panel
-	private JPanel panel;
-
-	// Controla a loja
-	private Loja loja;
-
 	/**
 	 * Create the panel.
 	 */
 	public TelaCadastroTransportadora(Loja l) {
-		panel = this;
-		this.loja = l;
+		super(l);
 
 		setBorder(new TitledBorder(null, "Cadastrar Transportadora",
-				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
-						Font.PLAIN, 16)));
+				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 
 		setLayout(new MigLayout("", "[55.00][113.00,grow][][pref!][][91.00,grow]", "[][][][][][][grow,bottom]"));
 
@@ -168,9 +155,7 @@ public class TelaCadastroTransportadora extends JPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Container parent = panel.getParent();
-				CardLayout cl = (CardLayout) parent.getLayout();
-				cl.show(parent, "Inicial");
+				showTelaPrincipal(false);
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 6 6 1,alignx right");
@@ -178,19 +163,7 @@ public class TelaCadastroTransportadora extends JPanel {
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				txtCnpj.setText("");
-				txtPrazoEntrega.setText("");
-				txtTaxaEntrega.setText("");
-				textFieldEndereco.setText("");
-				txtEndNum.setText("");
-				txtComplemento.setText("");
-				txtBairro.setText("");
-				txtCidade.setText("");
-				txtEstado.setText("");
-				txtPais.setText("");
-				txtRazaoSocial.setText("");
-				txtCep.setText("");
-	
+				limparCampos();	
 			}
 		});
 		add(btnLimpar, "cell 0 6,alignx right,aligny bottom");
@@ -218,18 +191,29 @@ public class TelaCadastroTransportadora extends JPanel {
 				loja.cadastrarTransportadora(cnpj, nomeFantasia, razaoSocial,
 						prazoEntrega, taxaEntrega, endereco);
 				
-				JOptionPane.showMessageDialog(panel,
-						"Transportadora cadastrada com sucesso!", "Sucesso",
-						JOptionPane.INFORMATION_MESSAGE);
-				showTelaPrincipal();
+				showMensagemSucesso("Transportadora cadastrada com sucesso!");
+				showTelaPrincipal(false);
 			}
 		});
 		add(btnCadastrar, "cell 0 6 6 1,alignx right");
 	}
-	
-	public void showTelaPrincipal() {
-		Container parent = panel.getParent();
-		CardLayout cl = (CardLayout) parent.getLayout();
-		cl.show(parent, "Inicial");
+
+	@Override
+	public void limparCampos() {
+		txtNomeFantasia.setText("");
+		txtCnpj.setText("");
+		txtPrazoEntrega.setText("");
+		txtTaxaEntrega.setText("");
+		textFieldEndereco.setText("");
+		txtEndNum.setText("");
+		txtComplemento.setText("");
+		txtBairro.setText("");
+		txtCidade.setText("");
+		txtEstado.setText("");
+		txtPais.setText("");
+		txtRazaoSocial.setText("");
+		txtCep.setText("");
 	}
+	
+	
 }

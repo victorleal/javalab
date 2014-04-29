@@ -1,8 +1,5 @@
 package interfaces;
 
-import java.awt.CardLayout;
-import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,8 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -21,7 +16,7 @@ import auxiliar.SelectListener;
 import core.Endereco;
 import core.Loja;
 
-public class TelaCadastroCliente extends JPanel {
+public class TelaCadastroCliente extends GeneralPanel {
 	/**
 	 * 
 	 */
@@ -68,21 +63,14 @@ public class TelaCadastroCliente extends JPanel {
 	private JButton btnCadastrar;
 	private JButton btnLimpar;
 
-	// Controla o panel
-	private JPanel panel;
-
-	// Controla a loja
-	private Loja loja;
-
 	/**
 	 * Create the panel.
 	 */
 	public TelaCadastroCliente(Loja l) {
-		panel = this;
-		this.loja = l;
+		super(l);
 		
 		setBorder(new TitledBorder(null, "Cadastrar Cliente",
-				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 16)));
+				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][][][][][][][grow,bottom]"));
 
 		lblNome = new JLabel("Nome:");
@@ -207,7 +195,7 @@ public class TelaCadastroCliente extends JPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal();
+				showTelaPrincipal(false);
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 7 6 1,alignx right");
@@ -215,19 +203,7 @@ public class TelaCadastroCliente extends JPanel {
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				textFieldNome.setText("");
-				textFieldCpf.setText("");
-				textFieldEmail.setText("");
-				textFieldTelefone.setText("");
-				textFieldCelular.setText("");
-				textFieldEndereco.setText("");
-				textFieldBairro.setText("");
-				textFieldNumero.setText("");
-				textFieldBairro.setText("");
-				textFieldEstado.setText("");
-				textFieldPais.setText("");
-				textFieldComplemento.setText("");
-				textFieldCep.setText("");
+				limparCampos();
 			}
 		});
 		add(btnLimpar, "cell 0 7,alignx right");
@@ -267,18 +243,27 @@ public class TelaCadastroCliente extends JPanel {
 						isClienteFidelidade, programaFidelidade,
 						numeroFidelidade, endereco);
 
-				JOptionPane.showMessageDialog(panel,
-						"Cliente cadastrado com sucesso!", "Sucesso",
-						JOptionPane.INFORMATION_MESSAGE);
-				showTelaPrincipal();
+				showMensagemSucesso("Cliente cadastrado com sucesso!");
+				showTelaPrincipal(false);
 			}
 		});
 		add(btnCadastrar, "cell 0 7 6 1,alignx right");
 	}
 
-	public void showTelaPrincipal() {
-		Container parent = panel.getParent();
-		CardLayout cl = (CardLayout) parent.getLayout();
-		cl.show(parent, "Inicial");
+	@Override
+	public void limparCampos() {
+		textFieldNome.setText("");
+		textFieldCpf.setText("");
+		textFieldEmail.setText("");
+		textFieldTelefone.setText("");
+		textFieldCelular.setText("");
+		textFieldEndereco.setText("");
+		textFieldBairro.setText("");
+		textFieldNumero.setText("");
+		textFieldBairro.setText("");
+		textFieldEstado.setText("");
+		textFieldPais.setText("");
+		textFieldComplemento.setText("");
+		textFieldCep.setText("");
 	}
 }

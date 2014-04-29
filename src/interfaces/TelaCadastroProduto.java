@@ -1,22 +1,18 @@
 package interfaces;
 
-import java.awt.CardLayout;
-import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
 
-public class TelaCadastroProduto extends JPanel {
+public class TelaCadastroProduto extends GeneralPanel {
 	/**
 	 * 
 	 */
@@ -45,22 +41,14 @@ public class TelaCadastroProduto extends JPanel {
 	private JButton btnCadastrar;
 	private JButton btnLimpar;
 
-	// Controla o panel
-	private JPanel panel;
-
-	// Controla a loja
-	private Loja loja;
-
 	/**
 	 * Create the panel.
 	 */
 	public TelaCadastroProduto(Loja l) {
-		panel = this;
-		this.loja = l;
+		super(l);
 
 		setBorder(new TitledBorder(null, "Cadastrar Produto",
-				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
-						Font.PLAIN, 16)));
+				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][grow,bottom]"));
 
 		lblId = new JLabel("ID:");
@@ -118,32 +106,23 @@ public class TelaCadastroProduto extends JPanel {
 		textFieldDescricao = new JTextField();
 		add(textFieldDescricao, "cell 1 6,growx");
 		textFieldDescricao.setColumns(10);
-		
-		
-		
+
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Container parent = panel.getParent();
-				CardLayout cl = (CardLayout) parent.getLayout();
-				cl.show(parent, "Inicial");
+				showTelaPrincipal(false);
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 7 2 1,alignx right,aligny bottom");
-		
+
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				textFieldConteudo.setText("");
-				textFieldDescricao.setText("");
-				textFieldId.setText("");
-				textFieldPeso.setText("");
-				textFieldQtdeEstoque.setText("");
-				textFieldValorUnitario.setText("");		
+				limparCampos();
 			}
 		});
 		add(btnLimpar, "cell 0 7,alignx right,aligny bottom");
-				
+
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -155,18 +134,25 @@ public class TelaCadastroProduto extends JPanel {
 						.parseDouble(textFieldValorUnitario.getText());
 				int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
 						.getText());
+
 				loja.cadastrarProduto(categoria, conteudodaCaixa, descricao,
 						peso, valorUnitario, qtdeEstoque);
+
+				showMensagemSucesso("Produto cadastrado com sucesso!");
+				showTelaPrincipal(false);
 			}
 		});
 		add(btnCadastrar, "cell 0 7,alignx right,aligny bottom");
-		
-				
+	}
 
-				
-						
-						
-
+	@Override
+	public void limparCampos() {
+		textFieldConteudo.setText("");
+		textFieldDescricao.setText("");
+		textFieldId.setText("");
+		textFieldPeso.setText("");
+		textFieldQtdeEstoque.setText("");
+		textFieldValorUnitario.setText("");
 	}
 
 }
