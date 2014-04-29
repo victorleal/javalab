@@ -72,19 +72,20 @@ public class Loja {
 		}
 	}
 
-	public void alterarCliente(Cliente c) {
-		if (clientes.containsKey(c.getCpf())) {
-			c = clientes.get(c.getCpf());
-			c.setCelular("8282-2929");
-			c.setEmail("email@email.com");
-			c.setEndereco(new Endereco("Rua Nova", "Bairro Novo",
-					"Complemento Novo", "789", "12345-789", "Campinas", "SP",
-					"Brasil"));
-			c.setIsClienteFidelidade(true);
-			c.setNome("Jonas");
-			c.setNumeroFidelidade("7");
-			c.setProgramaFidelidade("Platinium");
-			c.setTelefone("7984-7856");
+	public void alterarCliente(String nome, String cpf, String email,
+			String telefone, String celular, boolean isClienteFidelidade,
+			String programaFidelidade, String numeroFidelidade,
+			Endereco endereco) {
+		if (clientes.containsKey(cpf)) {
+			Cliente c = clientes.get(cpf);
+			c.setCelular(celular);
+			c.setEmail(email);
+			c.setEndereco(endereco);
+			c.setIsClienteFidelidade(isClienteFidelidade);
+			c.setNome(nome);
+			c.setNumeroFidelidade(numeroFidelidade);
+			c.setProgramaFidelidade(programaFidelidade);
+			c.setTelefone(telefone);
 		}
 	}
 
@@ -178,6 +179,10 @@ public class Loja {
 			p = produtos.get(prod.getId());
 			p.setQtdeEstoque(estoque);
 		}
+	}
+
+	public Collection<Produto> getProdutos() {
+		return this.produtos.values();
 	}
 
 	public void setProdutoAlteracao(Produto p) {
@@ -307,13 +312,18 @@ public class Loja {
 		return idProduto;
 	}
 
+	public String[] getProgramaFidelidade() {
+		String[] programas = { "Gold", "Platinium", "Normal" };
+		return programas;
+	}
+
 	public void create() {
 		Endereco enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
 				"546", "78445-989", "Limeira", "São Paulo", "Brasil");
 		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
 				"78", "13000-000", "Campinas", "SP", "Brasil");
 		cadastrarCliente("Victor Leal", "51", "victor@email.com", "3232-3232",
-				"9999-9898", true, "Gold", "1234", enderecoCliente);
+				"9999-9898", true, "Normal", "1234", enderecoCliente);
 		cadastrarCliente("Paulo Paraluppi", "52", "paulo@email.com",
 				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
 		cadastrarCliente("Guilherme Nogueira", "3", "guilherme@email.com",

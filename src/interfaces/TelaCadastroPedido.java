@@ -264,7 +264,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal(true);
+				showTelaPrincipal();
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 9 6 1,alignx right");
@@ -299,7 +299,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 								null, t);
 
 						showMensagemSucesso("Pedido cadastrado com sucesso!");
-						showTelaPrincipal(true);
+						showTelaPrincipal();
 					} else {
 						showMensagemErro("Endereço não cadastrado!");
 					}

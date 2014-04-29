@@ -25,55 +25,30 @@ public class TelaConsultaCliente extends GeneralPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// TextField
-	private JTextField txtCpf;
-	private JTextField txtNome;
-
-	// Labels
-	private JLabel lblCpf;
-	private JLabel lblNome;
 	private JLabel lblClientesEncontrados;
 
 	// Buttons
 	private JButton btnExcluir;
 	private JButton btnAlterar;
 	private JButton btnCancelar;
-	private JButton btnBuscar;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaConsultaCliente(Loja l) {
 		super(l);
-		
+
 		setBorder(new TitledBorder(null, "Consultar Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 
-		setLayout(new MigLayout("", "[1.00][grow]", "[][][][][grow][bottom]"));
-
-		lblCpf = new JLabel("CPF:");
-		add(lblCpf, "cell 0 0,alignx trailing");
-
-		txtCpf = new JTextField();
-		add(txtCpf, "cell 1 0,growx");
-		txtCpf.setColumns(10);
-
-		lblNome = new JLabel("Nome:");
-		add(lblNome, "cell 0 1,alignx trailing");
-
-		txtNome = new JTextField();
-		add(txtNome, "cell 1 1,growx");
-		txtNome.setColumns(10);
-
-		btnBuscar = new JButton("Buscar");
-		add(btnBuscar, "cell 1 2,alignx right");
+		setLayout(new MigLayout("", "[1.00][grow]", "[][grow][bottom]"));
 
 		lblClientesEncontrados = new JLabel("Clientes Encontrados");
-		add(lblClientesEncontrados, "cell 0 3 2 1,alignx center");
+		add(lblClientesEncontrados, "cell 0 0 2 1,alignx center");
 
 		Cliente[] lista = {};
 		lista = (Cliente[]) l.getClientes().toArray(lista);
-		JList<Cliente> list = new JList<Cliente>(lista);
+		JList list = new JList(lista);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setCellRenderer(new Renderer());
@@ -81,34 +56,50 @@ public class TelaConsultaCliente extends GeneralPanel {
 			public void valueChanged(ListSelectionEvent event) {
 				if (!event.getValueIsAdjusting()) {
 					JList<?> source = (JList<?>) event.getSource();
-					Cliente clienteSelecionado = (Cliente) source.getSelectedValue();
-					
+					Cliente clienteSelecionado = (Cliente) source
+							.getSelectedValue();
+
 					loja.setClienteAlteracao(clienteSelecionado);
 				}
 			}
 		});
 		JScrollPane listScroller = new JScrollPane(list);
-		add(listScroller, "cell 0 4 2 1,grow");
+		add(listScroller, "cell 0 1 2 1,grow");
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal(true);
+				showTelaPrincipal();
 			}
 		});
-		add(btnCancelar, "flowx,cell 1 5,alignx right,aligny bottom");
+		add(btnCancelar, "flowx,cell 1 2,alignx right,aligny bottom");
 
 		btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addTela(new TelaAlterarCliente(loja), "AlterarCliente");
-				showTela("AlterarCliente");
+				if (loja.getClienteAlteracao() != null) {
+					addTela(new TelaAlterarCliente(loja), "AlterarCliente");
+					showTela("AlterarCliente");
+				} else {
+					showMensagemErro("Nenhum cliente selecionado");
+				}
 			}
 		});
-		add(btnAlterar, "cell 1 5");
+		add(btnAlterar, "cell 1 2");
 
 		btnExcluir = new JButton("Excluir");
-		add(btnExcluir, "cell 1 5,alignx right");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (loja.getClienteAlteracao() != null) {
+					loja.removerCliente(loja.getClienteAlteracao().getCpf());
+					showMensagemSucesso("Cliente removido com sucesso");
+					showTelaPrincipal();
+				} else {
+					showMensagemErro("Nenhum cliente selecionado");
+				}
+			}
+		});
+		add(btnExcluir, "cell 1 2,alignx right");
 
 	}
 
@@ -119,13 +110,14 @@ public class TelaConsultaCliente extends GeneralPanel {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public Component getListCellRendererComponent(JList<?> list, Object value,
-				int index, boolean isSelected, boolean cellHasFocus) {
+		public Component getListCellRendererComponent(JList<?> list,
+				Object value, int index, boolean isSelected,
+				boolean cellHasFocus) {
 			Cliente cliente = (Cliente) value;
 			Component c = super.getListCellRendererComponent(list, value,
 					index, isSelected, cellHasFocus);
 			if (isSelected) {
-				c.setBackground(Color.RED);
+				c.setBackground(new Color(255, 128, 128));
 			}
 			setText(cliente.getNome());
 			return c;
@@ -135,6 +127,6 @@ public class TelaConsultaCliente extends GeneralPanel {
 	@Override
 	public void limparCampos() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -26,6 +25,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 	private static final long serialVersionUID = 1L;
 	// textField
 	private JTextField textFieldNome;
+	private JTextField textFieldCPF;
 	private JTextField textFieldCelular;
 	private JTextField textFieldEndNum;
 	private JTextField textFieldEndereco;
@@ -61,7 +61,8 @@ public class TelaAlterarCliente extends GeneralPanel {
 
 	// ComboBox
 	private JComboBox<String> comboBoxFidelidade;
-	private JComboBox<Integer> comboBoxPrograma;
+	private JComboBox<String> comboBoxPrograma;
+	private JLabel lblCpf;
 
 	/**
 	 * Create the panel.
@@ -74,7 +75,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 
 		setLayout(new MigLayout("",
-				"[55.00,grow][114.00,grow][][pref!,grow][][91.00,grow]",
+				"[55.00][114.00,grow][][pref!,grow][][91.00,grow]",
 				"[][][][][][][grow,bottom]"));
 
 		lblNome = new JLabel("Nome:");
@@ -82,8 +83,17 @@ public class TelaAlterarCliente extends GeneralPanel {
 
 		textFieldNome = new JTextField();
 		textFieldNome.setText(c.getNome());
-		add(textFieldNome, "cell 1 0 5 1,growx");
+		add(textFieldNome, "cell 1 0 3 1,growx");
 		textFieldNome.setColumns(10);
+
+		lblCpf = new JLabel("CPF:");
+		add(lblCpf, "cell 4 0,alignx trailing");
+
+		textFieldCPF = new JTextField();
+		textFieldCPF.setText(c.getCpf());
+		textFieldCPF.setEditable(false);
+		add(textFieldCPF, "cell 5 0,growx");
+		textFieldCPF.setColumns(10);
 
 		lblCelular = new JLabel("Celular:");
 		add(lblCelular, "cell 0 1,alignx right");
@@ -175,11 +185,17 @@ public class TelaAlterarCliente extends GeneralPanel {
 
 		lblClienteFidelidade = new JLabel("Cliente Fidelidade?");
 		add(lblClienteFidelidade, "cell 0 5,alignx right");
-		
+
 		lblPrograma = new JLabel("Programa:");
 		add(lblPrograma, "cell 2 5,alignx right");
 
-		comboBoxPrograma = new JComboBox<Integer>();
+		comboBoxPrograma = new JComboBox<String>();
+		for (String p : loja.getProgramaFidelidade()) {
+			comboBoxPrograma.addItem(p);
+		}
+		if (c.getProgramaFidelidade() != null) {
+			comboBoxPrograma.setSelectedItem(c.getProgramaFidelidade());
+		}
 		comboBoxPrograma.setEnabled(false);
 		add(comboBoxPrograma, "cell 3 5,growx");
 
@@ -199,12 +215,17 @@ public class TelaAlterarCliente extends GeneralPanel {
 		components.add(textFieldNumeroFidelidade);
 		comboBoxFidelidade
 				.addItemListener(new SelectListener("Sim", components));
+		if (c.getIsClienteFidelidade() == true) {
+			comboBoxFidelidade.setSelectedItem("Sim");
+		} else {
+			comboBoxFidelidade.setSelectedItem("Não");
+		}
 		add(comboBoxFidelidade, "cell 1 5,growx");
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal(true);
+				showTela("ConsultarCliente");
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 6 6 1,alignx right");
@@ -212,8 +233,8 @@ public class TelaAlterarCliente extends GeneralPanel {
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				String nome = textFieldNome.getText();
+				String cpf = textFieldCPF.getText();
 				String email = textFieldEmail.getText();
 				String telefone = textFieldTelefone.getText();
 				String celular = textFieldCelular.getText();
@@ -223,8 +244,9 @@ public class TelaAlterarCliente extends GeneralPanel {
 				if (clienteFidelidade.equals("Sim")) {
 					isClienteFidelidade = true;
 				}
-				String programaFidelidade = (String) comboBoxFidelidade
+				String programaFidelidade = (String) comboBoxPrograma
 						.getSelectedItem();
+				System.out.println(programaFidelidade);
 				String numeroFidelidade = textFieldNumeroFidelidade.getText();
 
 				// Endereco
@@ -239,13 +261,11 @@ public class TelaAlterarCliente extends GeneralPanel {
 				Endereco endereco = new Endereco(rua, bairro, complemento,
 						numero, cep, cidade, estado, pais);
 
-				loja.cadastrarCliente(nome, null, email, telefone, celular,
+				loja.alterarCliente(nome, cpf, email, telefone, celular,
 						isClienteFidelidade, programaFidelidade,
 						numeroFidelidade, endereco);
-
-				JOptionPane.showMessageDialog(panel,
-						"Cliente alterado com sucesso!", "Sucesso",
-						JOptionPane.INFORMATION_MESSAGE);
+				
+				showMensagemSucesso("Cliente alterado com sucesso");
 				showTelaPrincipal(true);
 			}
 		});

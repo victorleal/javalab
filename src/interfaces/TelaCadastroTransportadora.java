@@ -155,7 +155,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal(false);
+				showTelaPrincipal();
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 6 6 1,alignx right");
@@ -192,7 +192,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 						prazoEntrega, taxaEntrega, endereco);
 				
 				showMensagemSucesso("Transportadora cadastrada com sucesso!");
-				showTelaPrincipal(false);
+				showTelaPrincipal();
 			}
 		});
 		add(btnCadastrar, "cell 0 6 6 1,alignx right");

@@ -14,7 +14,7 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
 
-public class TelaConsultaTransportadora extends JPanel {
+public class TelaConsultaTransportadora extends GeneralPanel {
 	//TextField
 	private JTextField txtCnpj;
 	private JTextField txtRazaoSocial;
@@ -36,9 +36,10 @@ public class TelaConsultaTransportadora extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TelaConsultaTransportadora(Loja loja) {
-		setBorder(new TitledBorder(null, "Consultar Transportadora", TitledBorder.LEADING, TitledBorder.TOP,new Font("Tahoma",
-				Font.PLAIN, 16)));
+	public TelaConsultaTransportadora(Loja l) {
+		super(l);
+		
+		setBorder(new TitledBorder(null, "Consultar Transportadora", TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 
 		setLayout(new MigLayout("", "[1.00][grow]", "[][][][][][grow][bottom]"));
 		
@@ -92,6 +93,13 @@ public class TelaConsultaTransportadora extends JPanel {
 		
 	
 
+	}
+
+
+	@Override
+	public void limparCampos() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

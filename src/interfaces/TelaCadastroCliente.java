@@ -195,7 +195,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal(false);
+				showTelaPrincipal();
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 7 6 1,alignx right");
@@ -244,7 +244,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 						numeroFidelidade, endereco);
 
 				showMensagemSucesso("Cliente cadastrado com sucesso!");
-				showTelaPrincipal(false);
+				showTelaPrincipal();
 			}
 		});
 		add(btnCadastrar, "cell 0 7 6 1,alignx right");

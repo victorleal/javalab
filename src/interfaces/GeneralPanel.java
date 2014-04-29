@@ -20,10 +20,10 @@ public abstract class GeneralPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	// Controla o parent
-	private Container parent;
+	protected Container parent;
 
 	// Controla o CardLayout
-	private CardLayout cl;
+	protected CardLayout cl;
 
 	// Controla o panel
 	protected JPanel panel;
@@ -54,7 +54,7 @@ public abstract class GeneralPanel extends JPanel {
 		cl.show(parent, tela);
 	}
 
-	public void showTelaPrincipal(boolean removerPanel) {
+	public void showTelaPrincipal() {
 		parent = panel.getParent();
 		cl = (CardLayout) parent.getLayout();
 		cl.show(parent, "Inicial");
@@ -63,9 +63,7 @@ public abstract class GeneralPanel extends JPanel {
 		 * Removemos os paineis que sofrem influencia de cadastro/alteracao em
 		 * outros paineis.
 		 */
-		if (removerPanel) {
-			cl.removeLayoutComponent(panel);
-		}
+		cl.removeLayoutComponent(panel);
 	}
 
 	public void showMensagemSucesso(String mensagem) {
@@ -82,7 +80,7 @@ public abstract class GeneralPanel extends JPanel {
 
 		@Override
 		public void ancestorAdded(AncestorEvent arg0) {
-			//limparCampos();
+			// limparCampos();
 		}
 
 		@Override
