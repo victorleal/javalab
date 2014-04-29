@@ -116,7 +116,6 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane.add(new TelaCadastroPedido(loja), "CadastrarPedido");
 				CardLayout cl = (CardLayout) (contentPane.getLayout());
 				cl.show(contentPane, "CadastrarCliente");
 				frame.validate();

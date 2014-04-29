@@ -5,6 +5,7 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JTextField;
 
 public class SelectListener implements ItemListener {
 	private String expectedAnswer;
@@ -23,11 +24,14 @@ public class SelectListener implements ItemListener {
 			}
 		}
 	}
-	
+
 	public void disableComponents() {
 		if (components != null) {
 			for (JComponent component : components) {
 				component.setEnabled(false);
+				if (component instanceof JTextField) {
+					((JTextField) component).setText("");
+				}
 			}
 		}
 	}

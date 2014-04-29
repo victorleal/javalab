@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/interfaces/TelaAlterarCliente.java=UTF-8
 encoding//src/interfaces/TelaCadastroCliente.java=UTF-8
 encoding//src/interfaces/TelaCadastroPedido.java=UTF-8
 encoding//src/interfaces/TelaCadastroProduto.java=UTF-8
+encoding//src/interfaces/TelaControle.java=UTF-8

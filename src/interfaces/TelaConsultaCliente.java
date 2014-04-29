@@ -2,7 +2,6 @@ package interfaces;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -48,8 +47,7 @@ public class TelaConsultaCliente extends GeneralPanel {
 		super(l);
 		
 		setBorder(new TitledBorder(null, "Consultar Cliente",
-				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
-						Font.PLAIN, 16)));
+				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 
 		setLayout(new MigLayout("", "[1.00][grow]", "[][][][][grow][bottom]"));
 
@@ -95,7 +93,7 @@ public class TelaConsultaCliente extends GeneralPanel {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal(false);
+				showTelaPrincipal(true);
 			}
 		});
 		add(btnCancelar, "flowx,cell 1 5,alignx right,aligny bottom");

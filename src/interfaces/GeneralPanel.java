@@ -42,10 +42,6 @@ public abstract class GeneralPanel extends JPanel {
 	}
 
 	public abstract void limparCampos();
-	
-	public void inicializar(){
-		
-	}
 
 	public void addTela(JComponent tela, String nome) {
 		parent = panel.getParent();
@@ -87,7 +83,6 @@ public abstract class GeneralPanel extends JPanel {
 		@Override
 		public void ancestorAdded(AncestorEvent arg0) {
 			limparCampos();
-			inicializar();
 		}
 
 		@Override
