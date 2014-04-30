@@ -138,6 +138,10 @@ public class Loja {
 			pedidos.remove(numero);
 		}
 	}
+	
+	public Collection<Pedido> getPedidos() {
+		return this.pedidos.values();
+	}
 
 	/********** PRODUTOS **********/
 	public void cadastrarProduto(String categoria, String conteudodaCaixa,
@@ -269,7 +273,8 @@ public class Loja {
 		double valorDevido = 0;
 		for (Pedido pedido : pedidos.values()) {
 			Transportadora t = pedido.getTransportadora();
-			if (t.getCnpj() == cnpj) {
+
+			if (t.getCnpj().equals(cnpj)) {
 				valorDevido += t.getTaxaEntrega();
 			}
 		}
@@ -278,10 +283,8 @@ public class Loja {
 
 	public double getValorDevidoTotal() {
 		double valorDevido = 0;
-		for (Transportadora t : transportadoras.values()) {
-			if (!t.getPedidosTransportadora().isEmpty()) {
-				valorDevido += t.getTaxaEntrega();
-			}
+		for(Pedido p: pedidos.values()){
+			valorDevido += p.getTransportadora().getTaxaEntrega();
 		}
 		return valorDevido;
 	}
@@ -322,9 +325,9 @@ public class Loja {
 				"546", "78445-989", "Limeira", "São Paulo", "Brasil");
 		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
 				"78", "13000-000", "Campinas", "SP", "Brasil");
-		cadastrarCliente("Victor Leal", "51", "victor@email.com", "3232-3232",
+		cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
 				"9999-9898", true, "Normal", "1234", enderecoCliente);
-		cadastrarCliente("Paulo Paraluppi", "52", "paulo@email.com",
+		cadastrarCliente("Paulo Paraluppi", "2", "paulo@email.com",
 				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
 		cadastrarCliente("Guilherme Nogueira", "3", "guilherme@email.com",
 				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
@@ -343,11 +346,8 @@ public class Loja {
 				420, 300.00, 10);
 		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexão",
 				"HD SATA III Western Digital 1TB", 320, 210.00, 10);
-
-		for (int i = 0; i < 30; i++) {
-			cadastrarCliente("Guilherme Nogueira", new Integer(i).toString(),
-					"guilherme@email.com", "3232-3232", "9999-9898", true,
-					"Gold", "1234", enderecoCliente);
-		}
+		HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
+		map.put(produtos.get(1), 2);
+		cadastrarPedido(1250, "A vista", Calendar.getInstance(), Calendar.getInstance(), enderecoCliente, clientes.get("2"), map, transportadoras.get("1"));
 	}
 }

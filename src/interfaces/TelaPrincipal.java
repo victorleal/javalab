@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -178,6 +179,17 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		mnPedido.add(mntmConsultar_1);
+		
+		JMenuItem mntmApagarPedidosAntigos = new JMenuItem("Apagar Pedidos Entregues");
+		mntmApagarPedidosAntigos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loja.limparPedidos();
+				JOptionPane.showMessageDialog(frame, "Pedidos entregues foram limpos com sucesso!", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+		});
+		mnPedido.add(mntmApagarPedidosAntigos);
 
 		JMenu mnTransportadora = new JMenu("Transportadora");
 		menuBar.add(mnTransportadora);

@@ -1,105 +1,128 @@
 package interfaces;
 
-import java.awt.Font;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
+import core.Produto;
+import core.Transportadora;
 
 public class TelaConsultaTransportadora extends GeneralPanel {
-	//TextField
-	private JTextField txtCnpj;
-	private JTextField txtRazaoSocial;
-	private JTextField txtNomeFantasia;
-	
-	//Label
-	private JLabel lblCnpj;
-	private JLabel lblRazoSocial;
-	private JLabel lblNomeFantasia;
+	private static final long serialVersionUID = 1L;
 	private JLabel lblTransportadorasEncontradas;
-	
-	//Button
-	private JButton btnBuscar;
 	private JButton btnCancelar;
 	private JButton btnExcluir;
 	private JButton btnAlterar;
-	
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaConsultaTransportadora(Loja l) {
 		super(l);
-		
-		setBorder(new TitledBorder(null, "Consultar Transportadora", TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 
-		setLayout(new MigLayout("", "[1.00][grow]", "[][][][][][grow][bottom]"));
-		
-		lblCnpj = new JLabel("CNPJ:");
-		add(lblCnpj, "cell 0 0,alignx trailing");
-		
-		txtCnpj = new JTextField();
-		add(txtCnpj, "cell 1 0,growx");
-		txtCnpj.setColumns(10);
-		
-		lblRazoSocial = new JLabel("Razão Social:");
-		add(lblRazoSocial, "cell 0 1,alignx trailing");
-		
-		txtRazaoSocial = new JTextField();
-		add(txtRazaoSocial, "cell 1 1,growx");
-		txtRazaoSocial.setColumns(10);
-		
-		lblNomeFantasia = new JLabel("Nome Fantasia");
-		add(lblNomeFantasia, "cell 0 2,alignx trailing");
-		
-		txtNomeFantasia = new JTextField();
-		add(txtNomeFantasia, "cell 1 2,growx");
-		txtNomeFantasia.setColumns(10);
-		
-		btnBuscar = new JButton("Buscar");
-		add(btnBuscar, "cell 1 3,alignx right");
-		
-		lblTransportadorasEncontradas = new JLabel("Transportadoras Encontradas");
-		add(lblTransportadorasEncontradas, "cell 0 4 2 1,alignx center");
-		
-		JList list = new JList();
-		add(list, "cell 0 5 2 1,grow");
-		
+		setBorder(new TitledBorder(null, "Consultar Transportadora",
+				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
+
+		setLayout(new MigLayout("", "[1.00][grow]", "[][grow][bottom]"));
+
+		lblTransportadorasEncontradas = new JLabel(
+				"Transportadoras Encontradas");
+		add(lblTransportadorasEncontradas, "cell 0 0 2 1,alignx center");
+
+		Transportadora[] lista = {};
+		lista = (Transportadora[]) loja.getTransportadoras().toArray(lista);
+		JList list = new JList(lista);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setLayoutOrientation(JList.VERTICAL);
+		list.setCellRenderer(new Renderer());
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent event) {
+				if (!event.getValueIsAdjusting()) {
+					JList<?> source = (JList<?>) event.getSource();
+					Transportadora transportadoraSelecionada = (Transportadora) source
+							.getSelectedValue();
+
+					loja.setTransportadoraAlteracao(transportadoraSelecionada);
+				}
+			}
+		});
+		JScrollPane listScroller = new JScrollPane(list);
+		add(listScroller, "cell 0 1 2 1,grow");
+
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				showTelaPrincipal();
 			}
 		});
-		add(btnCancelar, "flowx,cell 1 6,alignx right,aligny bottom");
-		
+		add(btnCancelar, "flowx,cell 1 2,alignx right,aligny bottom");
+
 		btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//contentPane.add(new TelaAlterarTransportadora(loja),"AlterarTransportadora");
+				if (loja.getTransportadoraAlteracao() != null) {
+					addTela(new TelaAlterarTransportadora(loja), "AlterarTransportadora");
+					showTela("AlterarTransportadora");
+				} else {
+					showMensagemErro("Nenhuma transportadora selecionada");
+				}
 			}
 		});
-		add(btnAlterar, "cell 1 6");
-		
-		btnExcluir = new JButton("Excluir");
-		add(btnExcluir, "cell 1 6,alignx right");	
-		
-	
+		add(btnAlterar, "cell 1 2");
 
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (loja.getTransportadoraAlteracao() != null) {
+					loja.removerTransportadora(loja.getTransportadoraAlteracao().getCnpj());
+					showMensagemSucesso("Transportadora removida com sucesso");
+					showTelaPrincipal();
+				} else {
+					showMensagemErro("Nenhuma transportadora selecionada");
+				}
+			}
+		});
+		add(btnExcluir, "cell 1 2,alignx right");
 	}
 
+	class Renderer extends DefaultListCellRenderer {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public Component getListCellRendererComponent(JList<?> list,
+				Object value, int index, boolean isSelected,
+				boolean cellHasFocus) {
+			Transportadora t = (Transportadora) value;
+			Component c = super.getListCellRendererComponent(list, value,
+					index, isSelected, cellHasFocus);
+			if (isSelected) {
+				c.setBackground(new Color(255, 128, 128));
+			}
+			setText(t.getNomeFantasia());
+			return c;
+		}
+	}
 
 	@Override
 	public void limparCampos() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

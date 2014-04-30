@@ -60,6 +60,19 @@ public class GerenciadorPedidos {
 		}
 		return true;
 	}
+	
+	/***** Retorna Pedidos ****/
+	public List<Pedido> getPedidosCliente(Cliente c) {
+		return clienteXPedido.get(c);
+	}
+	
+	public List<Pedido> getPedidosTransportadora(Transportadora t) {
+		return transportadoraXPedido.get(t);
+	}
+	
+	public List<Pedido> getPedidosProduto(Produto p) {
+		return produtoXPedido.get(p);
+	}
 
 	/***** Adições ****/
 
@@ -118,9 +131,10 @@ public class GerenciadorPedidos {
 	protected void removeClienteXPedido(Cliente c, Pedido p) {
 		if (clienteXPedido.containsKey(c)) {
 			temp = clienteXPedido.get(c);
-			for (Pedido ped : temp) {
-				if (ped.equals(p)) {
-					temp.remove(ped);
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(p)) {
+					temp.remove(temp.get(i));
+					--i;
 				}
 			}
 			clienteXPedido.put(c, temp);
@@ -130,9 +144,10 @@ public class GerenciadorPedidos {
 	protected void removeTransportadoraXPedido(Transportadora t, Pedido p) {
 		if (transportadoraXPedido.containsKey(t)) {
 			temp = transportadoraXPedido.get(t);
-			for (Pedido ped : temp) {
-				if (ped.equals(p)) {
-					temp.remove(ped);
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(p)) {
+					temp.remove(temp.get(i));
+					--i;
 				}
 			}
 			transportadoraXPedido.put(t, temp);
@@ -142,9 +157,10 @@ public class GerenciadorPedidos {
 	protected void removeProdutoXPedido(Produto prod, Pedido p) {
 		if (produtoXPedido.containsKey(prod)) {
 			temp = produtoXPedido.get(prod);
-			for (Pedido ped : temp) {
-				if (ped.equals(p)) {
-					temp.remove(ped);
+			for (int i = 0; i < temp.size(); i++) {
+				if (temp.get(i).equals(p)) {
+					temp.remove(temp.get(i));
+					--i;
 				}
 			}
 			produtoXPedido.put(prod, temp);

@@ -1,101 +1,135 @@
 package interfaces;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
-import core.Endereco;
 import core.Loja;
-import core.Produto;
 import core.Transportadora;
 
 public class TelaAlterarTransportadora extends GeneralPanel {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//textFields
+	// textFields
 	private JTextField txtPrazoEntrega;
 	private JTextField txtValorFrete;
+	private JTextField txtNome;
+	private JTextField txtCnpj;
+	private JTextField txtRazaoSocial;
 
-	//Labels 
+	// Labels
 	private JLabel lblPrazoMximoDe;
 	private JLabel lblValorDoFrete;
-	
-	//Buttons
+	private JLabel lblCnpj;
+	private JLabel lblNome;
+	private JLabel lblRazoSocial;
+
+
+	// Buttons
 	private JButton btnCancelar;
 	private JButton btnSalvar;
+
+	// Controla a Transportadora
+	Transportadora t;
+
 	
-	
+
+
 	/**
 	 * Create the panel.
 	 */
 	public TelaAlterarTransportadora(Loja l) {
 		super(l);
-		Transportadora t = loja.getTransportadoraAlteracao();
+		t = loja.getTransportadoraAlteracao();
+
+		setBorder(new TitledBorder(null, "Alterar Transportadora",
+				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
+		setLayout(new MigLayout("", "[][grow]", "[][][][][][grow,bottom]"));
 		
-		setBorder(new TitledBorder(null, "Alterar Transportadora", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
-				Font.PLAIN, 16)));
-		setLayout(new MigLayout("", "[][grow]", "[][][grow,bottom]"));
+		lblNome = new JLabel("Nome Fantasia:");
+		add(lblNome, "cell 0 0,alignx trailing");
 		
+		txtNome = new JTextField();
+		txtNome.setEnabled(false);
+		txtNome.setEditable(false);
+		add(txtNome, "cell 1 0,growx");
+		txtNome.setText(t.getNomeFantasia());
+		txtNome.setColumns(10);
+		
+		lblRazoSocial = new JLabel("Razão Social:");
+		add(lblRazoSocial, "cell 0 1,alignx trailing");
+		
+		txtRazaoSocial = new JTextField();
+		txtRazaoSocial.setEnabled(false);
+		txtRazaoSocial.setEditable(false);
+		txtRazaoSocial.setText(t.getRazaoSocial());
+		add(txtRazaoSocial, "cell 1 1,growx");
+		txtRazaoSocial.setColumns(10);
+		
+		lblCnpj = new JLabel("CNPJ:");
+		add(lblCnpj, "cell 0 2,alignx trailing");
+		
+		txtCnpj = new JTextField();
+		txtCnpj.setEditable(false);
+		txtCnpj.setEnabled(false);
+		txtCnpj.setText(t.getCnpj());
+		add(txtCnpj, "cell 1 2,growx");
+		txtCnpj.setColumns(10);
+
 		lblPrazoMximoDe = new JLabel("Prazo Máximo de Entrega:");
-		add(lblPrazoMximoDe, "cell 0 0,alignx trailing");
-		
+		add(lblPrazoMximoDe, "cell 0 3,alignx trailing");
+
 		txtPrazoEntrega = new JTextField();
-		txtPrazoEntrega.setText(String.valueOf(new Double(t.getPrazoEntrega())));
-		add(txtPrazoEntrega, "cell 1 0,growx");
+		txtPrazoEntrega
+				.setText(String.valueOf(new Integer(t.getPrazoEntrega())));
+		add(txtPrazoEntrega, "cell 1 3,growx");
 		txtPrazoEntrega.setColumns(10);
-		
+
 		lblValorDoFrete = new JLabel("Valor do Frete:");
-		add(lblValorDoFrete, "cell 0 1,alignx trailing");
-		
+		add(lblValorDoFrete, "cell 0 4,alignx trailing");
+
 		txtValorFrete = new JTextField();
 		txtValorFrete.setText(String.valueOf(new Double(t.getTaxaEntrega())));
-		add(txtValorFrete, "cell 1 1,growx");
+		add(txtValorFrete, "cell 1 4,growx");
 		txtValorFrete.setColumns(10);
-		
+
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal(true);
+				showTela("ConsultarTransportadora");
 			}
 		});
-		add(btnCancelar, "flowx,cell 0 2 2 1,alignx right,aligny bottom");
-		
+		add(btnCancelar, "flowx,cell 0 5 2 1,alignx right,aligny bottom");
+
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int prazoEntrega = Integer.parseInt(txtPrazoEntrega.getText());
-				double taxaEntrega = Double.parseDouble(txtValorFrete
-						.getText());
-				
-				loja.cadastrarTransportadora(null, null, null,
-						prazoEntrega, taxaEntrega, null);
-				
-				JOptionPane.showMessageDialog(panel,
-						"Transportadora alterada com sucesso!", "Sucesso",
-						JOptionPane.INFORMATION_MESSAGE);
-				showTelaPrincipal(true);
+				double taxaEntrega = Double.parseDouble(txtValorFrete.getText());
+
+				loja.alterarTransportadora(t, taxaEntrega);
+				loja.alterarTransportadora(t, prazoEntrega);
+
+				showMensagemSucesso("Transportadora alterada com sucesso!");
+				showTelaPrincipal();
 			}
 		});
-		add(btnSalvar, "cell 0 2,alignx right,aligny bottom");
+		add(btnSalvar, "cell 0 5 2 1,alignx right,aligny bottom");
 
 	}
-
 
 	@Override
 	public void limparCampos() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

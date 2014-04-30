@@ -266,7 +266,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 						numeroFidelidade, endereco);
 				
 				showMensagemSucesso("Cliente alterado com sucesso");
-				showTelaPrincipal(true);
+				showTelaPrincipal();
 			}
 		});
 		add(btnSalvar, "cell 0 6 6 1,alignx right");

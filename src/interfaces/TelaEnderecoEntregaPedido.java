@@ -20,8 +20,8 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	//TextField
+
+	// TextField
 	private JTextField textFieldRua;
 	private JTextField textFieldNumero;
 	private JTextField textFieldBairro;
@@ -31,7 +31,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	private JTextField textFieldComplemento;
 	private JTextField textFieldCep;
 
-	//Labels
+	// Labels
 	private JLabel lblRua;
 	private JLabel lblNumero;
 	private JLabel lblBairro;
@@ -40,10 +40,10 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	private JLabel lblPas;
 	private JLabel lblComplemento;
 	private JLabel lblCep;
-	
-	//Button
+
+	// Button
 	private JButton btnOk;
-	
+
 	// Controla o panel
 	private JPanel panel;
 
@@ -51,11 +51,13 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaEnderecoEntregaPedido() {
-		setBorder(new TitledBorder(null, "Endere\u00E7o de Entrega", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
-				Font.PLAIN, 16)));
+		setBorder(new TitledBorder(null, "Endere\u00E7o de Entrega",
+				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
+						Font.PLAIN, 16)));
 		panel = this;
-		
-		setLayout(new MigLayout("", "[45.00][222.00,grow][63.00][grow]", "[][][][][][grow,bottom]"));
+
+		setLayout(new MigLayout("", "[45.00][222.00,grow][63.00][grow]",
+				"[][][][][][grow,bottom]"));
 
 		lblRua = new JLabel("Rua:");
 		add(lblRua, "cell 0 0,alignx trailing");
@@ -112,7 +114,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		textFieldCep = new JTextField();
 		add(textFieldCep, "cell 3 4,growx");
 		textFieldCep.setColumns(10);
-		
+
 		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,8 +136,14 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		String estado = textFieldEstado.getText();
 		String pais = textFieldPais.getText();
 		String cep = textFieldCep.getText();
-		Endereco e = new Endereco(rua, bairro, complemento, numero, cep,
-				cidade, estado, pais);
+
+		Endereco e;
+		if (rua != null && !rua.isEmpty()) {
+			e = new Endereco(rua, bairro, complemento, numero, cep, cidade,
+					estado, pais);
+		} else {
+			e = null;
+		}
 		return e;
 	}
 

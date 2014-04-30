@@ -9,6 +9,8 @@ import java.awt.event.ComponentEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -62,6 +64,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 
 	// Buttons
 	private JButton buttonAdicionarProduto;
+	private JButton btnRemoverProduto;
 	private JButton btnCancelar;
 	private JButton btnCadastrar;
 	private JButton btnLimpar;
@@ -78,12 +81,19 @@ public class TelaCadastroPedido extends GeneralPanel {
 	// Controla TelaEnderecoEntrega
 	private TelaEnderecoEntregaPedido te;
 
+	// Controla lista de produtos
+	Map<Produto, Integer> produtos;
+
+	// Controla produto recem adicionado
+	int produtosAdicionados = 0;
+
 	/**
 	 * Create the panel.
 	 */
 	public TelaCadastroPedido(Loja l) {
 		super(l);
 		te = new TelaEnderecoEntregaPedido();
+		produtos = new HashMap<Produto, Integer>();
 
 		setBorder(new TitledBorder(null, "Cadastrar Pedido",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
@@ -119,7 +129,6 @@ public class TelaCadastroPedido extends GeneralPanel {
 					panelTransportadora.setVisible(true);
 					comboBoxFormaPagamento.setEnabled(true);
 					textFieldDataCompra.setEnabled(true);
-					btnCadastrar.setVisible(true);
 				} else {
 					showMensagemErro("Cliente não encontrado");
 				}
@@ -160,20 +169,29 @@ public class TelaCadastroPedido extends GeneralPanel {
 		buttonAdicionarProduto = new JButton("+");
 		buttonAdicionarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Produto p = loja.consultarProduto(Integer
-						.parseInt(textFieldCodigoProduto.getText()));
-				TableModel model = (TableModel) table.getModel();
-				model.addRow(new Object[] { p, textFieldQtdeProduto.getText() });
-				Double valorTotal = Double.parseDouble(textFieldValorTotal
-						.getText());
-				double qtde = Double.parseDouble(textFieldQtdeProduto.getText());
-				valorTotal += (p.getValorUnitario() * qtde);
-				textFieldValorTotal.setText(valorTotal.toString());
-				textFieldCodigoProduto.setText("");
-				textFieldQtdeProduto.setText("");
+				if (!textFieldCodigoProduto.getText().isEmpty()) {
+					Produto p = loja.consultarProduto(Integer
+							.parseInt(textFieldCodigoProduto.getText()));
+
+					produtosAdicionados++;
+					TableModel model = (TableModel) table.getModel();
+					model.addRow(new Object[] { p,
+							textFieldQtdeProduto.getText() });
+					Double valorTotal = Double.parseDouble(textFieldValorTotal
+							.getText());
+					int qtde = Integer.parseInt(textFieldQtdeProduto.getText());
+					valorTotal += (p.getValorUnitario() * qtde);
+					produtos.put(p, qtde);
+					textFieldValorTotal.setText(valorTotal.toString());
+					textFieldCodigoProduto.setText("");
+					textFieldQtdeProduto.setText("");
+					btnRemoverProduto.setEnabled(true);
+				} else {
+					showMensagemErro("Produto não encontrado");
+				}
 			}
 		});
-		panelProdutos.add(buttonAdicionarProduto, "cell 4 0,growx");
+		panelProdutos.add(buttonAdicionarProduto, "flowx,cell 4 0,alignx left");
 
 		String[] cabecalho = { "Produto", "Quantidade" };
 		int linhas = 0;
@@ -194,6 +212,19 @@ public class TelaCadastroPedido extends GeneralPanel {
 		textFieldValorTotal.setEditable(false);
 		panelProdutos.add(textFieldValorTotal, "cell 4 4,growx");
 		textFieldValorTotal.setColumns(10);
+
+		btnRemoverProduto = new JButton("-");
+		btnRemoverProduto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TableModel model = (TableModel) table.getModel();
+				model.removeRow(produtosAdicionados - 1);
+				if (model.getRowCount() == 0) {
+					btnRemoverProduto.setEnabled(false);
+				}
+			}
+		});
+		btnRemoverProduto.setEnabled(false);
+		panelProdutos.add(btnRemoverProduto, "cell 4 0");
 
 		panelTransportadora = new JPanel();
 		panelTransportadora.setBorder(new TitledBorder(null, "Transportadora",
@@ -277,29 +308,33 @@ public class TelaCadastroPedido extends GeneralPanel {
 					Transportadora t = (Transportadora) comboBoxTransportadora
 							.getSelectedItem();
 					Endereco endereco = te.getEnderecoEntrega();
-					if (endereco == null) {
-						double valorTotal = Double
-								.parseDouble(textFieldValorTotal.getText());
-						String formaPagamento = (String) comboBoxFormaPagamento
-								.getSelectedItem();
-						String dataCompra = textFieldDataCompra.getText();
-						String dataEntrega = textFieldDataEntrega.getText();
-						Calendar calDataCompra = Calendar.getInstance();
-						Calendar calDataEntrega = Calendar.getInstance();
-						try {
-							SimpleDateFormat sdf = new SimpleDateFormat(
-									"dd/MM/yyyy");
-							calDataCompra.setTime(sdf.parse(dataCompra));
-							calDataEntrega.setTime(sdf.parse(dataEntrega));
-						} catch (ParseException ex) {
-							ex.printStackTrace();
-						}
-						loja.cadastrarPedido(valorTotal, formaPagamento,
-								calDataCompra, calDataEntrega, endereco, c,
-								null, t);
+					if (endereco != null) {
+						if (!produtos.isEmpty()) {
+							double valorTotal = Double
+									.parseDouble(textFieldValorTotal.getText());
+							String formaPagamento = (String) comboBoxFormaPagamento
+									.getSelectedItem();
+							String dataCompra = textFieldDataCompra.getText();
+							String dataEntrega = textFieldDataEntrega.getText();
+							Calendar calDataCompra = Calendar.getInstance();
+							Calendar calDataEntrega = Calendar.getInstance();
+							try {
+								SimpleDateFormat sdf = new SimpleDateFormat(
+										"dd/MM/yyyy");
+								calDataCompra.setTime(sdf.parse(dataCompra));
+								calDataEntrega.setTime(sdf.parse(dataEntrega));
+							} catch (ParseException ex) {
+								ex.printStackTrace();
+							}
+							loja.cadastrarPedido(valorTotal, formaPagamento,
+									calDataCompra, calDataEntrega, endereco, c,
+									produtos, t);
 
-						showMensagemSucesso("Pedido cadastrado com sucesso!");
-						showTelaPrincipal();
+							showMensagemSucesso("Pedido cadastrado com sucesso!");
+							showTelaPrincipal();
+						} else {
+							showMensagemErro("Pedido sem produtos!");
+						}
 					} else {
 						showMensagemErro("Endereço não cadastrado!");
 					}
@@ -319,6 +354,18 @@ public class TelaCadastroPedido extends GeneralPanel {
 		textFieldDataEntrega.setText("");
 		textFieldNumero.setText("");
 		textFieldQtdeProduto.setText("");
-		textFieldValorTotal.setText("");
+		textFieldValorTotal.setText("0");
+
+		// Limpa tabela de produtos
+		TableModel model = (TableModel) table.getModel();
+		int rows = model.getRowCount();
+		for (int i = rows - 1; i >= 0; i--) {
+			model.removeRow(i);
+		}
+
+		panelProdutos.setVisible(false);
+		panelTransportadora.setVisible(false);
+		comboBoxFormaPagamento.setEnabled(false);
+		textFieldDataCompra.setEnabled(false);
 	}
 }

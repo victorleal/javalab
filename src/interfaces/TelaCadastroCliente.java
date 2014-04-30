@@ -56,7 +56,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 
 	// ComboBox
 	private JComboBox<String> comboBoxFidelidade;
-	private JComboBox<Integer> comboBoxPrograma;
+	private JComboBox<String> comboBoxPrograma;
 
 	// Buttons
 	private JButton btnCancelar;
@@ -170,7 +170,10 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblPrograma = new JLabel("Programa:");
 		add(lblPrograma, "cell 2 6,alignx right");
 
-		comboBoxPrograma = new JComboBox<Integer>();
+		comboBoxPrograma = new JComboBox<String>();
+		comboBoxPrograma.addItem("Gold");
+		comboBoxPrograma.addItem("Platinium");
+		comboBoxPrograma.addItem("Normal");
 		comboBoxPrograma.setEnabled(false);
 		add(comboBoxPrograma, "cell 3 6,growx");
 
