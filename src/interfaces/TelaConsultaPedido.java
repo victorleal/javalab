@@ -30,7 +30,7 @@ public class TelaConsultaPedido extends GeneralPanel {
 	private Pedido pedidoSelecionado;
 
 	/**
-	 * Create the panel.
+	 * Create the panel Pedido.
 	 */
 	public TelaConsultaPedido(Loja l) {
 		super(l);
