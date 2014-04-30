@@ -20,7 +20,7 @@ import core.Loja;
 public class TelaPrincipal extends JFrame {
 
 	/**
-	 * 
+	 * Paulo
 	 */
 
 	private static final long serialVersionUID = 1L;
