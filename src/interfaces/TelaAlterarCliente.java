@@ -16,6 +16,7 @@ import auxiliar.SelectListener;
 import core.Cliente;
 import core.Endereco;
 import core.Loja;
+import exceptions.ParametroException;
 
 public class TelaAlterarCliente extends GeneralPanel {
 
@@ -261,12 +262,16 @@ public class TelaAlterarCliente extends GeneralPanel {
 				Endereco endereco = new Endereco(rua, bairro, complemento,
 						numero, cep, cidade, estado, pais);
 
-				loja.alterarCliente(nome, cpf, email, telefone, celular,
-						isClienteFidelidade, programaFidelidade,
-						numeroFidelidade, endereco);
-				
-				showMensagemSucesso("Cliente alterado com sucesso");
-				showTelaPrincipal();
+				try {
+					loja.alterarCliente(nome, cpf, email, telefone, celular,
+							isClienteFidelidade, programaFidelidade,
+							numeroFidelidade, endereco);
+					
+					showMensagemSucesso("Cliente alterado com sucesso");
+					showTelaPrincipal();
+				} catch (ParametroException exception) {
+					showMensagemErro(exception.getMessage());
+				}
 			}
 		});
 		add(btnSalvar, "cell 0 6 6 1,alignx right");

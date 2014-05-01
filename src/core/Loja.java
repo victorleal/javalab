@@ -31,7 +31,7 @@ public class Loja {
 		COMPUTADORES, TELEFONIA, VIDEOSOM, TABLETS, GAMES
 	};
 
-	public Loja() throws ParametroException {
+	public Loja() {
 		clientes = new HashMap<String, Cliente>();
 		pedidos = new HashMap<Integer, Pedido>();
 		transportadoras = new HashMap<String, Transportadora>();
@@ -328,17 +328,22 @@ public class Loja {
 		return programas;
 	}
 
-	public void create() throws ParametroException {
+	public void create(){
 		Endereco enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
 				"546", "78445-989", "Limeira", "São Paulo", "Brasil");
 		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
 				"78", "13000-000", "Campinas", "SP", "Brasil");
-		cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
-				"9999-9898", true, "Normal", "1234", enderecoCliente);
-		cadastrarCliente("Paulo Paraluppi", "2", "paulo@email.com",
-				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
-		cadastrarCliente("Guilherme Nogueira", "3", "guilherme@email.com",
-				"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
+		try{
+			cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
+					"9999-9898", true, "Normal", "1234", enderecoCliente);
+			cadastrarCliente("Paulo Paraluppi", "2", "paulo@email.com",
+					"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
+			cadastrarCliente("Guilherme Nogueira", "3", "guilherme@email.com",
+					"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
+		}catch(ParametroException e){
+			System.out.println(e.getMessage());
+		}
+		
 		cadastrarTransportadora("1", "Transportadora Java", "JSE Transportes",
 				90, 125.00, enderecoTransportadora);
 		cadastrarTransportadora("2", "Transportadora Oracle",
