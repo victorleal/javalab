@@ -22,7 +22,6 @@ public class TelaAlterarProduto extends GeneralPanel {
 	private JLabel lblPeso;
 	private JLabel lblValorUnitrio;
 	private JLabel lblQuantidadeNoEstoque;
-	private JLabel lblCategoria;
 	private JLabel lblConteudo;
 	private JLabel lblDescricao;
 
