@@ -3,6 +3,8 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.ParametroException;
+
 public class Cliente extends Pessoa {
 
 	private Boolean isClienteFidelidade;
@@ -36,7 +38,7 @@ public class Cliente extends Pessoa {
 
 	public Cliente(String nome, String cpf, String email, String telefone,
 			String celular, Endereco endereco, Boolean isClienteFidelidade,
-			String programaFidelidade, String numeroFidelidade) {
+			String programaFidelidade, String numeroFidelidade) throws ParametroException {
 		super(nome, cpf, email, telefone, celular, endereco);
 		this.isClienteFidelidade = isClienteFidelidade;
 		this.programaFidelidade = programaFidelidade;

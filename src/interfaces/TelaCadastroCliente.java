@@ -15,6 +15,7 @@ import net.miginfocom.swing.MigLayout;
 import auxiliar.SelectListener;
 import core.Endereco;
 import core.Loja;
+import exceptions.ParametroException;
 
 public class TelaCadastroCliente extends GeneralPanel {
 	/**
@@ -68,10 +69,12 @@ public class TelaCadastroCliente extends GeneralPanel {
 	 */
 	public TelaCadastroCliente(Loja l) {
 		super(l);
-		
+
 		setBorder(new TitledBorder(null, "Cadastrar Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
-		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][][][][][][][grow,bottom]"));
+		setLayout(new MigLayout("",
+				"[69.00][114.00,grow][][grow][][91.00,grow]",
+				"[][][][][][][][grow,bottom]"));
 
 		lblNome = new JLabel("Nome:");
 		add(lblNome, "cell 0 0,alignx right");
@@ -202,7 +205,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 7 6 1,alignx right");
-		
+
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -210,7 +213,6 @@ public class TelaCadastroCliente extends GeneralPanel {
 			}
 		});
 		add(btnLimpar, "cell 0 7,alignx right");
-
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -242,12 +244,15 @@ public class TelaCadastroCliente extends GeneralPanel {
 				Endereco endereco = new Endereco(rua, bairro, complemento,
 						numero, cep, cidade, estado, pais);
 
-				loja.cadastrarCliente(nome, cpf, email, telefone, celular,
-						isClienteFidelidade, programaFidelidade,
-						numeroFidelidade, endereco);
-
-				showMensagemSucesso("Cliente cadastrado com sucesso!");
-				showTelaPrincipal();
+				try {
+					loja.cadastrarCliente(nome, cpf, email, telefone, celular,
+							isClienteFidelidade, programaFidelidade,
+							numeroFidelidade, endereco);
+					showMensagemSucesso("Cliente cadastrado com sucesso!");
+					showTelaPrincipal();
+				} catch (ParametroException exception) {
+					showMensagemErro(exception.getMessage());
+				}
 			}
 		});
 		add(btnCadastrar, "cell 0 7 6 1,alignx right");

@@ -16,6 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 
 import core.Loja;
+import exceptions.ParametroException;
 
 public class TelaPrincipal extends JFrame {
 
@@ -33,8 +34,9 @@ public class TelaPrincipal extends JFrame {
 	 * Create the frame.
 	 * 
 	 * @param titulo
+	 * @throws ParametroException 
 	 */
-	public TelaPrincipal(String titulo) {
+	public TelaPrincipal(String titulo) throws ParametroException {
 		loja = new Loja();
 		frame = this;
 

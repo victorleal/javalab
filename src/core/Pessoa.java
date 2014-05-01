@@ -1,5 +1,7 @@
 package core;
 
+import exceptions.ParametroException;
+
 public class Pessoa {
 
 	private String nome;
@@ -13,8 +15,12 @@ public class Pessoa {
 		return nome;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNome(String nome) throws ParametroException {
+		if (nome != null && nome.isEmpty()) {
+			throw new ParametroException("nome");
+		} else {
+			this.nome = nome;
+		}
 	}
 
 	public String getCpf() {
@@ -54,14 +60,18 @@ public class Pessoa {
 	}
 
 	public Pessoa(String nome, String cpf, String email, String telefone,
-			String celular, Endereco endereco) {
+			String celular, Endereco endereco) throws ParametroException {
 		super();
-		this.nome = nome;
-		this.cpf = cpf;
-		this.email = email;
-		this.telefone = telefone;
-		this.celular = celular;
-		this.endereco = endereco;
+		try {
+			setNome(nome);
+			this.cpf = cpf;
+			this.email = email;
+			this.telefone = telefone;
+			this.celular = celular;
+			this.endereco = endereco;
+		} catch (ParametroException e) {
+			throw e;
+		}
 	}
 
 	public Pessoa() {

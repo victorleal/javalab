@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import exceptions.ParametroException;
 import auxiliar.GerenciadorPedidos;
 
 public class Loja {
@@ -30,7 +31,7 @@ public class Loja {
 		COMPUTADORES, TELEFONIA, VIDEOSOM, TABLETS, GAMES
 	};
 
-	public Loja() {
+	public Loja() throws ParametroException {
 		clientes = new HashMap<String, Cliente>();
 		pedidos = new HashMap<Integer, Pedido>();
 		transportadoras = new HashMap<String, Transportadora>();
@@ -41,13 +42,20 @@ public class Loja {
 		create();
 	}
 
-	/********** CLIENTES **********/
+	/********** CLIENTES 
+	 * @throws ParametroException **********/
 	public void cadastrarCliente(String nome, String cpf, String email,
 			String telefone, String celular, boolean isClienteFidelidade,
 			String programaFidelidade, String numeroFidelidade,
-			Endereco endereco) {
-		Cliente c = new Cliente(nome, cpf, email, telefone, celular, endereco,
-				isClienteFidelidade, programaFidelidade, numeroFidelidade);
+			Endereco endereco) throws ParametroException {
+		Cliente c;
+		try {
+			c = new Cliente(nome, cpf, email, telefone, celular,
+					endereco, isClienteFidelidade, programaFidelidade,
+					numeroFidelidade);
+		} catch (ParametroException e) {
+			throw e;
+		}
 
 		if (!clientes.containsKey(c.getCpf())) {
 			clientes.put(c.getCpf(), c);
@@ -75,7 +83,7 @@ public class Loja {
 	public void alterarCliente(String nome, String cpf, String email,
 			String telefone, String celular, boolean isClienteFidelidade,
 			String programaFidelidade, String numeroFidelidade,
-			Endereco endereco) {
+			Endereco endereco) throws ParametroException {
 		if (clientes.containsKey(cpf)) {
 			Cliente c = clientes.get(cpf);
 			c.setCelular(celular);
@@ -138,7 +146,7 @@ public class Loja {
 			pedidos.remove(numero);
 		}
 	}
-	
+
 	public Collection<Pedido> getPedidos() {
 		return this.pedidos.values();
 	}
@@ -283,7 +291,7 @@ public class Loja {
 
 	public double getValorDevidoTotal() {
 		double valorDevido = 0;
-		for(Pedido p: pedidos.values()){
+		for (Pedido p : pedidos.values()) {
 			valorDevido += p.getTransportadora().getTaxaEntrega();
 		}
 		return valorDevido;
@@ -320,7 +328,7 @@ public class Loja {
 		return programas;
 	}
 
-	public void create() {
+	public void create() throws ParametroException {
 		Endereco enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
 				"546", "78445-989", "Limeira", "São Paulo", "Brasil");
 		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
@@ -348,6 +356,8 @@ public class Loja {
 				"HD SATA III Western Digital 1TB", 320, 210.00, 10);
 		HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
 		map.put(produtos.get(1), 2);
-		cadastrarPedido(1250, "A vista", Calendar.getInstance(), Calendar.getInstance(), enderecoCliente, clientes.get("2"), map, transportadoras.get("1"));
+		cadastrarPedido(1250, "A vista", Calendar.getInstance(),
+				Calendar.getInstance(), enderecoCliente, clientes.get("2"),
+				map, transportadoras.get("1"));
 	}
 }

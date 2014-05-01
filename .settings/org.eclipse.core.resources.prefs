@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/exceptions/ParametroException.java=UTF-8
 encoding//src/interfaces/TelaAlterarCliente.java=UTF-8
 encoding//src/interfaces/TelaAlterarProduto.java=UTF-8
 encoding//src/interfaces/TelaAlterarTransportadora.java=UTF-8
