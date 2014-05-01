@@ -17,6 +17,7 @@ public class TelaSobre extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 
 	/**
+	 * Teste
 	 * Create the dialog.
 	 */
 	public TelaSobre() {
