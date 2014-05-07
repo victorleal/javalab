@@ -70,6 +70,8 @@ public class TelaCadastroCliente extends GeneralPanel {
 	// Mascaras
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCelular;
+	private MaskFormatter mascaraTelefone;
+	private MaskFormatter mascaraCEP;
 
 	/**
 	 * Create the panel.
@@ -85,7 +87,9 @@ public class TelaCadastroCliente extends GeneralPanel {
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
-			mascaraCelular = new MaskFormatter("#####-####");
+			mascaraCelular = new MaskFormatter("(##)#####-####");
+			mascaraTelefone = new MaskFormatter("(##)####-####");
+			mascaraCEP = new MaskFormatter("#####-###");
 		} catch (ParseException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -108,14 +112,14 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblCelular = new JLabel("Celular:");
 		add(lblCelular, "cell 2 1,alignx right");
 
-		textFieldCelular = new JTextField();
+		textFieldCelular = new JFormattedTextField(mascaraCelular);
 		add(textFieldCelular, "cell 3 1,growx");
 		textFieldCelular.setColumns(10);
 
 		lblTelefone = new JLabel("Telefone:");
 		add(lblTelefone, "cell 4 1,alignx right");
 
-		textFieldTelefone = new JTextField();
+		textFieldTelefone = new JFormattedTextField(mascaraTelefone);
 		add(textFieldTelefone, "cell 5 1,growx");
 		textFieldTelefone.setColumns(10);
 
@@ -164,7 +168,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblCidade = new JLabel("Cidade:");
 		add(lblCidade, "cell 0 5,alignx right");
 
-		textFieldCidade = new JTextField();
+		textFieldCidade = new JFormattedTextField();
 		add(textFieldCidade, "cell 1 5,growx");
 		textFieldCidade.setColumns(10);
 
