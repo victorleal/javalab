@@ -2,14 +2,17 @@ package interfaces;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import auxiliar.SelectListener;
@@ -41,7 +44,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 
 	// TextFields
 	private JTextField textFieldNome;
-	private JTextField textFieldCpf;
+	private JFormattedTextField textFieldCpf;
 	private JTextField textFieldEmail;
 	private JTextField textFieldCelular;
 	private JTextField textFieldTelefone;
@@ -64,6 +67,10 @@ public class TelaCadastroCliente extends GeneralPanel {
 	private JButton btnCadastrar;
 	private JButton btnLimpar;
 
+	// Mascaras
+	private MaskFormatter mascaraCpf;
+	private MaskFormatter mascaraCelular;
+
 	/**
 	 * Create the panel.
 	 */
@@ -76,6 +83,14 @@ public class TelaCadastroCliente extends GeneralPanel {
 				"[69.00][114.00,grow][][grow][][91.00,grow]",
 				"[][][][][][][][grow,bottom]"));
 
+		try {
+			mascaraCpf = new MaskFormatter("###.###.###-##");
+			mascaraCelular = new MaskFormatter("#####-####");
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
 		lblNome = new JLabel("Nome:");
 		add(lblNome, "cell 0 0,alignx right");
 
@@ -86,7 +101,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblCpf = new JLabel("CPF:");
 		add(lblCpf, "cell 0 1,alignx right");
 
-		textFieldCpf = new JTextField();
+		textFieldCpf = new JFormattedTextField(mascaraCpf);
 		add(textFieldCpf, "cell 1 1,growx");
 		textFieldCpf.setColumns(10);
 
