@@ -55,6 +55,7 @@ public class TelaCadastroProduto extends GeneralPanel {
 		add(lblId, "flowx,cell 0 0,alignx right");
 
 		textFieldId = new JTextField();
+		textFieldId.setEditable(false);
 		Integer id = loja.getIdPedido();
 		String idPedido = id.toString();
 		textFieldId.setText(idPedido);
