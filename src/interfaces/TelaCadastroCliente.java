@@ -54,13 +54,13 @@ public class TelaCadastroCliente extends GeneralPanel {
 	private JTextField textFieldBairro;
 	private JFormattedTextField textFieldCep;
 	private JTextField textFieldPais;
-	private JTextField textFieldEstado;
 	private JTextField textFieldCidade;
 	private JTextField textFieldNumeroFidelidade;
 
 	// ComboBox
 	private JComboBox<String> comboBoxFidelidade;
 	private JComboBox<String> comboBoxPrograma;
+	private JComboBox<String> comboBoxEstado;
 
 	// Buttons
 	private JButton btnCancelar;
@@ -81,9 +81,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 
 		setBorder(new TitledBorder(null, "Cadastrar Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
-		setLayout(new MigLayout("",
-				"[69.00][114.00,grow][][grow][][91.00,grow]",
-				"[][][][][][][][grow,bottom]"));
+		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][][][][][][][grow,bottom]"));
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -179,10 +177,36 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblEstado = new JLabel("Estado:");
 		add(lblEstado, "cell 2 5,alignx trailing");
 
-		textFieldEstado = new JTextField();
-		add(textFieldEstado, "cell 3 5,growx");
-		textFieldEstado.setColumns(10);
-
+		comboBoxEstado = new JComboBox<String>();
+		comboBoxEstado.addItem("AC");
+		comboBoxEstado.addItem("AL");
+		comboBoxEstado.addItem("AP");
+		comboBoxEstado.addItem("AM");
+		comboBoxEstado.addItem("BA");
+		comboBoxEstado.addItem("CE");
+		comboBoxEstado.addItem("DF");
+		comboBoxEstado.addItem("ES");
+		comboBoxEstado.addItem("GO");
+		comboBoxEstado.addItem("MA");
+		comboBoxEstado.addItem("MT");
+		comboBoxEstado.addItem("MS");
+		comboBoxEstado.addItem("MG");
+		comboBoxEstado.addItem("PA");
+		comboBoxEstado.addItem("PB");
+		comboBoxEstado.addItem("PE");
+		comboBoxEstado.addItem("PI");
+		comboBoxEstado.addItem("RJ");
+		comboBoxEstado.addItem("RN");
+		comboBoxEstado.addItem("RS");
+		comboBoxEstado.addItem("RO");
+		comboBoxEstado.addItem("RR");
+		comboBoxEstado.addItem("SC");
+		comboBoxEstado.addItem("SP");
+		comboBoxEstado.addItem("SE");
+		comboBoxEstado.addItem("TO");
+		comboBoxEstado.setEnabled(true);
+		add(comboBoxEstado, "cell 3 5,growx");
+	
 		lblPais = new JLabel("País:");
 		add(lblPais, "cell 4 5,alignx trailing");
 
@@ -235,7 +259,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 				limparCampos();
 			}
 		});
-		add(btnLimpar, "cell 0 7,alignx right");
+		add(btnLimpar, "cell 0 7 6 1,alignx right");
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -260,7 +284,8 @@ public class TelaCadastroCliente extends GeneralPanel {
 				String bairro = textFieldBairro.getText();
 				String numero = textFieldNumero.getText();
 				String cidade = textFieldBairro.getText();
-				String estado = textFieldEstado.getText();
+				String estado = (String) comboBoxEstado
+						.getSelectedItem();
 				String pais = textFieldPais.getText();
 				String complemento = textFieldComplemento.getText();
 				String cep = ((String)textFieldCep.getText());
@@ -292,7 +317,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		textFieldBairro.setText("");
 		textFieldNumero.setText("");
 		textFieldBairro.setText("");
-		textFieldEstado.setText("");
+		//comboBoxEstado.setSelectedItem(");
 		textFieldPais.setText("");
 		textFieldComplemento.setText("");
 		textFieldCep.setText("");
