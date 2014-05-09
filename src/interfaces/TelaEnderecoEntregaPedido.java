@@ -27,7 +27,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 
 	// TextField
 	private JTextField textFieldRua;
-	private JFormattedTextField textFieldNumero;
+	private JTextField textFieldNumero;
 	private JTextField textFieldBairro;
 	private JTextField textFieldCidade;
 	private JTextField textFieldEstado;
@@ -47,7 +47,6 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	
 	// Mascaras
 	private MaskFormatter mascaraCEP;
-	private MaskFormatter mascaraNumero;
 
 	// Button
 	private JButton btnOk;
@@ -86,7 +85,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		lblNumero = new JLabel("N\u00FAmero:");
 		add(lblNumero, "cell 2 0,alignx trailing");
 
-		textFieldNumero = new JFormattedTextField(mascaraNumero);
+		textFieldNumero = new JTextField();
 		add(textFieldNumero, "cell 3 0,growx");
 		textFieldNumero.setColumns(10);
 
