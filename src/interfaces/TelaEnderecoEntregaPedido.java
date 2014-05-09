@@ -69,7 +69,6 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		try {
 			mascaraCEP = new MaskFormatter("#####-###");
 			mascaraCEP.setPlaceholderCharacter('_');
-			mascaraNumero = new MaskFormatter("#####");
 		} catch (ParseException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
