@@ -2,12 +2,16 @@ package interfaces;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
@@ -29,10 +33,16 @@ public class TelaCadastroProduto extends GeneralPanel {
 	private JTextField textFieldId;
 	private JTextField textFieldConteudo;
 	private JTextField textFieldDescricao;
-	private JTextField textFieldPeso;
-	private JTextField textFieldValorUnitario;
+	private JFormattedTextField textFieldPeso;
+	private JFormattedTextField textFieldValorUnitario;
 	private JTextField textFieldQtdeEstoque;
 
+	// Mascaras
+	private MaskFormatter mascaraPeso;
+	//private MaskFormatter mascaraValor;
+	//private DecimalFormat mascaraValor;
+	private NumberFormatter mascaraValor; 
+	
 	// ComboBox
 	private JComboBox<String> comboBoxCategoria;
 
@@ -50,6 +60,16 @@ public class TelaCadastroProduto extends GeneralPanel {
 		setBorder(new TitledBorder(null, "Cadastrar Produto",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][grow,bottom]"));
+		
+		try {	        
+			mascaraPeso = new MaskFormatter("####,##");
+			mascaraPeso.setPlaceholderCharacter('_');
+			
+			mascaraValor = new NumberFormatter(new DecimalFormat("$ #,###.00"));
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		lblId = new JLabel("ID:");
 		add(lblId, "flowx,cell 0 0,alignx right");
@@ -65,14 +85,15 @@ public class TelaCadastroProduto extends GeneralPanel {
 		lblPeso = new JLabel("Peso:");
 		add(lblPeso, "cell 0 1,alignx right");
 
-		textFieldPeso = new JTextField();
+		textFieldPeso = new JFormattedTextField(mascaraPeso);
 		add(textFieldPeso, "cell 1 1,growx");
 		textFieldPeso.setColumns(10);
 
 		lblValorUnitario = new JLabel("Valor Unitário:");
 		add(lblValorUnitario, "cell 0 2,alignx right");
 
-		textFieldValorUnitario = new JTextField();
+		textFieldValorUnitario = new JFormattedTextField(mascaraValor);
+		//textFieldValorUnitario.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		add(textFieldValorUnitario, "cell 1 2,growx");
 		textFieldValorUnitario.setColumns(10);
 

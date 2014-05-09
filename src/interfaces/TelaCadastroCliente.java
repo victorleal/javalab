@@ -46,13 +46,13 @@ public class TelaCadastroCliente extends GeneralPanel {
 	private JTextField textFieldNome;
 	private JFormattedTextField textFieldCpf;
 	private JTextField textFieldEmail;
-	private JTextField textFieldCelular;
-	private JTextField textFieldTelefone;
+	private JFormattedTextField textFieldCelular;
+	private JFormattedTextField textFieldTelefone;
 	private JTextField textFieldNumero;
 	private JTextField textFieldEndereco;
 	private JTextField textFieldComplemento;
 	private JTextField textFieldBairro;
-	private JTextField textFieldCep;
+	private JFormattedTextField textFieldCep;
 	private JTextField textFieldPais;
 	private JTextField textFieldEstado;
 	private JTextField textFieldCidade;
@@ -87,9 +87,13 @@ public class TelaCadastroCliente extends GeneralPanel {
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
+			mascaraCpf.setPlaceholderCharacter('_');
 			mascaraCelular = new MaskFormatter("(##)#####-####");
+			mascaraCelular.setPlaceholderCharacter('_');
 			mascaraTelefone = new MaskFormatter("(##)####-####");
+			mascaraTelefone.setPlaceholderCharacter('_');
 			mascaraCEP = new MaskFormatter("#####-###");
+			mascaraCEP.setPlaceholderCharacter('_');
 		} catch (ParseException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -161,7 +165,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblCep = new JLabel("CEP:");
 		add(lblCep, "cell 4 4,alignx trailing");
 
-		textFieldCep = new JTextField();
+		textFieldCep = new JFormattedTextField(mascaraCEP);
 		add(textFieldCep, "cell 5 4,growx");
 		textFieldCep.setColumns(10);
 
@@ -237,10 +241,10 @@ public class TelaCadastroCliente extends GeneralPanel {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = textFieldNome.getText();
-				String cpf = textFieldCpf.getText();
+				String cpf = ((String)textFieldCpf.getText());
 				String email = textFieldEmail.getText();
-				String telefone = textFieldTelefone.getText();
-				String celular = textFieldCelular.getText();
+				String telefone = ((String)textFieldTelefone.getText());
+				String celular = ((String)textFieldCelular.getText());
 				String clienteFidelidade = (String) comboBoxFidelidade
 						.getSelectedItem();
 				boolean isClienteFidelidade = false;
@@ -259,7 +263,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 				String estado = textFieldEstado.getText();
 				String pais = textFieldPais.getText();
 				String complemento = textFieldComplemento.getText();
-				String cep = textFieldCep.getText();
+				String cep = ((String)textFieldCep.getText());
 				Endereco endereco = new Endereco(rua, bairro, complemento,
 						numero, cep, cidade, estado, pais);
 

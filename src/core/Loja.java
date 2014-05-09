@@ -64,6 +64,7 @@ public class Loja {
 
 	public Cliente consultarCliente(String cpf) {
 		Cliente c = null;
+		System.out.println(cpf);
 		if (clientes.containsKey(cpf)) {
 			c = clientes.get(cpf);
 		}
@@ -76,7 +77,7 @@ public class Loja {
 			clientes.remove(cpf);
 		} else {
 			System.out.println("O Cliente com o CPF " + cpf
-					+ " não foi encontrado.");
+					+ " nï¿½o foi encontrado.");
 		}
 	}
 
@@ -330,8 +331,8 @@ public class Loja {
 
 	public void create(){
 		Endereco enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
-				"546", "78445-989", "Limeira", "São Paulo", "Brasil");
-		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
+				"546", "78445-989", "Limeira", "Sï¿½o Paulo", "Brasil");
+		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecï¿½", "",
 				"78", "13000-000", "Campinas", "SP", "Brasil");
 		try{
 			cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
@@ -355,9 +356,9 @@ public class Loja {
 		cadastrarProduto(Categorias.GAMES.name(), "DVD game e manual",
 				"FIFA 14", 100, 98.00, 10);
 		cadastrarProduto(Categorias.VIDEOSOM.name(),
-				"Leitor de Bluray e cabos conexão", "Leitor de Bluray Sony",
+				"Leitor de Bluray e cabos conexï¿½o", "Leitor de Bluray Sony",
 				420, 300.00, 10);
-		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexão",
+		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexï¿½o",
 				"HD SATA III Western Digital 1TB", 320, 210.00, 10);
 		HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
 		map.put(produtos.get(1), 2);

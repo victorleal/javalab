@@ -14,12 +14,14 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import auxiliar.ComboBoxTransportadoraRenderer;
@@ -51,12 +53,12 @@ public class TelaCadastroPedido extends GeneralPanel {
 	private JTextField textFieldCodigoProduto;
 	private JTextField textFieldQtdeProduto;
 	private JTextField textFieldNumero;
-	private JTextField textFieldCpfCliente;
+	private JFormattedTextField textFieldCpfCliente;
 	private JTable table;
 	private JTextField textFieldValorTotal;
 	private JTextField textFieldNome;
-	private JTextField textFieldDataCompra;
-	private JTextField textFieldDataEntrega;
+	private JFormattedTextField textFieldDataCompra;
+	private JFormattedTextField textFieldDataEntrega;
 
 	// ComboBox
 	private JComboBox<String> comboBoxFormaPagamento;
@@ -70,6 +72,10 @@ public class TelaCadastroPedido extends GeneralPanel {
 	private JButton btnLimpar;
 	private JButton btnBuscaCliente;
 	private JButton btnAdicionarEndereco;
+	
+	// Mascaras
+	private MaskFormatter mascaraCpf;
+	private MaskFormatter mascaraData;
 
 	// Controla os panels
 	private JPanel panelProdutos;
@@ -99,6 +105,16 @@ public class TelaCadastroPedido extends GeneralPanel {
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][][grow][][grow][67.00]",
 				"[][][][14.00][][][][][][grow,bottom]"));
+		
+		try {
+			mascaraCpf = new MaskFormatter("###.###.###-##");
+			mascaraCpf.setPlaceholderCharacter('_');
+			mascaraData = new MaskFormatter("##/##/####");
+			mascaraData.setPlaceholderCharacter('_');
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		lblNumero = new JLabel("Número:");
 		add(lblNumero, "cell 0 1,alignx right");
@@ -114,14 +130,21 @@ public class TelaCadastroPedido extends GeneralPanel {
 		lblCpfCliente = new JLabel("CPF Cliente:");
 		add(lblCpfCliente, "cell 2 1,alignx right");
 
-		textFieldCpfCliente = new JTextField();
+		textFieldCpfCliente = new JFormattedTextField(mascaraCpf);
 		add(textFieldCpfCliente, "cell 3 1 2 1,growx");
 		textFieldCpfCliente.setColumns(10);
 
 		btnBuscaCliente = new JButton("Buscar");
 		btnBuscaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String cpf = textFieldCpfCliente.getText();
+				try {
+					textFieldCpfCliente.commitEdit();
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String cpf = ((String)textFieldCpfCliente.getValue());
+				System.out.println(textFieldCpfCliente.getValue());
 				c = loja.consultarCliente(cpf);
 				if (c != null) {
 					textFieldNome.setText(c.getNome());
@@ -252,7 +275,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 		lblDataDeEntrega = new JLabel("Data de Entrega:");
 		panelTransportadora.add(lblDataDeEntrega, "cell 4 0,alignx right");
 
-		textFieldDataEntrega = new JTextField();
+		textFieldDataEntrega = new JFormattedTextField(mascaraData);
 		panelTransportadora.add(textFieldDataEntrega, "cell 5 0 2 1,growx");
 		textFieldDataEntrega.setColumns(10);
 
@@ -269,7 +292,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 		lblDataDeCompra = new JLabel("Data de Compra:");
 		add(lblDataDeCompra, "cell 3 7,alignx right");
 
-		textFieldDataCompra = new JTextField();
+		textFieldDataCompra = new JFormattedTextField(mascaraData);
 		add(textFieldDataCompra, "cell 4 7 2 1,growx");
 		textFieldDataCompra.setColumns(10);
 		textFieldDataCompra.setEnabled(false);

@@ -5,15 +5,19 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import core.Endereco;
+
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 public class TelaEnderecoEntregaPedido extends JPanel {
 	/**
@@ -23,13 +27,13 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 
 	// TextField
 	private JTextField textFieldRua;
-	private JTextField textFieldNumero;
+	private JFormattedTextField textFieldNumero;
 	private JTextField textFieldBairro;
 	private JTextField textFieldCidade;
 	private JTextField textFieldEstado;
 	private JTextField textFieldPais;
 	private JTextField textFieldComplemento;
-	private JTextField textFieldCep;
+	private JFormattedTextField textFieldCep;
 
 	// Labels
 	private JLabel lblRua;
@@ -40,6 +44,10 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	private JLabel lblPas;
 	private JLabel lblComplemento;
 	private JLabel lblCep;
+	
+	// Mascaras
+	private MaskFormatter mascaraCEP;
+	private MaskFormatter mascaraNumero;
 
 	// Button
 	private JButton btnOk;
@@ -58,6 +66,15 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 
 		setLayout(new MigLayout("", "[45.00][222.00,grow][63.00][grow]",
 				"[][][][][][grow,bottom]"));
+		
+		try {
+			mascaraCEP = new MaskFormatter("#####-###");
+			mascaraCEP.setPlaceholderCharacter('_');
+			mascaraNumero = new MaskFormatter("#####");
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		lblRua = new JLabel("Rua:");
 		add(lblRua, "cell 0 0,alignx trailing");
@@ -69,7 +86,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		lblNumero = new JLabel("N\u00FAmero:");
 		add(lblNumero, "cell 2 0,alignx trailing");
 
-		textFieldNumero = new JTextField();
+		textFieldNumero = new JFormattedTextField(mascaraNumero);
 		add(textFieldNumero, "cell 3 0,growx");
 		textFieldNumero.setColumns(10);
 
@@ -111,7 +128,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		lblCep = new JLabel("CEP:");
 		add(lblCep, "cell 2 4,alignx trailing");
 
-		textFieldCep = new JTextField();
+		textFieldCep = new JFormattedTextField(mascaraCEP);
 		add(textFieldCep, "cell 3 4,growx");
 		textFieldCep.setColumns(10);
 

@@ -2,11 +2,16 @@ package interfaces;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import core.Endereco;
@@ -32,7 +37,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 	private JLabel lblPais;
 
 	// TextFields
-	private JTextField txtCnpj;
+	private JFormattedTextField txtCnpj;
 	private JTextField txtPrazoEntrega;
 	private JTextField txtTaxaEntrega;
 	private JTextField textFieldEndereco;
@@ -43,7 +48,11 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 	private JTextField txtEstado;
 	private JTextField txtPais;
 	private JTextField txtRazaoSocial;
-	private JTextField txtCep;
+	private JFormattedTextField txtCep;
+	
+	// Mascaras
+	private MaskFormatter mascaraCnpj;
+	private MaskFormatter mascaraCEP;
 
 	// Buttons
 	private JButton btnCancelar;
@@ -60,6 +69,16 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 
 		setLayout(new MigLayout("", "[55.00][113.00,grow][][pref!][][91.00,grow]", "[][][][][][][grow,bottom]"));
+		
+		try {
+			mascaraCnpj = new MaskFormatter("##.###.###/####-##");
+			mascaraCnpj.setPlaceholderCharacter('_');
+			mascaraCEP = new MaskFormatter("#####-###");
+			mascaraCEP.setPlaceholderCharacter('_');
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		lblNomeFantasia = new JLabel("Nome Fantasia:");
 		add(lblNomeFantasia, "cell 0 0,alignx right");
@@ -68,7 +87,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		add(txtNomeFantasia, "cell 1 0 5 1,growx");
 		txtNomeFantasia.setColumns(10);
 
-		lblRazaoSocial = new JLabel("Raz\u00E3o Social:");
+		lblRazaoSocial = new JLabel("Razao Social:");
 		add(lblRazaoSocial, "cell 0 1,alignx trailing");
 
 		txtRazaoSocial = new JTextField();
@@ -78,7 +97,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		lblCnpj = new JLabel("CNPJ:");
 		add(lblCnpj, "cell 0 2,alignx right");
 
-		txtCnpj = new JTextField();
+		txtCnpj = new JFormattedTextField(mascaraCnpj);
 		add(txtCnpj, "cell 1 2,growx");
 		txtCnpj.setColumns(10);
 
@@ -110,6 +129,8 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		add(txtEndNum, "cell 5 3,growx");
 		txtEndNum.setColumns(10);
 
+	
+		
 		lblComplemento = new JLabel("Complemento:");
 		add(lblComplemento, "cell 0 4,alignx trailing");
 
@@ -127,7 +148,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		lblCep = new JLabel("CEP:");
 		add(lblCep, "cell 4 4,alignx trailing");
 
-		txtCep = new JTextField();
+		txtCep = new JFormattedTextField(mascaraCEP);
 		add(txtCep, "cell 5 4,growx");
 		txtCep.setColumns(10);
 
@@ -171,7 +192,8 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String cnpj = txtCnpj.getText();
+				String cnpj = ((String)txtCnpj.getValue());
+				System.out.println(txtCnpj.getValue());
 				String nomeFantasia = txtNomeFantasia.getText();
 				String razaoSocial = txtRazaoSocial.getText();
 				int prazoEntrega = Integer.parseInt(txtPrazoEntrega.getText());
@@ -182,6 +204,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 				String complemento = txtComplemento.getText();
 				String numero = txtEndNum.getText();
 				String cep = txtCep.getText();
+				System.out.println(txtCep.getValue());
 				String cidade = txtCidade.getText();
 				String estado = txtEstado.getText();
 				String pais = txtPais.getText();
