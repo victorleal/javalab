@@ -282,8 +282,14 @@ public class TelaAlterarCliente extends GeneralPanel {
 				String pais = textFieldPais.getText();
 				String complemento = textFieldComplemento.getText();
 				String cep = textFieldCep.getText();
-				Endereco endereco = new Endereco(rua, bairro, complemento,
-						numero, cep, cidade, estado, pais);
+				Endereco endereco = null;
+				try {
+					endereco = new Endereco(rua, bairro, complemento,
+							numero, cep, cidade, estado, pais);
+				} catch (ParametroException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 				try {
 					loja.alterarCliente(nome, cpf, email, telefone, celular,
