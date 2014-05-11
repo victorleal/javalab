@@ -72,7 +72,7 @@ public abstract class GeneralPanel extends JPanel {
 	}
 
 	public void showMensagemErro(String mensagem) {
-		JOptionPane.showMessageDialog(panel, mensagem, "Atenção",
+		JOptionPane.showMessageDialog(panel, mensagem, "AtenÃ§Ã£o",
 				JOptionPane.ERROR_MESSAGE);
 	}
 

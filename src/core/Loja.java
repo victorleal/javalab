@@ -329,11 +329,13 @@ public class Loja {
 	}
 
 	public void create(){
-		Endereco enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
-				"546", "78445-989", "Limeira", "São Paulo", "Brasil");
-		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
-				"78", "13000-000", "Campinas", "SP", "Brasil");
+		Endereco enderecoTransportadora = null;
+		Endereco enderecoCliente = null;
 		try{
+			enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
+					"546", "78445-989", "Limeira", "São Paulo", "Brasil");
+			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
+					"78", "13000-000", "Campinas", "SP", "Brasil");
 			cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
 					"9999-9898", true, "Normal", "1234", enderecoCliente);
 			cadastrarCliente("Paulo Paraluppi", "2", "paulo@email.com",

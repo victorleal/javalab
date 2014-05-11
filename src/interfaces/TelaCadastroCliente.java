@@ -233,7 +233,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = textFieldNome.getText();
-				String cpf = textFieldCpf.getText();
+				String cpf = ((String)textFieldCpf.getValue());
 				String email = textFieldEmail.getText();
 				String telefone = textFieldTelefone.getText();
 				String celular = textFieldCelular.getText();

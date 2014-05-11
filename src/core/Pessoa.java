@@ -16,7 +16,7 @@ public class Pessoa {
 	}
 
 	public void setNome(String nome) throws ParametroException {
-		if (nome != null && nome.isEmpty()) {
+		if (nome == null || nome.isEmpty()) {
 			throw new ParametroException("nome");
 		} else {
 			this.nome = nome;
@@ -27,36 +27,60 @@ public class Pessoa {
 		return cpf;
 	}
 
+	private void setCpf(String cpf) throws ParametroException {
+		if (cpf == null || cpf.isEmpty()) {
+			throw new ParametroException("cpf");
+		} else {
+			this.cpf = cpf;
+		}
+	}
+
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setEndereco(Endereco endereco) throws ParametroException {
+		if (endereco == null) {
+			throw new ParametroException("endereço");
+		} else {
+			this.endereco = endereco;
+		}
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmail(String email) throws ParametroException {
+		if (email == null || email.isEmpty()) {
+			throw new ParametroException("e-mail");
+		} else {
+			this.email = email;
+		}
 	}
 
 	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setTelefone(String telefone) throws ParametroException {
+		if (telefone == null || telefone.isEmpty()) {
+			throw new ParametroException("telefone");
+		} else {
+			this.telefone = telefone;
+		}
 	}
 
 	public String getCelular() {
 		return celular;
 	}
 
-	public void setCelular(String celular) {
-		this.celular = celular;
+	public void setCelular(String celular) throws ParametroException {
+		if (celular == null || celular.isEmpty()) {
+			throw new ParametroException("celular");
+		} else {
+			this.celular = celular;
+		}
 	}
 
 	public Pessoa(String nome, String cpf, String email, String telefone,
@@ -64,18 +88,15 @@ public class Pessoa {
 		super();
 		try {
 			setNome(nome);
-			this.cpf = cpf;
-			this.email = email;
-			this.telefone = telefone;
-			this.celular = celular;
-			this.endereco = endereco;
+			System.out.println(cpf);
+			setCpf(cpf);
+			setCelular(celular);
+			setTelefone(telefone);
+			setEmail(email);
+			setEndereco(endereco);
 		} catch (ParametroException e) {
 			throw e;
 		}
-	}
-
-	public Pessoa() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
