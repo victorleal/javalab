@@ -335,11 +335,11 @@ public class Loja {
 		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapec�", "",
 				"78", "13000-000", "Campinas", "SP", "Brasil");
 		try{
-			cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
+			cadastrarCliente("Victor Leal", "594.521.307-17", "victor@email.com", "3232-3232",
 					"9999-9898", true, "Normal", "1234", enderecoCliente);
-			cadastrarCliente("Paulo Paraluppi", "2", "paulo@email.com",
+			cadastrarCliente("Paulo Paraluppi", "785.441.267-74", "paulo@email.com",
 					"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
-			cadastrarCliente("Guilherme Nogueira", "3", "guilherme@email.com",
+			cadastrarCliente("Guilherme Nogueira", "325.841.021-61", "guilherme@email.com",
 					"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
 		}catch(ParametroException e){
 			System.out.println(e.getMessage());

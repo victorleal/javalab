@@ -86,6 +86,7 @@ public class TelaCadastroProduto extends GeneralPanel {
 		add(lblPeso, "cell 0 1,alignx right");
 
 		textFieldPeso = new JFormattedTextField(mascaraPeso);
+		mascaraPeso.install(textFieldPeso);
 		add(textFieldPeso, "cell 1 1,growx");
 		textFieldPeso.setColumns(10);
 
