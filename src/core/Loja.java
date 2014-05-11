@@ -334,8 +334,8 @@ public class Loja {
 		Endereco enderecoCliente = null;
 		try{
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
-					"546", "78445-989", "Limeira", "São Paulo", "Brasil");
-			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
+					"546", "78445-989", "Limeira", "Sï¿½o Paulo", "Brasil");
+			enderecoCliente = new Endereco("Rua X", "Vl. Chapecï¿½", "",
 					"78", "13000-000", "Campinas", "SP", "Brasil");
 		try{
 			cadastrarCliente("Victor Leal", "594.521.307-17", "victor@email.com", "3232-3232",
@@ -369,4 +369,5 @@ public class Loja {
 				Calendar.getInstance(), enderecoCliente, clientes.get("594.521.307-17"),
 				map, transportadoras.get("86.866.847/0001-79"));
 	}
+}
 }
