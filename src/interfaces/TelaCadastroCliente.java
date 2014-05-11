@@ -19,6 +19,7 @@ import auxiliar.SelectListener;
 import core.Endereco;
 import core.Loja;
 import exceptions.ParametroException;
+import exceptions.Validadores;
 
 public class TelaCadastroCliente extends GeneralPanel {
 	/**
@@ -265,7 +266,14 @@ public class TelaCadastroCliente extends GeneralPanel {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = textFieldNome.getText();
-				String cpf = ((String)textFieldCpf.getText());
+				String cpfValidado = null;
+				String cpf = textFieldCpf.getText();
+				if (Validadores.validaCPF(cpf)) {
+					cpfValidado = (textFieldCpf.getText());
+					System.out.println("sucesso cliente");
+				}else{
+					System.out.println("falha");	
+				}
 				String email = textFieldEmail.getText();
 				String telefone = ((String)textFieldTelefone.getText());
 				String celular = ((String)textFieldCelular.getText());
@@ -293,7 +301,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 						numero, cep, cidade, estado, pais);
 
 				try {
-					loja.cadastrarCliente(nome, cpf, email, telefone, celular,
+					loja.cadastrarCliente(nome, cpfValidado, email, telefone, celular,
 							isClienteFidelidade, programaFidelidade,
 							numeroFidelidade, endereco);
 					showMensagemSucesso("Cliente cadastrado com sucesso!");
