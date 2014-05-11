@@ -64,6 +64,7 @@ public class Loja {
 
 	public Cliente consultarCliente(String cpf) {
 		Cliente c = null;
+		System.out.println(cpf);
 		if (clientes.containsKey(cpf)) {
 			c = clientes.get(cpf);
 		}
@@ -76,7 +77,7 @@ public class Loja {
 			clientes.remove(cpf);
 		} else {
 			System.out.println("O Cliente com o CPF " + cpf
-					+ " não foi encontrado.");
+					+ " nï¿½o foi encontrado.");
 		}
 	}
 
@@ -336,19 +337,20 @@ public class Loja {
 					"546", "78445-989", "Limeira", "São Paulo", "Brasil");
 			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "",
 					"78", "13000-000", "Campinas", "SP", "Brasil");
-			cadastrarCliente("Victor Leal", "1", "victor@email.com", "3232-3232",
+		try{
+			cadastrarCliente("Victor Leal", "594.521.307-17", "victor@email.com", "3232-3232",
 					"9999-9898", true, "Normal", "1234", enderecoCliente);
-			cadastrarCliente("Paulo Paraluppi", "2", "paulo@email.com",
+			cadastrarCliente("Paulo Paraluppi", "785.441.267-74", "paulo@email.com",
 					"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
-			cadastrarCliente("Guilherme Nogueira", "3", "guilherme@email.com",
+			cadastrarCliente("Guilherme Nogueira", "325.841.021-61", "guilherme@email.com",
 					"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
 		}catch(ParametroException e){
 			System.out.println(e.getMessage());
 		}
 		
-		cadastrarTransportadora("1", "Transportadora Java", "JSE Transportes",
+		cadastrarTransportadora("86.866.847/0001-79", "Transportadora Java", "JSE Transportes",
 				90, 125.00, enderecoTransportadora);
-		cadastrarTransportadora("2", "Transportadora Oracle",
+		cadastrarTransportadora("21.643.533/0001-61", "Transportadora Oracle",
 				"JSE Transportes", 90, 125.00, enderecoTransportadora);
 		cadastrarProduto(Categorias.TABLETS.name(), "Tablet e carregador",
 				"Tablet Samsung Galaxy Note", 500, 798.00, 10);
@@ -357,14 +359,14 @@ public class Loja {
 		cadastrarProduto(Categorias.GAMES.name(), "DVD game e manual",
 				"FIFA 14", 100, 98.00, 10);
 		cadastrarProduto(Categorias.VIDEOSOM.name(),
-				"Leitor de Bluray e cabos conexão", "Leitor de Bluray Sony",
+				"Leitor de Bluray e cabos conexao", "Leitor de Bluray Sony",
 				420, 300.00, 10);
-		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexão",
+		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexao",
 				"HD SATA III Western Digital 1TB", 320, 210.00, 10);
 		HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
 		map.put(produtos.get(1), 2);
 		cadastrarPedido(1250, "A vista", Calendar.getInstance(),
-				Calendar.getInstance(), enderecoCliente, clientes.get("2"),
-				map, transportadoras.get("1"));
+				Calendar.getInstance(), enderecoCliente, clientes.get("594.521.307-17"),
+				map, transportadoras.get("86.866.847/0001-79"));
 	}
 }

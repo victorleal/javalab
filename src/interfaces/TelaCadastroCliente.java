@@ -46,21 +46,21 @@ public class TelaCadastroCliente extends GeneralPanel {
 	private JTextField textFieldNome;
 	private JFormattedTextField textFieldCpf;
 	private JTextField textFieldEmail;
-	private JTextField textFieldCelular;
-	private JTextField textFieldTelefone;
+	private JFormattedTextField textFieldCelular;
+	private JFormattedTextField textFieldTelefone;
 	private JTextField textFieldNumero;
 	private JTextField textFieldEndereco;
 	private JTextField textFieldComplemento;
 	private JTextField textFieldBairro;
-	private JTextField textFieldCep;
+	private JFormattedTextField textFieldCep;
 	private JTextField textFieldPais;
-	private JTextField textFieldEstado;
 	private JTextField textFieldCidade;
 	private JTextField textFieldNumeroFidelidade;
 
 	// ComboBox
 	private JComboBox<String> comboBoxFidelidade;
 	private JComboBox<String> comboBoxPrograma;
+	private JComboBox<String> comboBoxEstado;
 
 	// Buttons
 	private JButton btnCancelar;
@@ -70,6 +70,8 @@ public class TelaCadastroCliente extends GeneralPanel {
 	// Mascaras
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCelular;
+	private MaskFormatter mascaraTelefone;
+	private MaskFormatter mascaraCEP;
 
 	/**
 	 * Create the panel.
@@ -79,13 +81,17 @@ public class TelaCadastroCliente extends GeneralPanel {
 
 		setBorder(new TitledBorder(null, "Cadastrar Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
-		setLayout(new MigLayout("",
-				"[69.00][114.00,grow][][grow][][91.00,grow]",
-				"[][][][][][][][grow,bottom]"));
+		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][][][][][][][grow,bottom]"));
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
-			mascaraCelular = new MaskFormatter("#####-####");
+			mascaraCpf.setPlaceholderCharacter('_');
+			mascaraCelular = new MaskFormatter("(##)#####-####");
+			mascaraCelular.setPlaceholderCharacter('_');
+			mascaraTelefone = new MaskFormatter("(##)####-####");
+			mascaraTelefone.setPlaceholderCharacter('_');
+			mascaraCEP = new MaskFormatter("#####-###");
+			mascaraCEP.setPlaceholderCharacter('_');
 		} catch (ParseException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -108,14 +114,14 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblCelular = new JLabel("Celular:");
 		add(lblCelular, "cell 2 1,alignx right");
 
-		textFieldCelular = new JTextField();
+		textFieldCelular = new JFormattedTextField(mascaraCelular);
 		add(textFieldCelular, "cell 3 1,growx");
 		textFieldCelular.setColumns(10);
 
 		lblTelefone = new JLabel("Telefone:");
 		add(lblTelefone, "cell 4 1,alignx right");
 
-		textFieldTelefone = new JTextField();
+		textFieldTelefone = new JFormattedTextField(mascaraTelefone);
 		add(textFieldTelefone, "cell 5 1,growx");
 		textFieldTelefone.setColumns(10);
 
@@ -157,24 +163,50 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblCep = new JLabel("CEP:");
 		add(lblCep, "cell 4 4,alignx trailing");
 
-		textFieldCep = new JTextField();
+		textFieldCep = new JFormattedTextField(mascaraCEP);
 		add(textFieldCep, "cell 5 4,growx");
 		textFieldCep.setColumns(10);
 
 		lblCidade = new JLabel("Cidade:");
 		add(lblCidade, "cell 0 5,alignx right");
 
-		textFieldCidade = new JTextField();
+		textFieldCidade = new JFormattedTextField();
 		add(textFieldCidade, "cell 1 5,growx");
 		textFieldCidade.setColumns(10);
 
 		lblEstado = new JLabel("Estado:");
 		add(lblEstado, "cell 2 5,alignx trailing");
 
-		textFieldEstado = new JTextField();
-		add(textFieldEstado, "cell 3 5,growx");
-		textFieldEstado.setColumns(10);
-
+		comboBoxEstado = new JComboBox<String>();
+		comboBoxEstado.addItem("AC");
+		comboBoxEstado.addItem("AL");
+		comboBoxEstado.addItem("AP");
+		comboBoxEstado.addItem("AM");
+		comboBoxEstado.addItem("BA");
+		comboBoxEstado.addItem("CE");
+		comboBoxEstado.addItem("DF");
+		comboBoxEstado.addItem("ES");
+		comboBoxEstado.addItem("GO");
+		comboBoxEstado.addItem("MA");
+		comboBoxEstado.addItem("MT");
+		comboBoxEstado.addItem("MS");
+		comboBoxEstado.addItem("MG");
+		comboBoxEstado.addItem("PA");
+		comboBoxEstado.addItem("PB");
+		comboBoxEstado.addItem("PE");
+		comboBoxEstado.addItem("PI");
+		comboBoxEstado.addItem("RJ");
+		comboBoxEstado.addItem("RN");
+		comboBoxEstado.addItem("RS");
+		comboBoxEstado.addItem("RO");
+		comboBoxEstado.addItem("RR");
+		comboBoxEstado.addItem("SC");
+		comboBoxEstado.addItem("SP");
+		comboBoxEstado.addItem("SE");
+		comboBoxEstado.addItem("TO");
+		comboBoxEstado.setEnabled(true);
+		add(comboBoxEstado, "cell 3 5,growx");
+	
 		lblPais = new JLabel("País:");
 		add(lblPais, "cell 4 5,alignx trailing");
 
@@ -227,16 +259,16 @@ public class TelaCadastroCliente extends GeneralPanel {
 				limparCampos();
 			}
 		});
-		add(btnLimpar, "cell 0 7,alignx right");
+		add(btnLimpar, "cell 0 7 6 1,alignx right");
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = textFieldNome.getText();
-				String cpf = ((String)textFieldCpf.getValue());
+				String cpf = ((String)textFieldCpf.getText());
 				String email = textFieldEmail.getText();
-				String telefone = textFieldTelefone.getText();
-				String celular = textFieldCelular.getText();
+				String telefone = ((String)textFieldTelefone.getText());
+				String celular = ((String)textFieldCelular.getText());
 				String clienteFidelidade = (String) comboBoxFidelidade
 						.getSelectedItem();
 				boolean isClienteFidelidade = false;
@@ -252,10 +284,11 @@ public class TelaCadastroCliente extends GeneralPanel {
 				String bairro = textFieldBairro.getText();
 				String numero = textFieldNumero.getText();
 				String cidade = textFieldBairro.getText();
-				String estado = textFieldEstado.getText();
+				String estado = (String) comboBoxEstado
+						.getSelectedItem();
 				String pais = textFieldPais.getText();
 				String complemento = textFieldComplemento.getText();
-				String cep = textFieldCep.getText();
+				String cep = ((String)textFieldCep.getText());
 				Endereco endereco = new Endereco(rua, bairro, complemento,
 						numero, cep, cidade, estado, pais);
 
@@ -284,7 +317,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		textFieldBairro.setText("");
 		textFieldNumero.setText("");
 		textFieldBairro.setText("");
-		textFieldEstado.setText("");
+		//comboBoxEstado.setSelectedItem(");
 		textFieldPais.setText("");
 		textFieldComplemento.setText("");
 		textFieldCep.setText("");

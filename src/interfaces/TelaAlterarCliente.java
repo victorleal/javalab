@@ -2,14 +2,17 @@ package interfaces;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import auxiliar.SelectListener;
@@ -26,17 +29,17 @@ public class TelaAlterarCliente extends GeneralPanel {
 	private static final long serialVersionUID = 1L;
 	// textField
 	private JTextField textFieldNome;
-	private JTextField textFieldCPF;
-	private JTextField textFieldCelular;
+	private JFormattedTextField textFieldCPF;
+	private JFormattedTextField textFieldCelular;
 	private JTextField textFieldEndNum;
 	private JTextField textFieldEndereco;
 	private JTextField textFieldComplemento;
 	private JTextField textFieldBairro;
-	private JTextField textFieldCep;
+	private JFormattedTextField textFieldCep;
 	private JTextField textFieldPais;
 	private JTextField textFieldEstado;
 	private JTextField textFieldCidade;
-	private JTextField textFieldTelefone;
+	private JFormattedTextField textFieldTelefone;
 	private JTextField textFieldEmail;
 	private JTextField textFieldNumeroFidelidade;
 
@@ -59,6 +62,12 @@ public class TelaAlterarCliente extends GeneralPanel {
 	private JLabel lblEstado;
 	private JLabel lblCidade;
 	private JLabel lblEmail;
+	
+	// Mascaras
+	private MaskFormatter mascaraCpf;
+	private MaskFormatter mascaraCelular;
+	private MaskFormatter mascaraTelefone;
+	private MaskFormatter mascaraCEP;
 
 	// ComboBox
 	private JComboBox<String> comboBoxFidelidade;
@@ -78,6 +87,20 @@ public class TelaAlterarCliente extends GeneralPanel {
 		setLayout(new MigLayout("",
 				"[55.00][114.00,grow][][pref!,grow][][91.00,grow]",
 				"[][][][][][][grow,bottom]"));
+		
+		try {
+			mascaraCpf = new MaskFormatter("###.###.###-##");
+			mascaraCpf.setPlaceholderCharacter('_');
+			mascaraCelular = new MaskFormatter("(##)#####-####");
+			mascaraCelular.setPlaceholderCharacter('_');
+			mascaraTelefone = new MaskFormatter("(##)####-####");
+			mascaraTelefone.setPlaceholderCharacter('_');
+			mascaraCEP = new MaskFormatter("#####-###");
+			mascaraCEP.setPlaceholderCharacter('_');
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		lblNome = new JLabel("Nome:");
 		add(lblNome, "cell 0 0,alignx right");
@@ -90,7 +113,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 		lblCpf = new JLabel("CPF:");
 		add(lblCpf, "cell 4 0,alignx trailing");
 
-		textFieldCPF = new JTextField();
+		textFieldCPF = new JFormattedTextField(mascaraCpf);
 		textFieldCPF.setText(c.getCpf());
 		textFieldCPF.setEditable(false);
 		add(textFieldCPF, "cell 5 0,growx");
@@ -99,7 +122,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 		lblCelular = new JLabel("Celular:");
 		add(lblCelular, "cell 0 1,alignx right");
 
-		textFieldCelular = new JTextField();
+		textFieldCelular = new JFormattedTextField(mascaraCelular);
 		textFieldCelular.setText(c.getCelular());
 		add(textFieldCelular, "cell 1 1,growx");
 		textFieldCelular.setColumns(10);
@@ -107,7 +130,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 		lblTelefone = new JLabel("Telefone:");
 		add(lblTelefone, "cell 2 1,alignx trailing");
 
-		textFieldTelefone = new JTextField();
+		textFieldTelefone = new JFormattedTextField(mascaraTelefone);
 		textFieldTelefone.setText(c.getTelefone());
 		add(textFieldTelefone, "cell 3 1,growx");
 		textFieldTelefone.setColumns(10);
@@ -155,7 +178,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 		lblCep = new JLabel("CEP:");
 		add(lblCep, "cell 4 3,alignx trailing");
 
-		textFieldCep = new JTextField();
+		textFieldCep = new JFormattedTextField(mascaraCEP);
 		textFieldCep.setText(c.getEndereco().getCep());
 		add(textFieldCep, "cell 5 3,growx");
 		textFieldCep.setColumns(10);

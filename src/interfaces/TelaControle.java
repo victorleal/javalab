@@ -1,23 +1,21 @@
 package interfaces;
 
 import java.awt.Font;
-
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JTextField;
 
 public class TelaControle extends GeneralPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Button
 	private JButton btnFaturamentoBruto;
 	private JButton btnFaturamentoLquido;

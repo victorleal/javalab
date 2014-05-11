@@ -2,11 +2,14 @@ package interfaces;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
@@ -22,7 +25,7 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 	private JTextField txtPrazoEntrega;
 	private JTextField txtValorFrete;
 	private JTextField txtNome;
-	private JTextField txtCnpj;
+	private JFormattedTextField txtCnpj;
 	private JTextField txtRazaoSocial;
 
 	// Labels
@@ -32,6 +35,10 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 	private JLabel lblNome;
 	private JLabel lblRazoSocial;
 
+	// Mascara
+	private MaskFormatter mascaraCnpj;
+	private MaskFormatter mascaraTelefone;
+	private MaskFormatter mascaraCEP;
 
 	// Buttons
 	private JButton btnCancelar;
@@ -53,6 +60,18 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 		setBorder(new TitledBorder(null, "Alterar Transportadora",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][grow,bottom]"));
+		
+		try {
+			mascaraCnpj = new MaskFormatter("##.###.###/####-##");
+			mascaraCnpj.setPlaceholderCharacter('_');
+			mascaraTelefone = new MaskFormatter("(##)####-####");
+			mascaraTelefone.setPlaceholderCharacter('_');
+			mascaraCEP = new MaskFormatter("#####-###");
+			mascaraCEP.setPlaceholderCharacter('_');
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		lblNome = new JLabel("Nome Fantasia:");
 		add(lblNome, "cell 0 0,alignx trailing");
@@ -77,8 +96,8 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 		lblCnpj = new JLabel("CNPJ:");
 		add(lblCnpj, "cell 0 2,alignx trailing");
 		
-		txtCnpj = new JTextField();
-		txtCnpj.setEditable(false);
+		txtCnpj = new JFormattedTextField(mascaraCnpj);
+		txtCnpj.setEditable(true);
 		txtCnpj.setEnabled(false);
 		txtCnpj.setText(t.getCnpj());
 		add(txtCnpj, "cell 1 2,growx");
