@@ -19,6 +19,8 @@ import core.Endereco;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
+import exceptions.ParametroException;
+
 public class TelaEnderecoEntregaPedido extends JPanel {
 	/**
 	 * 
@@ -152,10 +154,15 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		String pais = textFieldPais.getText();
 		String cep = textFieldCep.getText();
 
-		Endereco e;
+		Endereco e = null;
 		if (rua != null && !rua.isEmpty()) {
-			e = new Endereco(rua, bairro, complemento, numero, cep, cidade,
-					estado, pais);
+			try {
+				e = new Endereco(rua, bairro, complemento, numero, cep, cidade,
+						estado, pais);
+			} catch (ParametroException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		} else {
 			e = null;
 		}
