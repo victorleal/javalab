@@ -97,7 +97,7 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 		add(lblCnpj, "cell 0 2,alignx trailing");
 		
 		txtCnpj = new JFormattedTextField(mascaraCnpj);
-		txtCnpj.setEditable(false);
+		txtCnpj.setEditable(true);
 		txtCnpj.setEnabled(false);
 		txtCnpj.setText(t.getCnpj());
 		add(txtCnpj, "cell 1 2,growx");

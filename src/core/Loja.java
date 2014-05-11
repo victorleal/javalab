@@ -331,8 +331,8 @@ public class Loja {
 
 	public void create(){
 		Endereco enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
-				"546", "78445-989", "Limeira", "S�o Paulo", "Brasil");
-		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapec�", "",
+				"546", "78445-989", "Limeira", "Sao Paulo", "Brasil");
+		Endereco enderecoCliente = new Endereco("Rua X", "Vl. Chapeco", "",
 				"78", "13000-000", "Campinas", "SP", "Brasil");
 		try{
 			cadastrarCliente("Victor Leal", "594.521.307-17", "victor@email.com", "3232-3232",
@@ -345,9 +345,9 @@ public class Loja {
 			System.out.println(e.getMessage());
 		}
 		
-		cadastrarTransportadora("1", "Transportadora Java", "JSE Transportes",
+		cadastrarTransportadora("86.866.847/0001-79", "Transportadora Java", "JSE Transportes",
 				90, 125.00, enderecoTransportadora);
-		cadastrarTransportadora("2", "Transportadora Oracle",
+		cadastrarTransportadora("21.643.533/0001-61", "Transportadora Oracle",
 				"JSE Transportes", 90, 125.00, enderecoTransportadora);
 		cadastrarProduto(Categorias.TABLETS.name(), "Tablet e carregador",
 				"Tablet Samsung Galaxy Note", 500, 798.00, 10);
@@ -356,14 +356,14 @@ public class Loja {
 		cadastrarProduto(Categorias.GAMES.name(), "DVD game e manual",
 				"FIFA 14", 100, 98.00, 10);
 		cadastrarProduto(Categorias.VIDEOSOM.name(),
-				"Leitor de Bluray e cabos conex�o", "Leitor de Bluray Sony",
+				"Leitor de Bluray e cabos conexao", "Leitor de Bluray Sony",
 				420, 300.00, 10);
-		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conex�o",
+		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexao",
 				"HD SATA III Western Digital 1TB", 320, 210.00, 10);
 		HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
 		map.put(produtos.get(1), 2);
 		cadastrarPedido(1250, "A vista", Calendar.getInstance(),
-				Calendar.getInstance(), enderecoCliente, clientes.get("2"),
-				map, transportadoras.get("1"));
+				Calendar.getInstance(), enderecoCliente, clientes.get("594.521.307-17"),
+				map, transportadoras.get("86.866.847/0001-79"));
 	}
 }
