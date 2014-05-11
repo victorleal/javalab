@@ -1,1 +1,10 @@
+<<<<<<< HEAD
+$ cat .gitignore
+
+bin/**/*
+=======
 bin/
+>>>>>>> 163b5f408bd3bb023ab6dc36d0b47fd7c8a6f0a4
+
+*.class
+
