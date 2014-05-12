@@ -1,9 +1,11 @@
 package interfaces;
 
+import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -39,9 +41,9 @@ public class TelaCadastroProduto extends GeneralPanel {
 
 	// Mascaras
 	private MaskFormatter mascaraPeso;
-	//private MaskFormatter mascaraValor;
+	private MaskFormatter mascaraValor;
 	//private DecimalFormat mascaraValor;
-	private NumberFormatter mascaraValor; 
+	//private NumberFormatter mascaraValor; 
 	
 	// ComboBox
 	private JComboBox<String> comboBoxCategoria;
@@ -62,10 +64,13 @@ public class TelaCadastroProduto extends GeneralPanel {
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][grow,bottom]"));
 		
 		try {	        
-			mascaraPeso = new MaskFormatter("####,##");
-			mascaraPeso.setPlaceholderCharacter('_');
+			mascaraPeso = new MaskFormatter("####'.##");
+			mascaraPeso.setPlaceholderCharacter('0');
+			//mascaraPeso.setPlaceholder("_");
 			
-			mascaraValor = new NumberFormatter(new DecimalFormat("$ #,###.00"));
+			mascaraValor = new MaskFormatter("####'.##");
+			mascaraValor.setPlaceholderCharacter('0');
+			
 		} catch (ParseException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -155,6 +160,7 @@ public class TelaCadastroProduto extends GeneralPanel {
 				double peso = Double.parseDouble(textFieldPeso.getText());
 				double valorUnitario = Double
 						.parseDouble(textFieldValorUnitario.getText());
+				System.out.println(valorUnitario);
 				int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
 						.getText());
 
