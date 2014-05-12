@@ -297,8 +297,14 @@ public class TelaCadastroCliente extends GeneralPanel {
 				String pais = textFieldPais.getText();
 				String complemento = textFieldComplemento.getText();
 				String cep = ((String)textFieldCep.getText());
-				Endereco endereco = new Endereco(rua, bairro, complemento,
-						numero, cep, cidade, estado, pais);
+				Endereco endereco = null;
+				try {
+					endereco = new Endereco(rua, bairro, complemento,
+							numero, cep, cidade, estado, pais);
+				} catch (ParametroException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 				try {
 					loja.cadastrarCliente(nome, cpfValidado, email, telefone, celular,

@@ -2,8 +2,6 @@ package interfaces;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -16,6 +14,7 @@ import javax.swing.text.MaskFormatter;
 import net.miginfocom.swing.MigLayout;
 import core.Endereco;
 import core.Loja;
+import exceptions.ParametroException;
 
 public class TelaCadastroTransportadora extends GeneralPanel {
 	private static final long serialVersionUID = 1L;
@@ -208,8 +207,14 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 				String cidade = txtCidade.getText();
 				String estado = txtEstado.getText();
 				String pais = txtPais.getText();
-				Endereco endereco = new Endereco(rua, bairro, complemento,
-						numero, cep, cidade, estado, pais);
+				Endereco endereco = null;
+				try {
+					endereco = new Endereco(rua, bairro, complemento,
+							numero, cep, cidade, estado, pais);
+				} catch (ParametroException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				loja.cadastrarTransportadora(cnpj, nomeFantasia, razaoSocial,
 						prazoEntrega, taxaEntrega, endereco);

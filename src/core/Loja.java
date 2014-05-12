@@ -42,17 +42,19 @@ public class Loja {
 		create();
 	}
 
-	/********** CLIENTES 
-	 * @throws ParametroException **********/
+	/**********
+	 * CLIENTES
+	 * 
+	 * @throws ParametroException
+	 **********/
 	public void cadastrarCliente(String nome, String cpf, String email,
 			String telefone, String celular, boolean isClienteFidelidade,
 			String programaFidelidade, String numeroFidelidade,
 			Endereco endereco) throws ParametroException {
 		Cliente c;
 		try {
-			c = new Cliente(nome, cpf, email, telefone, celular,
-					endereco, isClienteFidelidade, programaFidelidade,
-					numeroFidelidade);
+			c = new Cliente(nome, cpf, email, telefone, celular, endereco,
+					isClienteFidelidade, programaFidelidade, numeroFidelidade);
 		} catch (ParametroException e) {
 			throw e;
 		}
@@ -329,9 +331,10 @@ public class Loja {
 		return programas;
 	}
 
-	public void create(){
+	public void create() {
 		Endereco enderecoTransportadora = null;
 		Endereco enderecoCliente = null;
+<<<<<<< HEAD
 		try{
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
 					"546", "78445-989", "Limeira", "Sï¿½o Paulo", "Brasil");
@@ -345,11 +348,28 @@ public class Loja {
 			cadastrarCliente("Guilherme Nogueira", "325.841.021-61", "guilherme@email.com",
 					"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
 		}catch(ParametroException e){
+=======
+		try {
+			enderecoTransportadora = new Endereco("Rua r", "Bairro", "", "546",
+					"78445-989", "Limeira", "São Paulo", "Brasil");
+			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "", "78",
+					"13000-000", "Campinas", "SP", "Brasil");
+			cadastrarCliente("Victor Leal", "594.521.307-17",
+					"victor@email.com", "3232-3232", "9999-9898", true,
+					"Normal", "1234", enderecoCliente);
+			cadastrarCliente("Paulo Paraluppi", "785.441.267-74",
+					"paulo@email.com", "3232-3232", "9999-9898", true, "Gold",
+					"1234", enderecoCliente);
+			cadastrarCliente("Guilherme Nogueira", "325.841.021-61",
+					"guilherme@email.com", "3232-3232", "9999-9898", true,
+					"Gold", "1234", enderecoCliente);
+		} catch (ParametroException e) {
+>>>>>>> FETCH_HEAD
 			System.out.println(e.getMessage());
 		}
-		
-		cadastrarTransportadora("86.866.847/0001-79", "Transportadora Java", "JSE Transportes",
-				90, 125.00, enderecoTransportadora);
+
+		cadastrarTransportadora("86.866.847/0001-79", "Transportadora Java",
+				"JSE Transportes", 90, 125.00, enderecoTransportadora);
 		cadastrarTransportadora("21.643.533/0001-61", "Transportadora Oracle",
 				"JSE Transportes", 90, 125.00, enderecoTransportadora);
 		cadastrarProduto(Categorias.TABLETS.name(), "Tablet e carregador",
@@ -366,8 +386,9 @@ public class Loja {
 		HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
 		map.put(produtos.get(1), 2);
 		cadastrarPedido(1250, "A vista", Calendar.getInstance(),
-				Calendar.getInstance(), enderecoCliente, clientes.get("594.521.307-17"),
-				map, transportadoras.get("86.866.847/0001-79"));
+				Calendar.getInstance(), enderecoCliente,
+				clientes.get("594.521.307-17"), map,
+				transportadoras.get("86.866.847/0001-79"));
 	}
 }
 }
