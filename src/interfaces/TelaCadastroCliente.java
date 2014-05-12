@@ -82,7 +82,9 @@ public class TelaCadastroCliente extends GeneralPanel {
 
 		setBorder(new TitledBorder(null, "Cadastrar Cliente",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
-		setLayout(new MigLayout("", "[69.00][114.00,grow][][grow][][91.00,grow]", "[][][][][][][][grow,bottom]"));
+		setLayout(new MigLayout("",
+				"[69.00][114.00,grow][][grow][][91.00,grow]",
+				"[][][][][][][][grow,bottom]"));
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -181,7 +183,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		comboBoxEstado = new JComboBox<String>(this.estados);
 		comboBoxEstado.setEnabled(true);
 		add(comboBoxEstado, "cell 3 5,growx");
-	
+
 		lblPais = new JLabel("País:");
 		add(lblPais, "cell 4 5,alignx trailing");
 
@@ -240,17 +242,10 @@ public class TelaCadastroCliente extends GeneralPanel {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = textFieldNome.getText();
-				String cpfValidado = null;
 				String cpf = textFieldCpf.getText();
-				if (Validadores.validaCPF(cpf)) {
-					cpfValidado = (textFieldCpf.getText());
-					System.out.println("sucesso cliente");
-				}else{
-					System.out.println("falha");	
-				}
 				String email = textFieldEmail.getText();
-				String telefone = ((String)textFieldTelefone.getText());
-				String celular = ((String)textFieldCelular.getText());
+				String telefone = ((String) textFieldTelefone.getText());
+				String celular = ((String) textFieldCelular.getText());
 				String clienteFidelidade = (String) comboBoxFidelidade
 						.getSelectedItem();
 				boolean isClienteFidelidade = false;
@@ -266,22 +261,16 @@ public class TelaCadastroCliente extends GeneralPanel {
 				String bairro = textFieldBairro.getText();
 				String numero = textFieldNumero.getText();
 				String cidade = textFieldBairro.getText();
-				String estado = (String) comboBoxEstado
-						.getSelectedItem();
+				String estado = (String) comboBoxEstado.getSelectedItem();
 				String pais = textFieldPais.getText();
 				String complemento = textFieldComplemento.getText();
-				String cep = ((String)textFieldCep.getText());
+				String cep = ((String) textFieldCep.getText());
 				Endereco endereco = null;
-				try {
-					endereco = new Endereco(rua, bairro, complemento,
-							numero, cep, cidade, estado, pais);
-				} catch (ParametroException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 
 				try {
-					loja.cadastrarCliente(nome, cpfValidado, email, telefone, celular,
+					endereco = new Endereco(rua, bairro, complemento, numero,
+							cep, cidade, estado, pais);
+					loja.cadastrarCliente(nome, cpf, email, telefone, celular,
 							isClienteFidelidade, programaFidelidade,
 							numeroFidelidade, endereco);
 					showMensagemSucesso("Cliente cadastrado com sucesso!");
@@ -305,7 +294,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		textFieldBairro.setText("");
 		textFieldNumero.setText("");
 		textFieldBairro.setText("");
-		//comboBoxEstado.setSelectedItem(");
+		// comboBoxEstado.setSelectedItem(");
 		textFieldPais.setText("");
 		textFieldComplemento.setText("");
 		textFieldCep.setText("");
