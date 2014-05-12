@@ -19,7 +19,6 @@ import auxiliar.SelectListener;
 import core.Endereco;
 import core.Loja;
 import exceptions.ParametroException;
-import exceptions.Validadores;
 
 public class TelaCadastroCliente extends GeneralPanel {
 	/**
@@ -242,7 +241,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = textFieldNome.getText();
-				String cpf = textFieldCpf.getText();
+				String cpf = (String)textFieldCpf.getValue();
 				String email = textFieldEmail.getText();
 				String telefone = ((String) textFieldTelefone.getText());
 				String celular = ((String) textFieldCelular.getText());

@@ -14,6 +14,7 @@ public class Validadores {
 				strCpf = strCpf.replace('.', ' ');
 				strCpf = strCpf.replace('-', ' ');
 				strCpf = strCpf.replaceAll(" ", "");
+				System.out.println(strCpf);
 				for (int iCont = 1; iCont < strCpf.length() - 1; iCont++) {
 					iDigitoCPF = Integer.valueOf(
 							strCpf.substring(iCont - 1, iCont)).intValue();

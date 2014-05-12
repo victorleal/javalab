@@ -14,7 +14,8 @@ public class Endereco {
 	private String pais;
 
 	public Endereco(String rua, String bairro, String complemento,
-			String numero, String cep, String cidade, String estado, String pais) throws ParametroException {
+			String numero, String cep, String cidade, String estado, String pais)
+			throws ParametroException {
 		super();
 		setRua(rua);
 		setBairro(bairro);
@@ -31,7 +32,7 @@ public class Endereco {
 
 	public void setRua(String rua) throws ParametroException {
 		if (rua == null || rua.isEmpty()) {
-			throw new ParametroException("rua");
+			throw new ParametroException("endereço");
 		} else {
 			this.rua = rua;
 		}
@@ -62,8 +63,8 @@ public class Endereco {
 	}
 
 	public void setNumero(String numero) throws ParametroException {
-		if (numero == null || numero.isEmpty()) {
-			throw new ParametroException("numero");
+		if (numero == null || numero.isEmpty() || !numero.matches("[0-9]+")) {
+			throw new ParametroException("número");
 		} else {
 			this.numero = numero;
 		}
@@ -75,7 +76,7 @@ public class Endereco {
 
 	public void setCep(String cep) throws ParametroException {
 		if (cep == null || cep.isEmpty()) {
-			throw new ParametroException("cep");
+			throw new ParametroException("CEP");
 		} else {
 			this.cep = cep;
 		}
@@ -111,7 +112,7 @@ public class Endereco {
 
 	public void setPais(String pais) throws ParametroException {
 		if (pais == null || pais.isEmpty()) {
-			throw new ParametroException("bairro");
+			throw new ParametroException("país");
 		} else {
 			this.pais = pais;
 		}
