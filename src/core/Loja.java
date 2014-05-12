@@ -334,13 +334,12 @@ public class Loja {
 	public void create() {
 		Endereco enderecoTransportadora = null;
 		Endereco enderecoCliente = null;
-<<<<<<< HEAD
+
 		try{
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "",
 					"546", "78445-989", "Limeira", "Sï¿½o Paulo", "Brasil");
 			enderecoCliente = new Endereco("Rua X", "Vl. Chapecï¿½", "",
 					"78", "13000-000", "Campinas", "SP", "Brasil");
-		try{
 			cadastrarCliente("Victor Leal", "594.521.307-17", "victor@email.com", "3232-3232",
 					"9999-9898", true, "Normal", "1234", enderecoCliente);
 			cadastrarCliente("Paulo Paraluppi", "785.441.267-74", "paulo@email.com",
@@ -348,11 +347,12 @@ public class Loja {
 			cadastrarCliente("Guilherme Nogueira", "325.841.021-61", "guilherme@email.com",
 					"3232-3232", "9999-9898", true, "Gold", "1234", enderecoCliente);
 		}catch(ParametroException e){
-=======
+		}
+
 		try {
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "", "546",
-					"78445-989", "Limeira", "São Paulo", "Brasil");
-			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "", "78",
+					"78445-989", "Limeira", "Sï¿½o Paulo", "Brasil");
+			enderecoCliente = new Endereco("Rua X", "Vl. Chapecï¿½", "", "78",
 					"13000-000", "Campinas", "SP", "Brasil");
 			cadastrarCliente("Victor Leal", "594.521.307-17",
 					"victor@email.com", "3232-3232", "9999-9898", true,
@@ -364,7 +364,6 @@ public class Loja {
 					"guilherme@email.com", "3232-3232", "9999-9898", true,
 					"Gold", "1234", enderecoCliente);
 		} catch (ParametroException e) {
->>>>>>> FETCH_HEAD
 			System.out.println(e.getMessage());
 		}
 
@@ -391,4 +390,4 @@ public class Loja {
 				transportadoras.get("86.866.847/0001-79"));
 	}
 }
-}
+

@@ -15,6 +15,7 @@ import net.miginfocom.swing.MigLayout;
 import core.Endereco;
 import core.Loja;
 import exceptions.ParametroException;
+import exceptions.Validadores;
 
 public class TelaCadastroTransportadora extends GeneralPanel {
 	private static final long serialVersionUID = 1L;
@@ -191,7 +192,14 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String cnpjValidado = null;
 				String cnpj = ((String)txtCnpj.getValue());
+				if (Validadores.validaCNPJ(cnpj)) {
+					cnpjValidado = (txtCnpj.getText());
+					System.out.println("sucesso transp");
+				}else{
+					System.out.println("falha transp");	
+				}
 				System.out.println(txtCnpj.getValue());
 				String nomeFantasia = txtNomeFantasia.getText();
 				String razaoSocial = txtRazaoSocial.getText();
@@ -216,7 +224,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 					e1.printStackTrace();
 				}
 				
-				loja.cadastrarTransportadora(cnpj, nomeFantasia, razaoSocial,
+				loja.cadastrarTransportadora(cnpjValidado, nomeFantasia, razaoSocial,
 						prazoEntrega, taxaEntrega, endereco);
 				
 				showMensagemSucesso("Transportadora cadastrada com sucesso!");
