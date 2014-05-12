@@ -178,33 +178,7 @@ public class TelaCadastroCliente extends GeneralPanel {
 		lblEstado = new JLabel("Estado:");
 		add(lblEstado, "cell 2 5,alignx trailing");
 
-		comboBoxEstado = new JComboBox<String>();
-		comboBoxEstado.addItem("AC");
-		comboBoxEstado.addItem("AL");
-		comboBoxEstado.addItem("AP");
-		comboBoxEstado.addItem("AM");
-		comboBoxEstado.addItem("BA");
-		comboBoxEstado.addItem("CE");
-		comboBoxEstado.addItem("DF");
-		comboBoxEstado.addItem("ES");
-		comboBoxEstado.addItem("GO");
-		comboBoxEstado.addItem("MA");
-		comboBoxEstado.addItem("MT");
-		comboBoxEstado.addItem("MS");
-		comboBoxEstado.addItem("MG");
-		comboBoxEstado.addItem("PA");
-		comboBoxEstado.addItem("PB");
-		comboBoxEstado.addItem("PE");
-		comboBoxEstado.addItem("PI");
-		comboBoxEstado.addItem("RJ");
-		comboBoxEstado.addItem("RN");
-		comboBoxEstado.addItem("RS");
-		comboBoxEstado.addItem("RO");
-		comboBoxEstado.addItem("RR");
-		comboBoxEstado.addItem("SC");
-		comboBoxEstado.addItem("SP");
-		comboBoxEstado.addItem("SE");
-		comboBoxEstado.addItem("TO");
+		comboBoxEstado = new JComboBox<String>(this.estados);
 		comboBoxEstado.setEnabled(true);
 		add(comboBoxEstado, "cell 3 5,growx");
 	

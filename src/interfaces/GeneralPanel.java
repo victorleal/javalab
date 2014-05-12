@@ -34,6 +34,10 @@ public abstract class GeneralPanel extends JPanel {
 	// Controla a fonte
 	protected Font fonte;
 
+	protected String[] estados = { "AC", "AL", "AP", "AM", "BA", "CE", "DF",
+			"ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PE", "PI", "RJ",
+			"RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
+
 	public GeneralPanel(Loja l) {
 		this.loja = l;
 		panel = this;
