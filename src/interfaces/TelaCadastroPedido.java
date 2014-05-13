@@ -211,6 +211,10 @@ public class TelaCadastroPedido extends GeneralPanel {
 							textFieldQtdeProduto.setText("");
 							btnRemoverProduto.setEnabled(true);
 						}
+					} catch (NumberFormatException nfe) {
+						// Essa excecao so sera lancada para o parametro
+						// quantidade
+						showMensagemErro("Quantidade não informada!");
 					} catch (Exception e1) {
 						showMensagemErro(e1.getMessage());
 					}

@@ -205,7 +205,6 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 					String complemento = txtComplemento.getText();
 					String numero = txtEndNum.getText();
 					String cep = txtCep.getText();
-					System.out.println(txtCep.getValue());
 					String cidade = txtCidade.getText();
 					String estado = txtEstado.getText();
 					String pais = txtPais.getText();
@@ -219,6 +218,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 					showMensagemSucesso("Transportadora cadastrada com sucesso!");
 					showTelaPrincipal();
 				} catch (NumberFormatException nfe) {
+					System.out.println(nfe.getLocalizedMessage());
 					showMensagemErro("Por favor verifique o preenchimento dos campos!");
 				} catch (ParametroException exception) {
 					showMensagemErro(exception.getMessage());
