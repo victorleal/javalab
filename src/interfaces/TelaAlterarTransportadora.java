@@ -14,6 +14,7 @@ import javax.swing.text.MaskFormatter;
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
 import core.Transportadora;
+import exceptions.ParametroException;
 
 public class TelaAlterarTransportadora extends GeneralPanel {
 
@@ -133,12 +134,18 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 			public void actionPerformed(ActionEvent e) {
 				int prazoEntrega = Integer.parseInt(txtPrazoEntrega.getText());
 				double taxaEntrega = Double.parseDouble(txtValorFrete.getText());
-
+			
+			try{
 				loja.alterarTransportadora(t, taxaEntrega);
 				loja.alterarTransportadora(t, prazoEntrega);
 
 				showMensagemSucesso("Transportadora alterada com sucesso!");
-				showTelaPrincipal();
+				showTelaPrincipal(); 
+			} catch (NumberFormatException nfe) {
+				showMensagemErro("Por favor verifique o preenchimento dos campos Prazo de Entrega e Taxa de Entrega!");
+			} catch (ParametroException exception) {
+				showMensagemErro(exception.getMessage());
+			}
 			}
 		});
 		add(btnSalvar, "cell 0 5 2 1,alignx right,aligny bottom");

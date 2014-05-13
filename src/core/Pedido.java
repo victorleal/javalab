@@ -50,6 +50,39 @@ public class Pedido {
 	public Transportadora getTransportadora() {
 		return this.transportadora;
 	}
+	
+
+	private void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	private void setValorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	private void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+
+	private void setDataCompra(Calendar dataCompra) {
+		this.dataCompra = dataCompra;
+	}
+
+	private void setDataEntrega(Calendar dataEntrega) {
+		this.dataEntrega = dataEntrega;
+	}
+
+	private void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	private void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	private void setTransportadora(Transportadora transportadora) {
+		this.transportadora = transportadora;
+	}
 
 	public Pedido(Integer numero, double valorTotal, String formaPagamento,
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,

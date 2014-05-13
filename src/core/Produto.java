@@ -44,7 +44,7 @@ public class Produto {
 		return qtdeEstoque;
 	}
 
-	public void setConteudodaCaixa(String conteudodaCaixa) throws ParametroException {
+	private void setConteudodaCaixa(String conteudodaCaixa) throws ParametroException {
 		if (conteudodaCaixa == null || conteudodaCaixa.isEmpty()) {
 			throw new ParametroException("Conteúdo da Caixa");
 		} else {
@@ -52,7 +52,7 @@ public class Produto {
 		}
 	}
 
-	public void setDescricao(String descricao) throws ParametroException {
+	private void setDescricao(String descricao) throws ParametroException {
 		if (descricao == null || descricao.isEmpty()) {
 			throw new ParametroException("Descrição");
 		} else {
@@ -60,16 +60,12 @@ public class Produto {
 		}
 	}
 
-	public void setPeso(double peso)  throws ParametroException {
+	private void setPeso(double peso)  throws ParametroException {
 		if (peso == 0) {
 			throw new ParametroException("Peso");
 		} else {
 			this.peso = peso;
 		}
-	}
-
-	public void setPedidosProduto(Map<Integer, Pedido> pedidosProduto) {
-		this.pedidosProduto = pedidosProduto;
 	}
 	
 

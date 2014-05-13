@@ -60,7 +60,7 @@ public class Transportadora {
 		}
 	}
 	
-	public void setCnpj(String cnpj) throws ParametroException {
+	private void setCnpj(String cnpj) throws ParametroException {
 		if (cnpj == null || cnpj.isEmpty() || !Validadores.validaCPF(cnpj)) {
 			throw new ParametroException("CNPJ");
 		} else {
@@ -68,7 +68,7 @@ public class Transportadora {
 		}
 	}
 
-	public void setNomeFantasia(String nomeFantasia) throws ParametroException {
+	private void setNomeFantasia(String nomeFantasia) throws ParametroException {
 		if (nomeFantasia == null || nomeFantasia.isEmpty()) {
 			throw new ParametroException("Nome Fantasia");
 		} else {
@@ -76,7 +76,7 @@ public class Transportadora {
 		}
 	}
 
-	public void setRazaoSocial(String razaoSocial) throws ParametroException {
+	private void setRazaoSocial(String razaoSocial) throws ParametroException {
 		if (razaoSocial == null || razaoSocial.isEmpty()) {
 			throw new ParametroException("Razão Social");
 		} else {
@@ -85,7 +85,7 @@ public class Transportadora {
 	}
 
 
-	public void setEndereco(Endereco endereco) {
+	private void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
