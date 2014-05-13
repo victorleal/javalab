@@ -68,7 +68,7 @@ public class Loja {
 		if (clientes.containsKey(cpf)) {
 			return clientes.get(cpf);
 		} else {
-			throw new Exception("Cliente não encontrado");
+			throw new Exception("Cliente nï¿½o encontrado");
 		}
 	}
 
@@ -115,25 +115,30 @@ public class Loja {
 	public void cadastrarPedido(double valorTotal, String formaPagamento,
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
 			Cliente cliente, Map<Produto, Integer> produtosPedido,
-			Transportadora transportadora) {
+			Transportadora transportadora) throws ParametroException {
 		Calendar cal = Calendar.getInstance();
 		cal.set(2014, 3, 25);
 		Calendar cal2 = Calendar.getInstance();
 		cal2.set(2014, 4, 5);
-
-		Pedido p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
+		Pedido p;
+		
+		try{
+		p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
 				endereco, cliente, produtosPedido, transportadora);
 		gerenciadorPedidos.adicionaPedido(cliente, transportadora,
 				produtosPedido.keySet(), p);
 		pedidos.put(idPedido, p);
 		idPedido++;
+		} catch (ParametroException e) {
+			throw e;
+		}
 	}
 
 	public Pedido consultarPedido(Integer numero) throws Exception {
 		if (pedidos.containsKey(numero)) {
 			return pedidos.get(numero);
 		} else {
-			throw new Exception("Pedido não encontrado");
+			throw new Exception("Pedido nï¿½o encontrado");
 		}
 	}
 
@@ -182,7 +187,7 @@ public class Loja {
 		if (produtos.containsKey(id)) {
 			return produtos.get(id);
 		} else {
-			throw new Exception("Produto não encontrado");
+			throw new Exception("Produto nï¿½o encontrado");
 		}
 	}
 
@@ -252,33 +257,24 @@ public class Loja {
 		if (transportadoras.containsKey(cnpj)) {
 			return transportadoras.get(cnpj);
 		} else {
-			throw new Exception("Transportadora não encontrada");
+			throw new Exception("Transportadora nï¿½o encontrada");
 		}
 	}
 
-	public void alterarTransportadora(Transportadora transp, int prazo) {
+	public void alterarTransportadora(Transportadora transp, int prazo) throws ParametroException {
 		Transportadora t = null;
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
-			try {
 				t.setPrazoEntrega(prazo);
-			} catch (ParametroException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
-	public void alterarTransportadora(Transportadora transp, double taxa) {
+	public void alterarTransportadora(Transportadora transp, double taxa) throws ParametroException {
 		Transportadora t = null;
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
-			try {
 				t.setTaxaEntrega(taxa);
-			} catch (ParametroException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 		}
 	}
 
@@ -360,8 +356,8 @@ public class Loja {
 
 		try {
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "", "546",
-					"78445-989", "Limeira", "São Paulo", "Brasil");
-			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "", "78",
+					"78445-989", "Limeira", "Sï¿½o Paulo", "Brasil");
+			enderecoCliente = new Endereco("Rua X", "Vl. Chapecï¿½", "", "78",
 					"13000-000", "Campinas", "SP", "Brasil");
 			cadastrarCliente("Victor Leal", "594.521.307-17",
 					"victor@email.com", "3232-3232", "9999-9898", true,

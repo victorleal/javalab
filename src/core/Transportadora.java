@@ -60,7 +60,7 @@ public class Transportadora {
 		}
 	}
 	
-	public void setCnpj(String cnpj) throws ParametroException {
+	private void setCnpj(String cnpj) throws ParametroException {
 		if (cnpj == null || cnpj.isEmpty() || !Validadores.validaCPF(cnpj)) {
 			throw new ParametroException("CNPJ");
 		} else {
@@ -68,7 +68,7 @@ public class Transportadora {
 		}
 	}
 
-	public void setNomeFantasia(String nomeFantasia) throws ParametroException {
+	private void setNomeFantasia(String nomeFantasia) throws ParametroException {
 		if (nomeFantasia == null || nomeFantasia.isEmpty()) {
 			throw new ParametroException("Nome Fantasia");
 		} else {
@@ -76,7 +76,7 @@ public class Transportadora {
 		}
 	}
 
-	public void setRazaoSocial(String razaoSocial) throws ParametroException {
+	private void setRazaoSocial(String razaoSocial) throws ParametroException {
 		if (razaoSocial == null || razaoSocial.isEmpty()) {
 			throw new ParametroException("Razão Social");
 		} else {
@@ -85,15 +85,19 @@ public class Transportadora {
 	}
 
 
+	private void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public Transportadora(String cnpj, String nomeFantasia, String razaoSocial,
 			int prazoEntrega, double taxaEntrega, Endereco endereco) throws ParametroException {
 		super();
-		this.cnpj = cnpj;
-		this.nomeFantasia = nomeFantasia;
-		this.razaoSocial = razaoSocial;
-		this.prazoEntrega = prazoEntrega;
-		this.taxaEntrega = taxaEntrega;
-		this.endereco = endereco;
+		setCnpj(cnpj);
+		setRazaoSocial(razaoSocial);
+		setNomeFantasia(nomeFantasia);
+		setPrazoEntrega(prazoEntrega);
+		setTaxaEntrega(taxaEntrega);
+		setEndereco(endereco);
 		this.pedidosTransportadora = new HashMap<Integer, Pedido>();
 	}
 

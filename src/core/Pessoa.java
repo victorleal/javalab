@@ -89,7 +89,7 @@ public class Pessoa {
 		super();
 		try {
 			setNome(nome);
-			System.out.println(cpf);
+			//System.out.println(cpf);
 			setCpf(cpf);
 			setCelular(celular);
 			setTelefone(telefone);

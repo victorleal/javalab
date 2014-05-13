@@ -286,12 +286,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 				try {
 					endereco = new Endereco(rua, bairro, complemento,
 							numero, cep, cidade, estado, pais);
-				} catch (ParametroException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				try {
+		
 					loja.alterarCliente(nome, cpf, email, telefone, celular,
 							isClienteFidelidade, programaFidelidade,
 							numeroFidelidade, endereco);

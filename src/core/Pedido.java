@@ -3,6 +3,8 @@ package core;
 import java.util.Calendar;
 import java.util.Map;
 
+import exceptions.ParametroException;
+
 public class Pedido {
 
 	private Integer numero;
@@ -50,24 +52,67 @@ public class Pedido {
 	public Transportadora getTransportadora() {
 		return this.transportadora;
 	}
+	
+	private void setFormaPagamento(String formaPagamento) throws ParametroException {
+		if (formaPagamento == null || formaPagamento.isEmpty()) {
+			throw new ParametroException("Forma Pagamento");
+		} else {
+		this.formaPagamento = formaPagamento;
+		}
+	}
+
+	private void setDataCompra(Calendar dataCompra)  throws ParametroException {
+		if (dataCompra == null) {
+			throw new ParametroException("Data Compra");
+		} else {
+		this.dataCompra = dataCompra;
+		}
+	}
+
+	private void setDataEntrega(Calendar dataEntrega) throws ParametroException {
+		if (dataEntrega == null) {
+			throw new ParametroException("Data Entrega");
+		} else {
+		this.dataEntrega = dataEntrega;
+		}
+	}
+
+	private void setEndereco(Endereco endereco) throws ParametroException {
+		if (endereco == null) {
+			throw new ParametroException("endereco");
+		} else {
+			this.endereco = endereco;
+		}
+	}
+
+	private void setCliente(Cliente cliente) throws ParametroException {
+		if (cliente == null) {
+			throw new ParametroException("cliente");
+		} else {
+			this.cliente = cliente;
+		}
+	}
+
 
 	public Pedido(Integer numero, double valorTotal, String formaPagamento,
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
 			Cliente cliente, Map<Produto, Integer> produtosPedido,
-			Transportadora transportadora) {
+			Transportadora transportadora) throws ParametroException {
 		super();
 		this.numero = numero;
 		this.valorTotal = valorTotal;
-		this.formaPagamento = formaPagamento;
-		this.dataCompra = dataCompra;
-		this.dataEntrega = dataEntrega;
-		this.endereco = endereco;
-		this.cliente = cliente;
 		if (produtosPedido == null) {
 			System.out.println("Lista Vazia");
 		}
 		this.produtosPedido = produtosPedido;
 		this.transportadora = transportadora;
+		
+		setCliente(cliente);
+		setEndereco(endereco);
+		setFormaPagamento(formaPagamento);
+		setDataCompra(dataCompra);
+		setDataEntrega(dataEntrega);
+
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import core.Endereco;
 import core.Loja;
 import core.Produto;
 import core.Transportadora;
+import exceptions.ParametroException;
 
 public class TelaCadastroPedido extends GeneralPanel {
 	/**
@@ -358,12 +359,16 @@ public class TelaCadastroPedido extends GeneralPanel {
 							} catch (ParseException ex) {
 								showMensagemErro();
 							}
+							try{
 							loja.cadastrarPedido(valorTotal, formaPagamento,
 									calDataCompra, calDataEntrega, endereco, c,
 									produtos, t);
 
 							showMensagemSucesso("Pedido cadastrado com sucesso!");
 							showTelaPrincipal();
+							} catch (ParametroException exception) {
+								showMensagemErro(exception.getMessage());
+							}
 						} else {
 							showMensagemErro("Pedido sem produtos!");
 						}
