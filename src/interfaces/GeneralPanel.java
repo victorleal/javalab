@@ -80,6 +80,12 @@ public abstract class GeneralPanel extends JPanel {
 				JOptionPane.ERROR_MESSAGE);
 	}
 
+	public void showMensagemErro() {
+		JOptionPane.showMessageDialog(panel,
+				"Uma ação inesperada ocorreu. Por favor, reinicie o programa.",
+				"Atenção", JOptionPane.ERROR_MESSAGE);
+	}
+
 	class AtivoListener implements AncestorListener {
 
 		@Override

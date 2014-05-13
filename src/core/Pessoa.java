@@ -29,7 +29,7 @@ public class Pessoa {
 	}
 
 	private void setCpf(String cpf) throws ParametroException {
-		if (cpf == null || cpf.isEmpty() || Validadores.validaCPF(cpf)) {
+		if (cpf == null || cpf.isEmpty() || !Validadores.validaCPF(cpf)) {
 			throw new ParametroException("cpf");
 		} else {
 			this.cpf = cpf;

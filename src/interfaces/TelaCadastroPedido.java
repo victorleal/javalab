@@ -72,7 +72,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 	private JButton btnLimpar;
 	private JButton btnBuscaCliente;
 	private JButton btnAdicionarEndereco;
-	
+
 	// Mascaras
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraData;
@@ -105,15 +105,14 @@ public class TelaCadastroPedido extends GeneralPanel {
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][][grow][][grow][67.00]",
 				"[][][][14.00][][][][][][grow,bottom]"));
-		
+
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
 			mascaraCpf.setPlaceholderCharacter('_');
 			mascaraData = new MaskFormatter("##/##/####");
 			mascaraData.setPlaceholderCharacter('_');
 		} catch (ParseException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+			showMensagemErro();
 		}
 
 		lblNumero = new JLabel("Número:");
@@ -137,23 +136,22 @@ public class TelaCadastroPedido extends GeneralPanel {
 		btnBuscaCliente = new JButton("Buscar");
 		btnBuscaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				try {
 					textFieldCpfCliente.commitEdit();
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				String cpf = ((String)textFieldCpfCliente.getValue());
-				System.out.println(textFieldCpfCliente.getValue());
-				c = loja.consultarCliente(cpf);
-				if (c != null) {
+
+					String cpf = ((String) textFieldCpfCliente.getValue());
+					System.out.println(textFieldCpfCliente.getValue());
+					c = loja.consultarCliente(cpf);
 					textFieldNome.setText(c.getNome());
 					panelProdutos.setVisible(true);
 					panelTransportadora.setVisible(true);
 					comboBoxFormaPagamento.setEnabled(true);
 					textFieldDataCompra.setEnabled(true);
-				} else {
-					showMensagemErro("Cliente não encontrado");
+				} catch (ParseException e2) {
+					showMensagemErro("O CPF não foi preenchido");
+				} catch (Exception e1) {
+					showMensagemErro(e1.getMessage());
 				}
 			}
 		});
@@ -193,22 +191,29 @@ public class TelaCadastroPedido extends GeneralPanel {
 		buttonAdicionarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textFieldCodigoProduto.getText().isEmpty()) {
-					Produto p = loja.consultarProduto(Integer
-							.parseInt(textFieldCodigoProduto.getText()));
-
-					produtosAdicionados++;
-					TableModel model = (TableModel) table.getModel();
-					model.addRow(new Object[] { p,
-							textFieldQtdeProduto.getText() });
-					Double valorTotal = Double.parseDouble(textFieldValorTotal
-							.getText());
-					int qtde = Integer.parseInt(textFieldQtdeProduto.getText());
-					valorTotal += (p.getValorUnitario() * qtde);
-					produtos.put(p, qtde);
-					textFieldValorTotal.setText(valorTotal.toString());
-					textFieldCodigoProduto.setText("");
-					textFieldQtdeProduto.setText("");
-					btnRemoverProduto.setEnabled(true);
+					Produto p;
+					try {
+						p = loja.consultarProduto(Integer
+								.parseInt(textFieldCodigoProduto.getText()));
+						int qtde = Integer.parseInt(textFieldQtdeProduto
+								.getText());
+						if (p.getQtdeEstoque() >= qtde) {
+							produtosAdicionados++;
+							TableModel model = (TableModel) table.getModel();
+							model.addRow(new Object[] { p,
+									textFieldQtdeProduto.getText() });
+							Double valorTotal = Double
+									.parseDouble(textFieldValorTotal.getText());
+							valorTotal += (p.getValorUnitario() * qtde);
+							produtos.put(p, qtde);
+							textFieldValorTotal.setText(valorTotal.toString());
+							textFieldCodigoProduto.setText("");
+							textFieldQtdeProduto.setText("");
+							btnRemoverProduto.setEnabled(true);
+						}
+					} catch (Exception e1) {
+						showMensagemErro(e1.getMessage());
+					}
 				} else {
 					showMensagemErro("Produto não encontrado");
 				}
@@ -347,7 +352,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 								calDataCompra.setTime(sdf.parse(dataCompra));
 								calDataEntrega.setTime(sdf.parse(dataEntrega));
 							} catch (ParseException ex) {
-								ex.printStackTrace();
+								showMensagemErro();
 							}
 							loja.cadastrarPedido(valorTotal, formaPagamento,
 									calDataCompra, calDataEntrega, endereco, c,
