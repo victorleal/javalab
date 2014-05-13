@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -48,6 +49,9 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 	private JTextField txtPais;
 	private JTextField txtRazaoSocial;
 	private JFormattedTextField txtCep;
+	
+	// comboBox
+	private JComboBox<String> comboBoxEstado;
 
 	// Mascaras
 	private MaskFormatter mascaraCnpj;
@@ -161,9 +165,9 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		lblEstado = new JLabel("Estado:");
 		add(lblEstado, "cell 2 5,alignx trailing");
 
-		txtEstado = new JTextField();
-		add(txtEstado, "cell 3 5,growx");
-		txtEstado.setColumns(10);
+		comboBoxEstado = new JComboBox<String>(this.estados);
+		comboBoxEstado.setEnabled(true);
+		add(comboBoxEstado, "cell 3 5,growx");
 
 		lblPais = new JLabel("Pa\u00EDs:");
 		add(lblPais, "cell 4 5,alignx trailing");
