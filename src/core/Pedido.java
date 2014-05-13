@@ -3,6 +3,8 @@ package core;
 import java.util.Calendar;
 import java.util.Map;
 
+import exceptions.ParametroException;
+
 public class Pedido {
 
 	private Integer numero;
@@ -72,30 +74,35 @@ public class Pedido {
 		this.dataEntrega = dataEntrega;
 	}
 
-	private void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	private void setEndereco(Endereco endereco) throws ParametroException {
+		if (endereco == null) {
+			throw new ParametroException("endereco");
+		} else {
+			this.endereco = endereco;
+		}
 	}
 
-	private void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	private void setCliente(Cliente cliente) throws ParametroException {
+		if (cliente == null) {
+			throw new ParametroException("cliente");
+		} else {
+			this.cliente = cliente;
+		}
 	}
 
-	private void setTransportadora(Transportadora transportadora) {
-		this.transportadora = transportadora;
-	}
 
 	public Pedido(Integer numero, double valorTotal, String formaPagamento,
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
 			Cliente cliente, Map<Produto, Integer> produtosPedido,
-			Transportadora transportadora) {
+			Transportadora transportadora) throws ParametroException {
 		super();
 		this.numero = numero;
+		setCliente(cliente);
+		setEndereco(endereco);
 		this.valorTotal = valorTotal;
 		this.formaPagamento = formaPagamento;
 		this.dataCompra = dataCompra;
 		this.dataEntrega = dataEntrega;
-		this.endereco = endereco;
-		this.cliente = cliente;
 		if (produtosPedido == null) {
 			System.out.println("Lista Vazia");
 		}

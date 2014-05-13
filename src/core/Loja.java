@@ -115,18 +115,23 @@ public class Loja {
 	public void cadastrarPedido(double valorTotal, String formaPagamento,
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
 			Cliente cliente, Map<Produto, Integer> produtosPedido,
-			Transportadora transportadora) {
+			Transportadora transportadora) throws ParametroException {
 		Calendar cal = Calendar.getInstance();
 		cal.set(2014, 3, 25);
 		Calendar cal2 = Calendar.getInstance();
 		cal2.set(2014, 4, 5);
-
-		Pedido p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
+		Pedido p;
+		
+		try{
+		p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
 				endereco, cliente, produtosPedido, transportadora);
 		gerenciadorPedidos.adicionaPedido(cliente, transportadora,
 				produtosPedido.keySet(), p);
 		pedidos.put(idPedido, p);
 		idPedido++;
+		} catch (ParametroException e) {
+			throw e;
+		}
 	}
 
 	public Pedido consultarPedido(Integer numero) throws Exception {
@@ -264,16 +269,12 @@ public class Loja {
 		}
 	}
 
-	public void alterarTransportadora(Transportadora transp, double taxa) {
+	public void alterarTransportadora(Transportadora transp, double taxa) throws ParametroException {
 		Transportadora t = null;
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
-			try {
 				t.setTaxaEntrega(taxa);
-			} catch (ParametroException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 		}
 	}
 
