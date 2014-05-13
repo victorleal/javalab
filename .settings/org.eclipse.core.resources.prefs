@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/core/Loja.java=UTF-8
+encoding//src/core/Produto.java=UTF-8
 encoding//src/exceptions/ParametroException.java=UTF-8
 encoding//src/interfaces/GeneralPanel.java=UTF-8
 encoding//src/interfaces/TelaAlterarCliente.java=UTF-8

@@ -52,20 +52,21 @@ public class Pedido {
 	public Transportadora getTransportadora() {
 		return this.transportadora;
 	}
-	
-	private void setFormaPagamento(String formaPagamento) throws ParametroException {
+
+	private void setFormaPagamento(String formaPagamento)
+			throws ParametroException {
 		if (formaPagamento == null || formaPagamento.isEmpty()) {
 			throw new ParametroException("Forma Pagamento");
 		} else {
-		this.formaPagamento = formaPagamento;
+			this.formaPagamento = formaPagamento;
 		}
 	}
 
-	private void setDataCompra(Calendar dataCompra)  throws ParametroException {
+	private void setDataCompra(Calendar dataCompra) throws ParametroException {
 		if (dataCompra == null) {
 			throw new ParametroException("Data Compra");
 		} else {
-		this.dataCompra = dataCompra;
+			this.dataCompra = dataCompra;
 		}
 	}
 
@@ -73,7 +74,7 @@ public class Pedido {
 		if (dataEntrega == null) {
 			throw new ParametroException("Data Entrega");
 		} else {
-		this.dataEntrega = dataEntrega;
+			this.dataEntrega = dataEntrega;
 		}
 	}
 
@@ -93,7 +94,6 @@ public class Pedido {
 		}
 	}
 
-
 	public Pedido(Integer numero, double valorTotal, String formaPagamento,
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
 			Cliente cliente, Map<Produto, Integer> produtosPedido,
@@ -106,7 +106,7 @@ public class Pedido {
 		}
 		this.produtosPedido = produtosPedido;
 		this.transportadora = transportadora;
-		
+
 		setCliente(cliente);
 		setEndereco(endereco);
 		setFormaPagamento(formaPagamento);
