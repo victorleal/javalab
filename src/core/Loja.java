@@ -121,14 +121,14 @@ public class Loja {
 		Calendar cal2 = Calendar.getInstance();
 		cal2.set(2014, 4, 5);
 		Pedido p;
-		
-		try{
-		p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
-				endereco, cliente, produtosPedido, transportadora);
-		gerenciadorPedidos.adicionaPedido(cliente, transportadora,
-				produtosPedido.keySet(), p);
-		pedidos.put(idPedido, p);
-		idPedido++;
+
+		try {
+			p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
+					endereco, cliente, produtosPedido, transportadora);
+			gerenciadorPedidos.adicionaPedido(cliente, transportadora,
+					produtosPedido.keySet(), p);
+			pedidos.put(idPedido, p);
+			idPedido++;
 		} catch (ParametroException e) {
 			throw e;
 		}
@@ -160,19 +160,19 @@ public class Loja {
 
 	/********** PRODUTOS **********/
 	public void cadastrarProduto(String categoria, String conteudodaCaixa,
-			String descricao, double peso, double valorUnitario, int qtdeEstoque) throws ParametroException {
-			Produto p;
-		
-			try {
-				p = new Produto(idProduto, categoria, conteudodaCaixa,
-				descricao, peso, valorUnitario, qtdeEstoque);
-			} catch (ParametroException e) {
-				throw e;
+			String descricao, double peso, double valorUnitario, int qtdeEstoque)
+			throws ParametroException {
+		Produto p;
+
+		try {
+			p = new Produto(idProduto, categoria, conteudodaCaixa, descricao,
+					peso, valorUnitario, qtdeEstoque);
+			if (!produtos.containsKey(p.getId())) {
+				produtos.put(p.getId(), p);
+				idProduto++;
 			}
-		
-		if (!produtos.containsKey(p.getId())) {
-			produtos.put(p.getId(), p);
-			idProduto++;
+		} catch (ParametroException e) {
+			throw e;
 		}
 	}
 
@@ -184,27 +184,32 @@ public class Loja {
 	}
 
 	public Produto consultarProduto(Integer id) throws Exception {
+		for (Integer i : produtos.keySet()) {
+			System.out.println(i);
+		}
 		if (produtos.containsKey(id)) {
 			return produtos.get(id);
 		} else {
-			throw new Exception("Produto n�o encontrado");
+			throw new Exception("Produto não encontrado");
 		}
 	}
 
-	public void alterarProduto(Produto prod, double valor)  throws ParametroException {
+	public void alterarProduto(Produto prod, double valor)
+			throws ParametroException {
 		Produto p = null;
 		if (produtos.containsKey(prod.getId())) {
 			p = produtos.get(prod.getId());
-				p.setValorUnitario(valor);
+			p.setValorUnitario(valor);
 
 		}
 	}
 
-	public void alterarProduto(Produto prod, int estoque)  throws ParametroException {
+	public void alterarProduto(Produto prod, int estoque)
+			throws ParametroException {
 		Produto p = null;
 		if (produtos.containsKey(prod.getId())) {
 			p = produtos.get(prod.getId());
-				p.setQtdeEstoque(estoque);
+			p.setQtdeEstoque(estoque);
 		}
 	}
 
@@ -220,24 +225,25 @@ public class Loja {
 		return this.produtoAlteracao;
 	}
 
-	public void devolverQuantidadeEstoque(Produto p, int qtde)  throws ParametroException {
+	public void devolverQuantidadeEstoque(Produto p, int qtde)
+			throws ParametroException {
 		int qtdeAtual = p.getQtdeEstoque();
 		int qtdeNova = qtdeAtual + qtde;
-			p.setQtdeEstoque(qtdeNova);
+		p.setQtdeEstoque(qtdeNova);
 
 	}
 
 	/********** TRANSPORTADORA **********/
 	public void cadastrarTransportadora(String cnpj, String nomeFantasia,
 			String razaoSocial, int prazoEntrega, double taxaEntrega,
-			Endereco endereco)  throws ParametroException {
+			Endereco endereco) throws ParametroException {
 		Transportadora t;
-			try{
-				t = new Transportadora(cnpj, nomeFantasia, razaoSocial,
-						prazoEntrega, taxaEntrega, endereco);
-			} catch (ParametroException e) {
-				throw e;
-			}
+		try {
+			t = new Transportadora(cnpj, nomeFantasia, razaoSocial,
+					prazoEntrega, taxaEntrega, endereco);
+		} catch (ParametroException e) {
+			throw e;
+		}
 
 		if (!transportadoras.containsKey(t.getCnpj())) {
 			transportadoras.put(cnpj, t);
@@ -261,20 +267,22 @@ public class Loja {
 		}
 	}
 
-	public void alterarTransportadora(Transportadora transp, int prazo) throws ParametroException {
+	public void alterarTransportadora(Transportadora transp, int prazo)
+			throws ParametroException {
 		Transportadora t = null;
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
-				t.setPrazoEntrega(prazo);
+			t.setPrazoEntrega(prazo);
 		}
 	}
 
-	public void alterarTransportadora(Transportadora transp, double taxa) throws ParametroException {
+	public void alterarTransportadora(Transportadora transp, double taxa)
+			throws ParametroException {
 		Transportadora t = null;
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
-				t.setTaxaEntrega(taxa);
-		
+			t.setTaxaEntrega(taxa);
+
 		}
 	}
 
@@ -356,8 +364,8 @@ public class Loja {
 
 		try {
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "", "546",
-					"78445-989", "Limeira", "S�o Paulo", "Brasil");
-			enderecoCliente = new Endereco("Rua X", "Vl. Chapec�", "", "78",
+					"78445-989", "Limeira", "São Paulo", "Brasil");
+			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "", "78",
 					"13000-000", "Campinas", "SP", "Brasil");
 			cadastrarCliente("Victor Leal", "594.521.307-17",
 					"victor@email.com", "3232-3232", "9999-9898", true,
@@ -372,28 +380,32 @@ public class Loja {
 			System.out.println("CREATE: " + e.getMessage());
 		}
 
-		try{
-		cadastrarTransportadora("86.866.847/0001-79", "Transportadora Java",
-				"JSE Transportes", 90, 125.00, enderecoTransportadora);
-		cadastrarTransportadora("21.643.533/0001-61", "Transportadora Oracle",
-				"JSE Transportes", 90, 125.00, enderecoTransportadora);
-		cadastrarProduto(Categorias.TABLETS.name(), "Tablet e carregador",
-				"Tablet Samsung Galaxy Note", 500, 798.00, 10);
-		cadastrarProduto(Categorias.TELEFONIA.name(), "Celular e carregador",
-				"Smartphone iPhone 5S 32GB", 450, 2500.00, 10);
-		cadastrarProduto(Categorias.GAMES.name(), "DVD game e manual",
-				"FIFA 14", 100, 98.00, 10);
-		cadastrarProduto(Categorias.VIDEOSOM.name(),
-				"Leitor de Bluray e cabos conexao", "Leitor de Bluray Sony",
-				420, 300.00, 10);
-		cadastrarProduto(Categorias.COMPUTADORES.name(), "HD e cabos conexao",
-				"HD SATA III Western Digital 1TB", 320, 210.00, 10);
-		HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
-		map.put(produtos.get(1), 2);
-		cadastrarPedido(1250, "A vista", Calendar.getInstance(),
-				Calendar.getInstance(), enderecoCliente,
-				clientes.get("594.521.307-17"), map,
-				transportadoras.get("86.866.847/0001-79"));
+		try {
+			cadastrarTransportadora("86.866.847/0001-79",
+					"Transportadora Java", "JSE Transportes", 90, 125.00,
+					enderecoTransportadora);
+			cadastrarTransportadora("21.643.533/0001-61",
+					"Transportadora Oracle", "JSE Transportes", 90, 125.00,
+					enderecoTransportadora);
+			cadastrarProduto(Categorias.TABLETS.name(), "Tablet e carregador",
+					"Tablet Samsung Galaxy Note", 500, 798.00, 10);
+			cadastrarProduto(Categorias.TELEFONIA.name(),
+					"Celular e carregador", "Smartphone iPhone 5S 32GB", 450,
+					2500.00, 10);
+			cadastrarProduto(Categorias.GAMES.name(), "DVD game e manual",
+					"FIFA 14", 100, 98.00, 10);
+			cadastrarProduto(Categorias.VIDEOSOM.name(),
+					"Leitor de Bluray e cabos conexao",
+					"Leitor de Bluray Sony", 420, 300.00, 10);
+			cadastrarProduto(Categorias.COMPUTADORES.name(),
+					"HD e cabos conexao", "HD SATA III Western Digital 1TB",
+					320, 210.00, 10);
+			HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
+			map.put(produtos.get(1), 2);
+			cadastrarPedido(1250, "A vista", Calendar.getInstance(),
+					Calendar.getInstance(), enderecoCliente,
+					clientes.get("594.521.307-17"), map,
+					transportadoras.get("86.866.847/0001-79"));
 		} catch (ParametroException e) {
 			System.out.println(e.getMessage());
 		}

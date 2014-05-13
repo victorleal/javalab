@@ -211,6 +211,9 @@ public class TelaCadastroPedido extends GeneralPanel {
 							textFieldCodigoProduto.setText("");
 							textFieldQtdeProduto.setText("");
 							btnRemoverProduto.setEnabled(true);
+						} else {
+							showMensagemErro("A quantidade desejada é maior que a quantidade em estoque. \nQuantidade em estoque atual: "
+									+ p.getQtdeEstoque());
 						}
 					} catch (NumberFormatException nfe) {
 						// Essa excecao so sera lancada para o parametro
@@ -220,7 +223,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 						showMensagemErro(e1.getMessage());
 					}
 				} else {
-					showMensagemErro("Produto não encontrado");
+					showMensagemErro("Código Produto não informado!");
 				}
 			}
 		});
@@ -356,16 +359,16 @@ public class TelaCadastroPedido extends GeneralPanel {
 										"dd/MM/yyyy");
 								calDataCompra.setTime(sdf.parse(dataCompra));
 								calDataEntrega.setTime(sdf.parse(dataEntrega));
-							} catch (ParseException ex) {
-								showMensagemErro();
-							}
-							try{
-							loja.cadastrarPedido(valorTotal, formaPagamento,
-									calDataCompra, calDataEntrega, endereco, c,
-									produtos, t);
 
-							showMensagemSucesso("Pedido cadastrado com sucesso!");
-							showTelaPrincipal();
+								loja.cadastrarPedido(valorTotal,
+										formaPagamento, calDataCompra,
+										calDataEntrega, endereco, c, produtos,
+										t);
+
+								showMensagemSucesso("Pedido cadastrado com sucesso!");
+								showTelaPrincipal();
+							} catch (ParseException ex) {
+								showMensagemErro("Erro! Verifique os campos de data.");
 							} catch (ParametroException exception) {
 								showMensagemErro(exception.getMessage());
 							}

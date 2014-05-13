@@ -35,16 +35,17 @@ public class Produto {
 	public double getPeso() {
 		return peso;
 	}
-	
+
 	public double getValorUnitario() {
 		return valorUnitario;
 	}
-	
+
 	public int getQtdeEstoque() {
 		return qtdeEstoque;
 	}
 
-	private void setConteudodaCaixa(String conteudodaCaixa) throws ParametroException {
+	private void setConteudodaCaixa(String conteudodaCaixa)
+			throws ParametroException {
 		if (conteudodaCaixa == null || conteudodaCaixa.isEmpty()) {
 			throw new ParametroException("Conteúdo da Caixa");
 		} else {
@@ -60,18 +61,18 @@ public class Produto {
 		}
 	}
 
-	private void setPeso(double peso)  throws ParametroException {
+	private void setPeso(double peso) throws ParametroException {
 		if (peso == 0) {
 			throw new ParametroException("Peso");
 		} else {
 			this.peso = peso;
 		}
 	}
-	
 
-	public void setValorUnitario(double valorUnitario) throws ParametroException {
+	public void setValorUnitario(double valorUnitario)
+			throws ParametroException {
 		if (valorUnitario == 0) {
-			throw new ParametroException("Valor Unitario");
+			throw new ParametroException("Valor Unitário");
 		} else {
 			this.valorUnitario = valorUnitario;
 		}
@@ -86,15 +87,16 @@ public class Produto {
 	}
 
 	public Produto(int id, String categoria, String conteudodaCaixa,
-			String descricao, double peso, double valorUnitario, int qtdeEstoque) throws ParametroException {
+			String descricao, double peso, double valorUnitario, int qtdeEstoque)
+			throws ParametroException {
 		super();
-		
+
 		setConteudodaCaixa(conteudodaCaixa);
 		setDescricao(descricao);
 		setValorUnitario(valorUnitario);
 		setQtdeEstoque(qtdeEstoque);
 		setPeso(peso);
-		
+
 		this.id = id;
 		this.categoria = categoria;
 		this.pedidosProduto = new HashMap<Integer, Pedido>();
