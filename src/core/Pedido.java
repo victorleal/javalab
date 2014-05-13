@@ -53,25 +53,28 @@ public class Pedido {
 		return this.transportadora;
 	}
 	
-
-	private void setNumero(Integer numero) {
-		this.numero = numero;
-	}
-
-	private void setValorTotal(double valorTotal) {
-		this.valorTotal = valorTotal;
-	}
-
-	private void setFormaPagamento(String formaPagamento) {
+	private void setFormaPagamento(String formaPagamento) throws ParametroException {
+		if (formaPagamento == null || formaPagamento.isEmpty()) {
+			throw new ParametroException("Forma Pagamento");
+		} else {
 		this.formaPagamento = formaPagamento;
+		}
 	}
 
-	private void setDataCompra(Calendar dataCompra) {
+	private void setDataCompra(Calendar dataCompra)  throws ParametroException {
+		if (dataCompra == null) {
+			throw new ParametroException("Data Compra");
+		} else {
 		this.dataCompra = dataCompra;
+		}
 	}
 
-	private void setDataEntrega(Calendar dataEntrega) {
+	private void setDataEntrega(Calendar dataEntrega) throws ParametroException {
+		if (dataEntrega == null) {
+			throw new ParametroException("Data Entrega");
+		} else {
 		this.dataEntrega = dataEntrega;
+		}
 	}
 
 	private void setEndereco(Endereco endereco) throws ParametroException {
@@ -97,17 +100,19 @@ public class Pedido {
 			Transportadora transportadora) throws ParametroException {
 		super();
 		this.numero = numero;
-		setCliente(cliente);
-		setEndereco(endereco);
 		this.valorTotal = valorTotal;
-		this.formaPagamento = formaPagamento;
-		this.dataCompra = dataCompra;
-		this.dataEntrega = dataEntrega;
 		if (produtosPedido == null) {
 			System.out.println("Lista Vazia");
 		}
 		this.produtosPedido = produtosPedido;
 		this.transportadora = transportadora;
+		
+		setCliente(cliente);
+		setEndereco(endereco);
+		setFormaPagamento(formaPagamento);
+		setDataCompra(dataCompra);
+		setDataEntrega(dataEntrega);
+
 	}
 
 	@Override
