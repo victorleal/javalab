@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
 import core.Produto;
+import exceptions.ParametroException;
 
 public class TelaAlterarProduto extends GeneralPanel {
 	/**
@@ -131,8 +132,12 @@ public class TelaAlterarProduto extends GeneralPanel {
 						.parseDouble(textFieldValorUnitario.getText());
 				int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
 						.getText());
-				loja.alterarProduto(p, qtdeEstoque);
-				loja.alterarProduto(p, valorUnitario);
+				try {
+					loja.alterarProduto(p, qtdeEstoque);
+					loja.alterarProduto(p, valorUnitario);
+				} catch (ParametroException e1) {
+					showMensagemErro(e1.getMessage());
+				}
 
 				showMensagemSucesso("Produto alterado com sucesso!");
 				showTelaPrincipal();

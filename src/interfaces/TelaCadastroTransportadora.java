@@ -15,7 +15,6 @@ import net.miginfocom.swing.MigLayout;
 import core.Endereco;
 import core.Loja;
 import exceptions.ParametroException;
-import exceptions.Validadores;
 
 public class TelaCadastroTransportadora extends GeneralPanel {
 	private static final long serialVersionUID = 1L;
@@ -49,7 +48,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 	private JTextField txtPais;
 	private JTextField txtRazaoSocial;
 	private JFormattedTextField txtCep;
-	
+
 	// Mascaras
 	private MaskFormatter mascaraCnpj;
 	private MaskFormatter mascaraCEP;
@@ -68,8 +67,10 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		setBorder(new TitledBorder(null, "Cadastrar Transportadora",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 
-		setLayout(new MigLayout("", "[55.00][113.00,grow][][pref!][][91.00,grow]", "[][][][][][][grow,bottom]"));
-		
+		setLayout(new MigLayout("",
+				"[55.00][113.00,grow][][pref!][][91.00,grow]",
+				"[][][][][][][grow,bottom]"));
+
 		try {
 			mascaraCnpj = new MaskFormatter("##.###.###/####-##");
 			mascaraCnpj.setPlaceholderCharacter('_');
@@ -129,8 +130,6 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		add(txtEndNum, "cell 5 3,growx");
 		txtEndNum.setColumns(10);
 
-	
-		
 		lblComplemento = new JLabel("Complemento:");
 		add(lblComplemento, "cell 0 4,alignx trailing");
 
@@ -180,11 +179,11 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 6 6 1,alignx right");
-		
+
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				limparCampos();	
+				limparCampos();
 			}
 		});
 		add(btnLimpar, "cell 0 6,alignx right,aligny bottom");
@@ -192,39 +191,35 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String cnpjValidado = null;
-				String cnpj = ((String)txtCnpj.getValue());
-				if (Validadores.validaCNPJ(cnpj)) {
-					cnpjValidado = (txtCnpj.getText());
-					System.out.println("sucesso transp");
-				}else{
-					System.out.println("falha transp");	
-				}
-				System.out.println(txtCnpj.getValue());
-				String nomeFantasia = txtNomeFantasia.getText();
-				String razaoSocial = txtRazaoSocial.getText();
-				int prazoEntrega = Integer.parseInt(txtPrazoEntrega.getText());
-				double taxaEntrega = Double.parseDouble(txtTaxaEntrega
-						.getText());
-				String rua = textFieldEndereco.getText();
-				String bairro = txtBairro.getText();
-				String complemento = txtComplemento.getText();
-				String numero = txtEndNum.getText();
-				String cep = txtCep.getText();
-				System.out.println(txtCep.getValue());
-				String cidade = txtCidade.getText();
-				String estado = txtEstado.getText();
-				String pais = txtPais.getText();
-				Endereco endereco = null;
+				int prazoEntrega = 0;
+				double taxaEntrega = 0;
 				try {
-					endereco = new Endereco(rua, bairro, complemento,
-							numero, cep, cidade, estado, pais);
-				
-				loja.cadastrarTransportadora(cnpjValidado, nomeFantasia, razaoSocial,
-						prazoEntrega, taxaEntrega, endereco);
-				
-				showMensagemSucesso("Transportadora cadastrada com sucesso!");
-				showTelaPrincipal();			
+					prazoEntrega = Integer.parseInt(txtPrazoEntrega.getText());
+					taxaEntrega = Double.parseDouble(txtTaxaEntrega.getText());
+
+					String cnpj = ((String) txtCnpj.getValue());
+					String nomeFantasia = txtNomeFantasia.getText();
+					String razaoSocial = txtRazaoSocial.getText();
+					String rua = textFieldEndereco.getText();
+					String bairro = txtBairro.getText();
+					String complemento = txtComplemento.getText();
+					String numero = txtEndNum.getText();
+					String cep = txtCep.getText();
+					System.out.println(txtCep.getValue());
+					String cidade = txtCidade.getText();
+					String estado = txtEstado.getText();
+					String pais = txtPais.getText();
+					Endereco endereco = null;
+					endereco = new Endereco(rua, bairro, complemento, numero,
+							cep, cidade, estado, pais);
+
+					loja.cadastrarTransportadora(cnpj, nomeFantasia,
+							razaoSocial, prazoEntrega, taxaEntrega, endereco);
+
+					showMensagemSucesso("Transportadora cadastrada com sucesso!");
+					showTelaPrincipal();
+				} catch (NumberFormatException nfe) {
+					showMensagemErro("Por favor verifique o preenchimento dos campos!");
 				} catch (ParametroException exception) {
 					showMensagemErro(exception.getMessage());
 				}
@@ -249,6 +244,5 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		txtRazaoSocial.setText("");
 		txtCep.setText("");
 	}
-	
-	
+
 }

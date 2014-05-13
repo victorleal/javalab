@@ -61,7 +61,7 @@ public class Transportadora {
 	}
 	
 	public void setCnpj(String cnpj) throws ParametroException {
-		if (cnpj == null || cnpj.isEmpty() || Validadores.validaCPF(cnpj)) {
+		if (cnpj == null || cnpj.isEmpty() || !Validadores.validaCPF(cnpj)) {
 			throw new ParametroException("CNPJ");
 		} else {
 			this.cnpj = cnpj;
