@@ -202,6 +202,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 					taxaEntrega = Double.parseDouble(txtTaxaEntrega.getText());
 
 					String cnpj = ((String) txtCnpj.getValue());
+					System.out.println(cnpj);
 					String nomeFantasia = txtNomeFantasia.getText();
 					String razaoSocial = txtRazaoSocial.getText();
 					String rua = textFieldEndereco.getText();
@@ -210,7 +211,8 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 					String numero = txtEndNum.getText();
 					String cep = txtCep.getText();
 					String cidade = txtCidade.getText();
-					String estado = txtEstado.getText();
+					String estado = (String) comboBoxEstado.getSelectedItem();
+				//	String estado = txtEstado.getText();
 					String pais = txtPais.getText();
 					Endereco endereco = null;
 					endereco = new Endereco(rua, bairro, complemento, numero,

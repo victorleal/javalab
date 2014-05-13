@@ -9,11 +9,19 @@ public class Validadores {
 		int iDigito1 = 0, iDigito2 = 0, iRestoDivisao = 0;
 		String strDigitoVerificador, strDigitoResultado;
 
+
 		if (!strCpf.substring(0, 1).equals("")) {
 			try {
 				strCpf = strCpf.replace('.', ' ');
 				strCpf = strCpf.replace('-', ' ');
 				strCpf = strCpf.replaceAll(" ", "");
+				if 		(strCpf.equals("00000000000") || strCpf.equals("11111111111") ||  
+				        strCpf.equals("22222222222") || strCpf.equals("33333333333") ||  
+				        strCpf.equals("44444444444") || strCpf.equals("55555555555") ||  
+				        strCpf.equals("66666666666") || strCpf.equals("77777777777") ||  
+				        strCpf.equals("88888888888") || strCpf.equals("99999999999") ||  
+				       (strCpf.length() != 11))  
+				       return(false); 
 				System.out.println(strCpf);
 				for (int iCont = 1; iCont < strCpf.length() - 1; iCont++) {
 					iDigitoCPF = Integer.valueOf(
@@ -54,6 +62,8 @@ public class Validadores {
 		int iSoma = 0, iDigito;
 		char[] chCaracteresCNPJ;
 		String strCNPJ_Calculado;
+		
+		
 
 		if (!strCNPJ.substring(0, 1).equals("")) {
 			try {
