@@ -42,7 +42,7 @@ public class Pessoa {
 
 	public void setEndereco(Endereco endereco) throws ParametroException {
 		if (endereco == null) {
-			throw new ParametroException("endereço");
+			throw new ParametroException("endereï¿½o");
 		} else {
 			this.endereco = endereco;
 		}
