@@ -22,6 +22,7 @@ public class Validadores {
 				        strCpf.equals("88888888888") || strCpf.equals("99999999999") ||  
 				       (strCpf.length() != 11))  
 				       return(false); 
+				
 				System.out.println(strCpf);
 				for (int iCont = 1; iCont < strCpf.length() - 1; iCont++) {
 					iDigitoCPF = Integer.valueOf(
