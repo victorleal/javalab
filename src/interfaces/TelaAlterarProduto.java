@@ -136,6 +136,7 @@ public class TelaAlterarProduto extends GeneralPanel {
 
 				showMensagemSucesso("Produto alterado com sucesso!");
 				showTelaPrincipal();
+				
 			}
 		});
 		add(btnSalvar, "cell 0 6 2 1,alignx right");

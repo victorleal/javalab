@@ -156,9 +156,16 @@ public class Loja {
 
 	/********** PRODUTOS **********/
 	public void cadastrarProduto(String categoria, String conteudodaCaixa,
-			String descricao, double peso, double valorUnitario, int qtdeEstoque) {
-		Produto p = new Produto(idProduto, categoria, conteudodaCaixa,
+			String descricao, double peso, double valorUnitario, int qtdeEstoque) throws ParametroException {
+			Produto p;
+		
+			try {
+				p = new Produto(idProduto, categoria, conteudodaCaixa,
 				descricao, peso, valorUnitario, qtdeEstoque);
+			} catch (ParametroException e) {
+				throw e;
+			}
+		
 		if (!produtos.containsKey(p.getId())) {
 			produtos.put(p.getId(), p);
 			idProduto++;
@@ -180,19 +187,20 @@ public class Loja {
 		return p;
 	}
 
-	public void alterarProduto(Produto prod, double valor) {
+	public void alterarProduto(Produto prod, double valor)  throws ParametroException {
 		Produto p = null;
 		if (produtos.containsKey(prod.getId())) {
 			p = produtos.get(prod.getId());
-			p.setValorUnitario(valor);
+				p.setValorUnitario(valor);
+
 		}
 	}
 
-	public void alterarProduto(Produto prod, int estoque) {
+	public void alterarProduto(Produto prod, int estoque)  throws ParametroException {
 		Produto p = null;
 		if (produtos.containsKey(prod.getId())) {
 			p = produtos.get(prod.getId());
-			p.setQtdeEstoque(estoque);
+				p.setQtdeEstoque(estoque);
 		}
 	}
 
@@ -208,18 +216,24 @@ public class Loja {
 		return this.produtoAlteracao;
 	}
 
-	public void devolverQuantidadeEstoque(Produto p, int qtde) {
+	public void devolverQuantidadeEstoque(Produto p, int qtde)  throws ParametroException {
 		int qtdeAtual = p.getQtdeEstoque();
 		int qtdeNova = qtdeAtual + qtde;
-		p.setQtdeEstoque(qtdeNova);
+			p.setQtdeEstoque(qtdeNova);
+
 	}
 
 	/********** TRANSPORTADORA **********/
 	public void cadastrarTransportadora(String cnpj, String nomeFantasia,
 			String razaoSocial, int prazoEntrega, double taxaEntrega,
-			Endereco endereco) {
-		Transportadora t = new Transportadora(cnpj, nomeFantasia, razaoSocial,
-				prazoEntrega, taxaEntrega, endereco);
+			Endereco endereco)  throws ParametroException {
+		Transportadora t;
+			try{
+				t = new Transportadora(cnpj, nomeFantasia, razaoSocial,
+						prazoEntrega, taxaEntrega, endereco);
+			} catch (ParametroException e) {
+				throw e;
+			}
 
 		if (!transportadoras.containsKey(t.getCnpj())) {
 			transportadoras.put(cnpj, t);
@@ -247,7 +261,12 @@ public class Loja {
 		Transportadora t = null;
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
-			t.setPrazoEntrega(prazo);
+			try {
+				t.setPrazoEntrega(prazo);
+			} catch (ParametroException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -255,7 +274,12 @@ public class Loja {
 		Transportadora t = null;
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
-			t.setTaxaEntrega(taxa);
+			try {
+				t.setTaxaEntrega(taxa);
+			} catch (ParametroException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -367,6 +391,7 @@ public class Loja {
 			System.out.println(e.getMessage());
 		}
 
+		try{
 		cadastrarTransportadora("86.866.847/0001-79", "Transportadora Java",
 				"JSE Transportes", 90, 125.00, enderecoTransportadora);
 		cadastrarTransportadora("21.643.533/0001-61", "Transportadora Oracle",
@@ -388,6 +413,9 @@ public class Loja {
 				Calendar.getInstance(), enderecoCliente,
 				clientes.get("594.521.307-17"), map,
 				transportadoras.get("86.866.847/0001-79"));
+		} catch (ParametroException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
 

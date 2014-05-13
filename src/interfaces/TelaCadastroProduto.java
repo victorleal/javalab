@@ -1,9 +1,7 @@
 package interfaces;
 
-import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -13,10 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
+import exceptions.ParametroException;
 
 public class TelaCadastroProduto extends GeneralPanel {
 	/**
@@ -163,12 +161,15 @@ public class TelaCadastroProduto extends GeneralPanel {
 				System.out.println(valorUnitario);
 				int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
 						.getText());
-
-				loja.cadastrarProduto(categoria, conteudodaCaixa, descricao,
+				try{
+					loja.cadastrarProduto(categoria, conteudodaCaixa, descricao,
 						peso, valorUnitario, qtdeEstoque);
 
-				showMensagemSucesso("Produto cadastrado com sucesso!");
-				showTelaPrincipal();
+					showMensagemSucesso("Produto cadastrado com sucesso!");
+					showTelaPrincipal();
+				} catch (ParametroException exception) {
+				showMensagemErro(exception.getMessage());
+				}
 			}
 		});
 		add(btnCadastrar, "cell 0 7,alignx right,aligny bottom");

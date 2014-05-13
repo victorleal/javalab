@@ -3,6 +3,9 @@ package core;
 import java.util.HashMap;
 import java.util.Map;
 
+import exceptions.ParametroException;
+import exceptions.Validadores;
+
 public class Transportadora {
 
 	private String cnpj;
@@ -37,20 +40,53 @@ public class Transportadora {
 		return prazoEntrega;
 	}
 
-	public void setPrazoEntrega(int prazoEntrega) {
-		this.prazoEntrega = prazoEntrega;
+	public void setPrazoEntrega(int prazoEntrega) throws ParametroException {
+		if (prazoEntrega == 0) {
+			throw new ParametroException("Prazo de Entrega");
+		} else {
+			this.prazoEntrega = prazoEntrega;
+		}
 	}
 
 	public double getTaxaEntrega() {
 		return taxaEntrega;
 	}
 
-	public void setTaxaEntrega(double taxaEntrega) {
-		this.taxaEntrega = taxaEntrega;
+	public void setTaxaEntrega(double taxaEntrega) throws ParametroException {
+		if (taxaEntrega == 0) {
+			throw new ParametroException("Taxa de Entrega");
+		} else {
+			this.taxaEntrega = taxaEntrega;
+		}
+	}
+	
+	public void setCnpj(String cnpj) throws ParametroException {
+		if (cnpj == null || cnpj.isEmpty() || Validadores.validaCPF(cnpj)) {
+			throw new ParametroException("CNPJ");
+		} else {
+			this.cnpj = cnpj;
+		}
 	}
 
+	public void setNomeFantasia(String nomeFantasia) throws ParametroException {
+		if (nomeFantasia == null || nomeFantasia.isEmpty()) {
+			throw new ParametroException("Nome Fantasia");
+		} else {
+			this.nomeFantasia = nomeFantasia;
+		}
+	}
+
+	public void setRazaoSocial(String razaoSocial) throws ParametroException {
+		if (razaoSocial == null || razaoSocial.isEmpty()) {
+			throw new ParametroException("Razão Social");
+		} else {
+			this.razaoSocial = razaoSocial;
+		}
+	}
+
+
 	public Transportadora(String cnpj, String nomeFantasia, String razaoSocial,
-			int prazoEntrega, double taxaEntrega, Endereco endereco) {
+			int prazoEntrega, double taxaEntrega, Endereco endereco) throws ParametroException {
 		super();
 		this.cnpj = cnpj;
 		this.nomeFantasia = nomeFantasia;
@@ -112,5 +148,7 @@ public class Transportadora {
 			return false;
 		return true;
 	}
+
+
 
 }

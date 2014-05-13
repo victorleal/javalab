@@ -219,16 +219,15 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 				try {
 					endereco = new Endereco(rua, bairro, complemento,
 							numero, cep, cidade, estado, pais);
-				} catch (ParametroException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
 				loja.cadastrarTransportadora(cnpjValidado, nomeFantasia, razaoSocial,
 						prazoEntrega, taxaEntrega, endereco);
 				
 				showMensagemSucesso("Transportadora cadastrada com sucesso!");
-				showTelaPrincipal();
+				showTelaPrincipal();			
+				} catch (ParametroException exception) {
+					showMensagemErro(exception.getMessage());
+				}
 			}
 		});
 		add(btnCadastrar, "cell 0 6 6 1,alignx right");

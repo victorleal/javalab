@@ -3,6 +3,8 @@ package core;
 import java.util.HashMap;
 import java.util.Map;
 
+import exceptions.ParametroException;
+
 public class Produto {
 
 	private int id;
@@ -33,25 +35,62 @@ public class Produto {
 	public double getPeso() {
 		return peso;
 	}
-
+	
 	public double getValorUnitario() {
 		return valorUnitario;
 	}
-
-	public void setValorUnitario(double valorUnitario) {
-		this.valorUnitario = valorUnitario;
-	}
-
+	
 	public int getQtdeEstoque() {
 		return qtdeEstoque;
 	}
 
-	public void setQtdeEstoque(int qtdeEstoque) {
-		this.qtdeEstoque = qtdeEstoque;
+	public void setConteudodaCaixa(String conteudodaCaixa) throws ParametroException {
+		if (conteudodaCaixa == null || conteudodaCaixa.isEmpty()) {
+			throw new ParametroException("Conteúdo da Caixa");
+		} else {
+			this.conteudodaCaixa = conteudodaCaixa;
+		}
+	}
+
+	public void setDescricao(String descricao) throws ParametroException {
+		if (descricao == null || descricao.isEmpty()) {
+			throw new ParametroException("Descrição");
+		} else {
+			this.descricao = descricao;
+		}
+	}
+
+	public void setPeso(double peso)  throws ParametroException {
+		if (peso == 0) {
+			throw new ParametroException("Peso");
+		} else {
+			this.peso = peso;
+		}
+	}
+
+	public void setPedidosProduto(Map<Integer, Pedido> pedidosProduto) {
+		this.pedidosProduto = pedidosProduto;
+	}
+	
+
+	public void setValorUnitario(double valorUnitario) throws ParametroException {
+		if (valorUnitario == 0) {
+			throw new ParametroException("Valor Unitario");
+		} else {
+			this.valorUnitario = valorUnitario;
+		}
+	}
+
+	public void setQtdeEstoque(int qtdeEstoque) throws ParametroException {
+		if (qtdeEstoque == 0) {
+			throw new ParametroException("Quantidade no Estoque");
+		} else {
+			this.qtdeEstoque = qtdeEstoque;
+		}
 	}
 
 	public Produto(int id, String categoria, String conteudodaCaixa,
-			String descricao, double peso, double valorUnitario, int qtdeEstoque) {
+			String descricao, double peso, double valorUnitario, int qtdeEstoque) throws ParametroException {
 		super();
 		this.id = id;
 		this.categoria = categoria;
