@@ -92,13 +92,15 @@ public class Produto {
 	public Produto(int id, String categoria, String conteudodaCaixa,
 			String descricao, double peso, double valorUnitario, int qtdeEstoque) throws ParametroException {
 		super();
+		
+		setConteudodaCaixa(conteudodaCaixa);
+		setDescricao(descricao);
+		setValorUnitario(valorUnitario);
+		setQtdeEstoque(qtdeEstoque);
+		setPeso(peso);
+		
 		this.id = id;
 		this.categoria = categoria;
-		this.conteudodaCaixa = conteudodaCaixa;
-		this.descricao = descricao;
-		this.peso = peso;
-		this.valorUnitario = valorUnitario;
-		this.qtdeEstoque = qtdeEstoque;
 		this.pedidosProduto = new HashMap<Integer, Pedido>();
 	}
 

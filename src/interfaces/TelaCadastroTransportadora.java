@@ -219,7 +219,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 					showMensagemSucesso("Transportadora cadastrada com sucesso!");
 					showTelaPrincipal();
 				} catch (NumberFormatException nfe) {
-					showMensagemErro("Por favor verifique o preenchimento dos campos!");
+					showMensagemErro("Por favor verifique o preenchimento dos campos Prazo de Entrega e Taxa de Entrega!");
 				} catch (ParametroException exception) {
 					showMensagemErro(exception.getMessage());
 				}

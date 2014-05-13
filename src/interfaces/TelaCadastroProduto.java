@@ -152,23 +152,28 @@ public class TelaCadastroProduto extends GeneralPanel {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String categoria = (String) comboBoxCategoria.getSelectedItem();
-				String conteudodaCaixa = textFieldConteudo.getText();
-				String descricao = textFieldDescricao.getText();
-				double peso = Double.parseDouble(textFieldPeso.getText());
-				double valorUnitario = Double
-						.parseDouble(textFieldValorUnitario.getText());
-				System.out.println(valorUnitario);
-				int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
-						.getText());
+				double peso = 0;
+				double valorUnitario = 0;
+				int qtdeEstoque = 0;
+				
 				try{
+					peso = Double.parseDouble(textFieldPeso.getText());
+					valorUnitario = Double.parseDouble(textFieldValorUnitario.getText());
+					qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque.getText());
+					
+					String categoria = (String) comboBoxCategoria.getSelectedItem();
+					String conteudodaCaixa = textFieldConteudo.getText();
+					String descricao = textFieldDescricao.getText();
+				
 					loja.cadastrarProduto(categoria, conteudodaCaixa, descricao,
 						peso, valorUnitario, qtdeEstoque);
 
 					showMensagemSucesso("Produto cadastrado com sucesso!");
 					showTelaPrincipal();
-				} catch (ParametroException exception) {
-				showMensagemErro(exception.getMessage());
+				}   catch (NumberFormatException nfe) {
+					showMensagemErro("Por favor verifique o preenchimento dos campos Peso, Valor Unitario ou Quantidade em Estoque!");
+			    } 	catch (ParametroException exception) {
+					showMensagemErro(exception.getMessage());
 				}
 			}
 		});

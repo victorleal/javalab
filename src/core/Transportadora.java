@@ -85,15 +85,19 @@ public class Transportadora {
 	}
 
 
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public Transportadora(String cnpj, String nomeFantasia, String razaoSocial,
 			int prazoEntrega, double taxaEntrega, Endereco endereco) throws ParametroException {
 		super();
-		this.cnpj = cnpj;
-		this.nomeFantasia = nomeFantasia;
-		this.razaoSocial = razaoSocial;
-		this.prazoEntrega = prazoEntrega;
-		this.taxaEntrega = taxaEntrega;
-		this.endereco = endereco;
+		setCnpj(cnpj);
+		setRazaoSocial(razaoSocial);
+		setNomeFantasia(nomeFantasia);
+		setPrazoEntrega(prazoEntrega);
+		setTaxaEntrega(taxaEntrega);
+		setEndereco(endereco);
 		this.pedidosTransportadora = new HashMap<Integer, Pedido>();
 	}
 
