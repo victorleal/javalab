@@ -128,17 +128,18 @@ public class TelaAlterarProduto extends GeneralPanel {
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				double valorUnitario = Double
-						.parseDouble(textFieldValorUnitario.getText());
-				int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
-						.getText());
+			
 				try {
+					double valorUnitario = Double
+							.parseDouble(textFieldValorUnitario.getText());
+					int qtdeEstoque = Integer.parseInt(textFieldQtdeEstoque
+							.getText());
 					loja.alterarProduto(p, qtdeEstoque);
 					loja.alterarProduto(p, valorUnitario);
 					showMensagemSucesso("Produto alterado com sucesso!");
 					showTelaPrincipal();
 				} catch (NumberFormatException nfe) {
-					showMensagemErro("Por favor verifique o preenchimento dos campos Peso, Valor Unitario ou Quantidade em Estoque!");
+					showMensagemErro("Por favor verifique o preenchimento dos campos Valor Unitario ou Quantidade em Estoque!");
 				} catch (ParametroException e1) {
 					showMensagemErro(e1.getMessage());
 				}

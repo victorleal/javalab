@@ -37,7 +37,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 	private JTextField textFieldBairro;
 	private JFormattedTextField textFieldCep;
 	private JTextField textFieldPais;
-	private JTextField textFieldEstado;
+	//private JTextField textFieldEstado;
 	private JTextField textFieldCidade;
 	private JFormattedTextField textFieldTelefone;
 	private JTextField textFieldEmail;
@@ -62,6 +62,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 	private JLabel lblEstado;
 	private JLabel lblCidade;
 	private JLabel lblEmail;
+	private JLabel lblCpf;
 	
 	// Mascaras
 	private MaskFormatter mascaraCpf;
@@ -72,7 +73,8 @@ public class TelaAlterarCliente extends GeneralPanel {
 	// ComboBox
 	private JComboBox<String> comboBoxFidelidade;
 	private JComboBox<String> comboBoxPrograma;
-	private JLabel lblCpf;
+	private JComboBox<String> comboBoxEstado;
+	
 
 	/**
 	 * Create the panel.
@@ -194,10 +196,10 @@ public class TelaAlterarCliente extends GeneralPanel {
 		lblEstado = new JLabel("Estado:");
 		add(lblEstado, "cell 2 4,alignx trailing");
 
-		textFieldEstado = new JTextField();
-		textFieldEstado.setText(c.getEndereco().getEstado());
-		add(textFieldEstado, "cell 3 4,growx");
-		textFieldEstado.setColumns(10);
+		comboBoxEstado = new JComboBox<String>(this.estados);
+		comboBoxEstado.setEnabled(true);
+		comboBoxEstado.setSelectedItem(c.getEndereco().getEstado());
+		add(comboBoxEstado, "cell 3 4,growx");
 
 		lblPas = new JLabel("País:");
 		add(lblPas, "cell 4 4,alignx trailing");
@@ -278,7 +280,7 @@ public class TelaAlterarCliente extends GeneralPanel {
 				String bairro = textFieldBairro.getText();
 				String numero = textFieldEndNum.getText();
 				String cidade = textFieldBairro.getText();
-				String estado = textFieldEstado.getText();
+				String estado = (String) comboBoxEstado.getSelectedItem();
 				String pais = textFieldPais.getText();
 				String complemento = textFieldComplemento.getText();
 				String cep = textFieldCep.getText();

@@ -270,9 +270,12 @@ public class Loja {
 	public void alterarTransportadora(Transportadora transp, int prazo)
 			throws ParametroException {
 		Transportadora t = null;
+		try{
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
 			t.setPrazoEntrega(prazo);
+		}} catch (ParametroException e) {
+			throw e;
 		}
 	}
 

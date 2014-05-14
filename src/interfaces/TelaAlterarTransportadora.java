@@ -132,10 +132,11 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+			try{
 				int prazoEntrega = Integer.parseInt(txtPrazoEntrega.getText());
 				double taxaEntrega = Double.parseDouble(txtValorFrete.getText());
 			
-			try{
 				loja.alterarTransportadora(t, taxaEntrega);
 				loja.alterarTransportadora(t, prazoEntrega);
 

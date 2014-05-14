@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,7 +33,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	private JTextField textFieldNumero;
 	private JTextField textFieldBairro;
 	private JTextField textFieldCidade;
-	private JTextField textFieldEstado;
+	//private JTextField textFieldEstado;
 	private JTextField textFieldPais;
 	private JTextField textFieldComplemento;
 	private JFormattedTextField textFieldCep;
@@ -46,6 +47,15 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	private JLabel lblPas;
 	private JLabel lblComplemento;
 	private JLabel lblCep;
+	
+	// Estados
+	protected String[] estados = { "AC", "AL", "AP", "AM", "BA", "CE", "DF",
+			"ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PE", "PI", "RJ",
+			"RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
+	
+	// Combo Box
+	
+	private JComboBox<String> comboBoxEstado;
 	
 	// Mascaras
 	private MaskFormatter mascaraCEP;
@@ -107,9 +117,9 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		lblEstado = new JLabel("Estado:");
 		add(lblEstado, "cell 2 2,alignx trailing");
 
-		textFieldEstado = new JTextField();
-		add(textFieldEstado, "cell 3 2,growx");
-		textFieldEstado.setColumns(10);
+		comboBoxEstado = new JComboBox<String>(this.estados);
+		comboBoxEstado.setEnabled(true);
+		add(comboBoxEstado, "cell 3 2,growx");
 
 		lblPas = new JLabel("Pa\u00EDs:");
 		add(lblPas, "cell 0 3,alignx trailing");
@@ -150,7 +160,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 		String bairro = textFieldBairro.getText();
 		String complemento = textFieldComplemento.getText();
 		String cidade = textFieldCidade.getText();
-		String estado = textFieldEstado.getText();
+		String estado = (String) comboBoxEstado.getSelectedItem();
 		String pais = textFieldPais.getText();
 		String cep = textFieldCep.getText();
 
