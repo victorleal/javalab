@@ -90,9 +90,13 @@ public class TelaConsultaCliente extends GeneralPanel {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (loja.getClienteAlteracao() != null) {
-					loja.removerCliente(loja.getClienteAlteracao().getCpf());
-					showMensagemSucesso("Cliente removido com sucesso");
-					showTelaPrincipal();
+					try {
+						loja.removerCliente(loja.getClienteAlteracao().getCpf());
+						showMensagemSucesso("Cliente removido com sucesso");
+						showTelaPrincipal();
+					} catch (Exception e) {
+						showMensagemErro("Cliente não encontrado");
+					}
 				} else {
 					showMensagemErro("Nenhum cliente selecionado");
 				}

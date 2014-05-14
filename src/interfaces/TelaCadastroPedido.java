@@ -254,6 +254,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				TableModel model = (TableModel) table.getModel();
 				model.removeRow(produtosAdicionados - 1);
+				produtosAdicionados--;
 				if (model.getRowCount() == 0) {
 					btnRemoverProduto.setEnabled(false);
 				}

@@ -86,9 +86,13 @@ public class TelaConsultaProduto extends GeneralPanel {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (loja.getProdutoAlteracao() != null) {
-					loja.removerProduto(loja.getProdutoAlteracao().getId());
-					showMensagemSucesso("Produto removido com sucesso");
-					showTelaPrincipal();
+					try {
+						loja.removerProduto(loja.getProdutoAlteracao().getId());
+						showMensagemSucesso("Produto removido com sucesso");
+						showTelaPrincipal();
+					} catch (Exception e1) {
+						showMensagemErro("Produto não encontrado");
+					}
 				} else {
 					showMensagemErro("Nenhum produto selecionado");
 				}

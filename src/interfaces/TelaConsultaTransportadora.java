@@ -74,7 +74,8 @@ public class TelaConsultaTransportadora extends GeneralPanel {
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (loja.getTransportadoraAlteracao() != null) {
-					addTela(new TelaAlterarTransportadora(loja), "AlterarTransportadora");
+					addTela(new TelaAlterarTransportadora(loja),
+							"AlterarTransportadora");
 					showTela("AlterarTransportadora");
 				} else {
 					showMensagemErro("Nenhuma transportadora selecionada");
@@ -87,9 +88,14 @@ public class TelaConsultaTransportadora extends GeneralPanel {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (loja.getTransportadoraAlteracao() != null) {
-					loja.removerTransportadora(loja.getTransportadoraAlteracao().getCnpj());
-					showMensagemSucesso("Transportadora removida com sucesso");
-					showTelaPrincipal();
+					try {
+						loja.removerTransportadora(loja
+								.getTransportadoraAlteracao().getCnpj());
+						showMensagemSucesso("Transportadora removida com sucesso");
+						showTelaPrincipal();
+					} catch (Exception e1) {
+						showMensagemErro("Transportadora não encontrada");
+					}
 				} else {
 					showMensagemErro("Nenhuma transportadora selecionada");
 				}

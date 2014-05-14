@@ -68,17 +68,16 @@ public class Loja {
 		if (clientes.containsKey(cpf)) {
 			return clientes.get(cpf);
 		} else {
-			throw new Exception("Cliente n�o encontrado");
+			throw new Exception("Cliente não encontrado");
 		}
 	}
 
-	public void removerCliente(String cpf) {
+	public void removerCliente(String cpf) throws Exception {
 		if (clientes.containsKey(cpf)
 				&& gerenciadorPedidos.consultaPedidosCliente(clientes.get(cpf))) {
 			clientes.remove(cpf);
 		} else {
-			System.out.println("O Cliente com o CPF " + cpf
-					+ " n�o foi encontrado.");
+			throw new Exception("Cliente não encontrado");
 		}
 	}
 
@@ -138,7 +137,7 @@ public class Loja {
 		if (pedidos.containsKey(numero)) {
 			return pedidos.get(numero);
 		} else {
-			throw new Exception("Pedido n�o encontrado");
+			throw new Exception("Pedido não encontrado");
 		}
 	}
 
@@ -150,7 +149,7 @@ public class Loja {
 			itensPedidoTemp = p.getProdutosPedido();
 			gerenciadorPedidos.removePedido(cliente, transportadora,
 					itensPedidoTemp.keySet(), p);
-			for(Produto prod : itensPedidoTemp.keySet()){
+			for (Produto prod : itensPedidoTemp.keySet()) {
 				int qtdeAtual = prod.getQtdeEstoque();
 				int qtdePedido = itensPedidoTemp.get(prod);
 				try {
@@ -185,10 +184,12 @@ public class Loja {
 		}
 	}
 
-	public void removerProduto(Integer id) {
+	public void removerProduto(Integer id) throws Exception {
 		if (produtos.containsKey(id)
 				&& gerenciadorPedidos.consultaPedidosProduto(produtos.get(id))) {
 			produtos.remove(id);
+		} else {
+			throw new Exception("Produto não encontrado");
 		}
 	}
 
@@ -259,12 +260,14 @@ public class Loja {
 		}
 	}
 
-	public void removerTransportadora(String cnpj) {
+	public void removerTransportadora(String cnpj) throws Exception {
 		if (transportadoras.containsKey(cnpj)
 				&& gerenciadorPedidos
 						.consultaPedidosTransportadora(transportadoras
 								.get(cnpj))) {
 			transportadoras.remove(cnpj);
+		} else {
+			throw new Exception("Transportadora não encontrada");
 		}
 	}
 
@@ -279,11 +282,12 @@ public class Loja {
 	public void alterarTransportadora(Transportadora transp, int prazo)
 			throws ParametroException {
 		Transportadora t = null;
-		try{
-		if (transportadoras.containsKey(transp.getCnpj())) {
-			t = transportadoras.get(transp.getCnpj());
-			t.setPrazoEntrega(prazo);
-		}} catch (ParametroException e) {
+		try {
+			if (transportadoras.containsKey(transp.getCnpj())) {
+				t = transportadoras.get(transp.getCnpj());
+				t.setPrazoEntrega(prazo);
+			}
+		} catch (ParametroException e) {
 			throw e;
 		}
 	}
