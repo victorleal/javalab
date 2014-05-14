@@ -113,7 +113,7 @@ public class TelaCadastroTransportadora extends GeneralPanel {
 		add(txtPrazoEntrega, "cell 3 2,growx");
 		txtPrazoEntrega.setColumns(10);
 
-		lblTaxaDeEntrega = new JLabel("Taxa de Entrega:");
+		lblTaxaDeEntrega = new JLabel("Taxa de Entrega (%):");
 		add(lblTaxaDeEntrega, "cell 4 2,alignx trailing");
 
 		txtTaxaEntrega = new JTextField();

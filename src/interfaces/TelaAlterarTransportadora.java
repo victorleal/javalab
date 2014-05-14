@@ -113,7 +113,7 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 		add(txtPrazoEntrega, "cell 1 3,growx");
 		txtPrazoEntrega.setColumns(10);
 
-		lblValorDoFrete = new JLabel("Valor do Frete:");
+		lblValorDoFrete = new JLabel("Taxa de Entrega (%):");
 		add(lblValorDoFrete, "cell 0 4,alignx trailing");
 
 		txtValorFrete = new JTextField();
