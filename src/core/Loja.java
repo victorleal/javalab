@@ -113,15 +113,12 @@ public class Loja {
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
 			Cliente cliente, Map<Produto, Integer> produtosPedido,
 			Transportadora transportadora) throws ParametroException {
-		Calendar cal = Calendar.getInstance();
-		cal.set(2014, 3, 25);
-		Calendar cal2 = Calendar.getInstance();
-		cal2.set(2014, 4, 5);
 		Pedido p;
 
 		try {
-			p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
-					endereco, cliente, produtosPedido, transportadora);
+			p = new Pedido(idPedido, valorTotal, formaPagamento, dataCompra,
+					dataEntrega, endereco, cliente, produtosPedido,
+					transportadora);
 			adicionaPedido(cliente, produtosPedido, transportadora, p);
 			pedidos.put(idPedido, p);
 			idPedido++;
@@ -436,10 +433,16 @@ public class Loja {
 			// Insere o tablet no pedido (qtde = 2)
 			HashMap<Produto, Integer> itensPedido = new HashMap<Produto, Integer>();
 			itensPedido.put(produtos.get(1), 2);
+
+			Calendar compra = Calendar.getInstance();
+			compra.set(2014, 3, 25);
+			Calendar entrega = Calendar.getInstance();
+			entrega.set(2014, 7, 25);
+
 			cadastrarPedido((produtos.get(1).getValorUnitario() * 2),
-					"A vista", Calendar.getInstance(), Calendar.getInstance(),
-					enderecoCliente, clientes.get("594.521.307-17"),
-					itensPedido, transportadoras.get("86.866.847/0001-79"));
+					"A vista", compra, entrega, enderecoCliente,
+					clientes.get("594.521.307-17"), itensPedido,
+					transportadoras.get("86.866.847/0001-79"));
 		} catch (ParametroException e) {
 			System.out.println("CREATE: " + e.getMessage());
 		}
