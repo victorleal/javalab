@@ -218,7 +218,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 					} catch (NumberFormatException nfe) {
 						// Essa excecao so sera lancada para o parametro
 						// quantidade
-						showMensagemErro("Quantidade não informada!");
+						showMensagemErro("Quantidade não informada ou o valor é inválido!");
 					} catch (Exception e1) {
 						showMensagemErro(e1.getMessage());
 					}

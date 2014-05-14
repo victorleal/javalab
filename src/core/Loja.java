@@ -142,7 +142,7 @@ public class Loja {
 		}
 	}
 
-	public void cancelarPedido(Integer numero) {
+	public void cancelarPedido(Integer numero) throws ParametroException {
 		if (pedidos.containsKey(numero)) {
 			Pedido p = pedidos.get(numero);
 			Cliente cliente = p.getCliente();
@@ -150,6 +150,15 @@ public class Loja {
 			itensPedidoTemp = p.getProdutosPedido();
 			gerenciadorPedidos.removePedido(cliente, transportadora,
 					itensPedidoTemp.keySet(), p);
+			for(Produto prod : itensPedidoTemp.keySet()){
+				int qtdeAtual = prod.getQtdeEstoque();
+				int qtdePedido = itensPedidoTemp.get(prod);
+				try {
+					prod.setQtdeEstoque(qtdePedido + qtdeAtual);
+				} catch (ParametroException e) {
+					throw e;
+				}
+			}
 			pedidos.remove(numero);
 		}
 	}
@@ -379,11 +388,6 @@ public class Loja {
 			cadastrarCliente("Guilherme Nogueira", "325.841.021-61",
 					"guilherme@email.com", "3232-3232", "9999-9898", true,
 					"Gold", "1234", enderecoCliente);
-		} catch (ParametroException e) {
-			System.out.println("CREATE: " + e.getMessage());
-		}
-
-		try {
 			cadastrarTransportadora("86.866.847/0001-79",
 					"Transportadora Java", "JSE Transportes", 90, 125.00,
 					enderecoTransportadora);
@@ -410,7 +414,7 @@ public class Loja {
 					clientes.get("594.521.307-17"), map,
 					transportadoras.get("86.866.847/0001-79"));
 		} catch (ParametroException e) {
-			System.out.println(e.getMessage());
+			System.out.println("CREATE: " + e.getMessage());
 		}
 	}
 }

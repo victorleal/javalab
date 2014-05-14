@@ -20,6 +20,7 @@ import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
 import core.Pedido;
+import exceptions.ParametroException;
 
 public class TelaConsultaPedido extends GeneralPanel {
 	private static final long serialVersionUID = 1L;
@@ -72,9 +73,13 @@ public class TelaConsultaPedido extends GeneralPanel {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (pedidoSelecionado != null) {
-					loja.cancelarPedido(pedidoSelecionado.getNumero());
-					showMensagemSucesso("Pedido removido com sucesso");
-					showTelaPrincipal();
+					try {
+						loja.cancelarPedido(pedidoSelecionado.getNumero());
+						showMensagemSucesso("Pedido removido com sucesso");
+						showTelaPrincipal();
+					} catch (ParametroException e1) {
+						showMensagemErro();
+					}
 				} else {
 					showMensagemErro("Nenhum pedido selecionado");
 				}
