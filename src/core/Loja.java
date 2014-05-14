@@ -349,7 +349,6 @@ public class Loja {
 		Calendar dataAtual = Calendar.getInstance();
 		for (Pedido pedido : pedidos.values()) {
 			if (pedido.getDataEntrega().before(dataAtual)) {
-				System.out.println("REMOVED");
 				Cliente cliente = pedido.getCliente();
 				Transportadora transportadora = pedido.getTransportadora();
 				itensPedidoTemp = pedido.getProdutosPedido();
