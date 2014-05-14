@@ -98,8 +98,8 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 		add(lblCnpj, "cell 0 2,alignx trailing");
 		
 		txtCnpj = new JFormattedTextField(mascaraCnpj);
-		txtCnpj.setEditable(true);
-		txtCnpj.setEnabled(false);
+		txtCnpj.setEditable(false);
+		txtCnpj.setEnabled(true);
 		txtCnpj.setText(t.getCnpj());
 		add(txtCnpj, "cell 1 2,growx");
 		txtCnpj.setColumns(10);
