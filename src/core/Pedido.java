@@ -75,7 +75,6 @@ public class Pedido {
 			throw new ParametroException("Data Entrega");
 		} else {
 			this.dataEntrega = dataEntrega;
-			System.out.println(dataEntrega);
 		}
 	}
 

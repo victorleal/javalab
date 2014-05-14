@@ -2,12 +2,9 @@ package core;
 
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import javax.swing.text.DateFormatter;
 
 import exceptions.ParametroException;
 
@@ -352,26 +349,15 @@ public class Loja {
 
 	public void limparPedidos() {
 		Calendar dataAtual = Calendar.getInstance();
-<<<<<<< HEAD
-		System.out.println(dataAtual.getTime());
 		for (Pedido pedido : pedidos.values()) {
-			System.out.println(pedido.getDataEntrega().getTime());
 			if (pedido.getDataEntrega().before(dataAtual)) {
 				System.out.println("REMOVED");
-=======
-		//dataAtual.roll(Calendar.DATE, -1);
-		//dataAtual = DateFormatter.parse(DateFormatter.setFormat(new Date()));
-		//System.out.println(dataAtual.getTime());
-		for (Pedido pedido : pedidos.values()) {
-			if (pedido.getDataEntrega().before(dataAtual.getTime())) {
-				System.out.println("teste");
->>>>>>> a840dcaccd5405f85829ad4a19fdc6a13f5711e5
 				Cliente cliente = pedido.getCliente();
 				Transportadora transportadora = pedido.getTransportadora();
 				itensPedidoTemp = pedido.getProdutosPedido();
 				removePedido(cliente, itensPedidoTemp.keySet(), transportadora,
 						pedido);
-				pedidos.remove(pedido);
+				pedidos.remove(pedido.getNumero());
 			}
 		}
 	}
