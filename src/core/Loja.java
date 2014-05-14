@@ -327,7 +327,7 @@ public class Loja {
 			//Pedido p = pedido.getValorTotal();
 
 			if (t.getCnpj().equals(cnpj)) {
-				valorDevido += pedido.getValorTotal()/t.getTaxaEntrega()*100;
+				valorDevido += pedido.getValorTotal()/t.getTaxaEntrega();
 			}
 		}
 		return valorDevido;
@@ -336,7 +336,7 @@ public class Loja {
 	public double getValorDevidoTotal() {
 		double valorDevido = 0;
 		for (Pedido p : pedidos.values()) {
-			valorDevido += p.getTransportadora().getTaxaEntrega();
+			valorDevido += p.getValorTotal()/p.getTransportadora().getTaxaEntrega();
 		}
 		return valorDevido;
 	}
