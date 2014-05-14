@@ -1,7 +1,7 @@
 package core;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import exceptions.ParametroException;
 
@@ -14,7 +14,7 @@ public class Produto {
 	private double peso;
 	private double valorUnitario;
 	private int qtdeEstoque;
-	private Map<Integer, Pedido> pedidosProduto;
+	private List<Pedido> pedidosProduto;
 
 	public int getId() {
 		return id;
@@ -99,22 +99,22 @@ public class Produto {
 
 		this.id = id;
 		this.categoria = categoria;
-		this.pedidosProduto = new HashMap<Integer, Pedido>();
+		this.pedidosProduto = new ArrayList<Pedido>();
 	}
 
 	public Produto() {
 	}
 
-	public Map<Integer, Pedido> getPedidosProduto() {
+	public List<Pedido> getPedidosProduto() {
 		return pedidosProduto;
 	}
 
 	public void adicionaPedido(Pedido pedido) {
-		this.pedidosProduto.put(pedido.getNumero(), pedido);
+		this.pedidosProduto.add(pedido);
 	}
 
 	public void removePedido(Pedido pedido) {
-		if (pedidosProduto.containsKey(pedido.getNumero())) {
+		if (pedidosProduto.contains(pedido)) {
 			this.pedidosProduto.remove(pedido);
 		}
 	}

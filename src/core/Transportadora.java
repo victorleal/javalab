@@ -1,7 +1,7 @@
 package core;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import exceptions.ParametroException;
 import exceptions.Validadores;
@@ -14,7 +14,7 @@ public class Transportadora {
 	private int prazoEntrega;
 	private double taxaEntrega;
 	private Endereco endereco;
-	private Map<Integer, Pedido> pedidosTransportadora;
+	private List<Pedido> pedidosTransportadora;
 
 	public String getCnpj() {
 		return cnpj;
@@ -24,7 +24,7 @@ public class Transportadora {
 		return endereco;
 	}
 
-	public Map<Integer, Pedido> getPedidosTransportadora() {
+	public List<Pedido> getPedidosTransportadora() {
 		return pedidosTransportadora;
 	}
 
@@ -59,7 +59,7 @@ public class Transportadora {
 			this.taxaEntrega = taxaEntrega;
 		}
 	}
-	
+
 	private void setCnpj(String cnpj) throws ParametroException {
 		if (cnpj == null || cnpj.isEmpty() || !Validadores.validaCNPJ(cnpj)) {
 			throw new ParametroException("CNPJ");
@@ -84,13 +84,13 @@ public class Transportadora {
 		}
 	}
 
-
 	private void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
 	public Transportadora(String cnpj, String nomeFantasia, String razaoSocial,
-			int prazoEntrega, double taxaEntrega, Endereco endereco) throws ParametroException {
+			int prazoEntrega, double taxaEntrega, Endereco endereco)
+			throws ParametroException {
 		super();
 		setCnpj(cnpj);
 		setRazaoSocial(razaoSocial);
@@ -98,18 +98,18 @@ public class Transportadora {
 		setPrazoEntrega(prazoEntrega);
 		setTaxaEntrega(taxaEntrega);
 		setEndereco(endereco);
-		this.pedidosTransportadora = new HashMap<Integer, Pedido>();
+		this.pedidosTransportadora = new ArrayList<Pedido>();
 	}
 
 	public Transportadora() {
 	}
 
 	public void adicionaPedido(Pedido pedido) {
-		this.pedidosTransportadora.put(pedido.getNumero(), pedido);
+		this.pedidosTransportadora.add(pedido);
 	}
 
 	public void removePedido(Pedido pedido) {
-		if (pedidosTransportadora.containsKey(pedido.getNumero())) {
+		if (pedidosTransportadora.contains(pedido)) {
 			this.pedidosTransportadora.remove(pedido);
 		}
 	}
@@ -152,7 +152,5 @@ public class Transportadora {
 			return false;
 		return true;
 	}
-
-
 
 }

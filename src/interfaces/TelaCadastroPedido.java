@@ -93,6 +93,9 @@ public class TelaCadastroPedido extends GeneralPanel {
 
 	// Controla produto recem adicionado
 	int produtosAdicionados = 0;
+	
+	// Controla quantidade disponivel
+	int qtdeDisponivel = 0;
 
 	/**
 	 * Create the panel.
@@ -142,7 +145,6 @@ public class TelaCadastroPedido extends GeneralPanel {
 					textFieldCpfCliente.commitEdit();
 
 					String cpf = ((String) textFieldCpfCliente.getValue());
-					System.out.println(textFieldCpfCliente.getValue());
 					c = loja.consultarCliente(cpf);
 					textFieldNome.setText(c.getNome());
 					panelProdutos.setVisible(true);
@@ -198,7 +200,8 @@ public class TelaCadastroPedido extends GeneralPanel {
 								.parseInt(textFieldCodigoProduto.getText()));
 						int qtde = Integer.parseInt(textFieldQtdeProduto
 								.getText());
-						if (p.getQtdeEstoque() >= qtde) {
+						qtdeDisponivel = p.getQtdeEstoque() - qtde;
+						if (qtdeDisponivel >= 0) {
 							produtosAdicionados++;
 							TableModel model = (TableModel) table.getModel();
 							model.addRow(new Object[] { p,

@@ -4,9 +4,9 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import exceptions.ParametroException;
-import auxiliar.GerenciadorPedidos;
 
 public class Loja {
 
@@ -16,8 +16,6 @@ public class Loja {
 	private Map<Integer, Produto> produtos;
 
 	private Map<Produto, Integer> itensPedidoTemp;
-
-	private GerenciadorPedidos gerenciadorPedidos;
 
 	private static int idPedido;
 	private static int idProduto;
@@ -37,8 +35,8 @@ public class Loja {
 		transportadoras = new HashMap<String, Transportadora>();
 		produtos = new HashMap<Integer, Produto>();
 		itensPedidoTemp = new HashMap<Produto, Integer>();
-		gerenciadorPedidos = new GerenciadorPedidos();
 		idPedido = 1;
+		idProduto = 1;
 		create();
 	}
 
@@ -74,7 +72,7 @@ public class Loja {
 
 	public void removerCliente(String cpf) throws Exception {
 		if (clientes.containsKey(cpf)
-				&& gerenciadorPedidos.consultaPedidosCliente(clientes.get(cpf))) {
+				&& clientes.get(cpf).getPedidosCliente().isEmpty()) {
 			clientes.remove(cpf);
 		} else {
 			throw new Exception("Cliente não encontrado");
@@ -124,8 +122,7 @@ public class Loja {
 		try {
 			p = new Pedido(idPedido, valorTotal, formaPagamento, cal, cal2,
 					endereco, cliente, produtosPedido, transportadora);
-			gerenciadorPedidos.adicionaPedido(cliente, transportadora,
-					produtosPedido.keySet(), p);
+			adicionaPedido(cliente, produtosPedido, transportadora, p);
 			pedidos.put(idPedido, p);
 			idPedido++;
 		} catch (ParametroException e) {
@@ -147,8 +144,6 @@ public class Loja {
 			Cliente cliente = p.getCliente();
 			Transportadora transportadora = p.getTransportadora();
 			itensPedidoTemp = p.getProdutosPedido();
-			gerenciadorPedidos.removePedido(cliente, transportadora,
-					itensPedidoTemp.keySet(), p);
 			for (Produto prod : itensPedidoTemp.keySet()) {
 				int qtdeAtual = prod.getQtdeEstoque();
 				int qtdePedido = itensPedidoTemp.get(prod);
@@ -158,6 +153,7 @@ public class Loja {
 					throw e;
 				}
 			}
+			removePedido(cliente, itensPedidoTemp.keySet(), transportadora, p);
 			pedidos.remove(numero);
 		}
 	}
@@ -186,7 +182,7 @@ public class Loja {
 
 	public void removerProduto(Integer id) throws Exception {
 		if (produtos.containsKey(id)
-				&& gerenciadorPedidos.consultaPedidosProduto(produtos.get(id))) {
+				&& produtos.get(id).getPedidosProduto().isEmpty()) {
 			produtos.remove(id);
 		} else {
 			throw new Exception("Produto não encontrado");
@@ -194,9 +190,6 @@ public class Loja {
 	}
 
 	public Produto consultarProduto(Integer id) throws Exception {
-		for (Integer i : produtos.keySet()) {
-			System.out.println(i);
-		}
 		if (produtos.containsKey(id)) {
 			return produtos.get(id);
 		} else {
@@ -235,6 +228,14 @@ public class Loja {
 		return this.produtoAlteracao;
 	}
 
+	public void atualizarEstoque(Produto p, int qtdeComprada) {
+		try {
+			p.setQtdeEstoque((p.getQtdeEstoque() - qtdeComprada));
+		} catch (ParametroException e) {
+			e.getMessage();
+		}
+	}
+
 	public void devolverQuantidadeEstoque(Produto p, int qtde)
 			throws ParametroException {
 		int qtdeAtual = p.getQtdeEstoque();
@@ -262,9 +263,8 @@ public class Loja {
 
 	public void removerTransportadora(String cnpj) throws Exception {
 		if (transportadoras.containsKey(cnpj)
-				&& gerenciadorPedidos
-						.consultaPedidosTransportadora(transportadoras
-								.get(cnpj))) {
+				&& transportadoras.get(cnpj).getPedidosTransportadora()
+						.isEmpty()) {
 			transportadoras.remove(cnpj);
 		} else {
 			throw new Exception("Transportadora não encontrada");
@@ -349,13 +349,16 @@ public class Loja {
 
 	public void limparPedidos() {
 		Calendar dataAtual = Calendar.getInstance();
+		System.out.println(dataAtual.getTime());
 		for (Pedido pedido : pedidos.values()) {
-			if (pedido.getDataEntrega().before(dataAtual.getTime())) {
+			System.out.println(pedido.getDataEntrega().getTime());
+			if (pedido.getDataEntrega().before(dataAtual)) {
+				System.out.println("REMOVED");
 				Cliente cliente = pedido.getCliente();
 				Transportadora transportadora = pedido.getTransportadora();
 				itensPedidoTemp = pedido.getProdutosPedido();
-				gerenciadorPedidos.removePedido(cliente, transportadora,
-						itensPedidoTemp.keySet(), pedido);
+				removePedido(cliente, itensPedidoTemp.keySet(), transportadora,
+						pedido);
 				pedidos.remove(pedido);
 			}
 		}
@@ -372,6 +375,26 @@ public class Loja {
 	public String[] getProgramaFidelidade() {
 		String[] programas = { "Gold", "Platinium", "Normal" };
 		return programas;
+	}
+
+	public void adicionaPedido(Cliente c, Map<Produto, Integer> produtos,
+			Transportadora t, Pedido p) {
+		c.adicionaPedido(p);
+		t.adicionaPedido(p);
+		for (Produto prod : produtos.keySet()) {
+			int qtdeComprada = produtos.get(prod);
+			atualizarEstoque(prod, qtdeComprada);
+			prod.adicionaPedido(p);
+		}
+	}
+
+	public void removePedido(Cliente c, Set<Produto> produtos,
+			Transportadora t, Pedido p) {
+		c.removePedido(p);
+		t.removePedido(p);
+		for (Produto prod : produtos) {
+			prod.removePedido(p);
+		}
 	}
 
 	public void create() {
@@ -411,12 +434,14 @@ public class Loja {
 			cadastrarProduto(Categorias.COMPUTADORES.name(),
 					"HD e cabos conexao", "HD SATA III Western Digital 1TB",
 					320, 210.00, 10);
-			HashMap<Produto, Integer> map = new HashMap<Produto, Integer>();
-			map.put(produtos.get(1), 2);
-			cadastrarPedido(1250, "A vista", Calendar.getInstance(),
-					Calendar.getInstance(), enderecoCliente,
-					clientes.get("594.521.307-17"), map,
-					transportadoras.get("86.866.847/0001-79"));
+
+			// Insere o tablet no pedido (qtde = 2)
+			HashMap<Produto, Integer> itensPedido = new HashMap<Produto, Integer>();
+			itensPedido.put(produtos.get(1), 2);
+			cadastrarPedido((produtos.get(1).getValorUnitario() * 2),
+					"A vista", Calendar.getInstance(), Calendar.getInstance(),
+					enderecoCliente, clientes.get("594.521.307-17"),
+					itensPedido, transportadoras.get("86.866.847/0001-79"));
 		} catch (ParametroException e) {
 			System.out.println("CREATE: " + e.getMessage());
 		}
