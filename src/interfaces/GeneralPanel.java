@@ -44,6 +44,12 @@ public abstract class GeneralPanel extends JPanel {
 		panel.addAncestorListener(new AtivoListener());
 		fonte = new Font("Tahoma", Font.PLAIN, 16);
 	}
+	
+	public GeneralPanel() {
+		panel = this;
+		panel.addAncestorListener(new AtivoListener());
+		fonte = new Font("Tahoma", Font.PLAIN, 16);
+	}
 
 	public abstract void limparCampos();
 

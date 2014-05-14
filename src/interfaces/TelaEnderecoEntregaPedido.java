@@ -2,7 +2,6 @@ package interfaces;
 
 import java.awt.CardLayout;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -13,16 +12,14 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import net.miginfocom.swing.MigLayout;
-import core.Endereco;
-
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
+import net.miginfocom.swing.MigLayout;
+import core.Endereco;
 import exceptions.ParametroException;
 
-public class TelaEnderecoEntregaPedido extends JPanel {
+public class TelaEnderecoEntregaPedido extends GeneralPanel {
 	/**
 	 * 
 	 */
@@ -33,7 +30,7 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	private JTextField textFieldNumero;
 	private JTextField textFieldBairro;
 	private JTextField textFieldCidade;
-	//private JTextField textFieldEstado;
+	// private JTextField textFieldEstado;
 	private JTextField textFieldPais;
 	private JTextField textFieldComplemento;
 	private JFormattedTextField textFieldCep;
@@ -47,16 +44,16 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	private JLabel lblPas;
 	private JLabel lblComplemento;
 	private JLabel lblCep;
-	
+
 	// Estados
 	protected String[] estados = { "AC", "AL", "AP", "AM", "BA", "CE", "DF",
 			"ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PE", "PI", "RJ",
 			"RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
-	
+
 	// Combo Box
-	
+
 	private JComboBox<String> comboBoxEstado;
-	
+
 	// Mascaras
 	private MaskFormatter mascaraCEP;
 
@@ -66,24 +63,26 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	// Controla o panel
 	private JPanel panel;
 
+	// Controla o endereco
+	private Endereco e;
+
 	/**
 	 * Create the panel.
 	 */
 	public TelaEnderecoEntregaPedido() {
+		super();
 		setBorder(new TitledBorder(null, "Endere\u00E7o de Entrega",
-				TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma",
-						Font.PLAIN, 16)));
+				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		panel = this;
 
 		setLayout(new MigLayout("", "[45.00][222.00,grow][63.00][grow]",
 				"[][][][][][grow,bottom]"));
-		
+
 		try {
 			mascaraCEP = new MaskFormatter("#####-###");
 			mascaraCEP.setPlaceholderCharacter('_');
 		} catch (ParseException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+			showMensagemErro();
 		}
 
 		lblRua = new JLabel("Rua:");
@@ -144,10 +143,25 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 
 		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Container parent = panel.getParent();
-				CardLayout cl = (CardLayout) parent.getLayout();
-				cl.show(parent, "CadastrarPedido");
+			public void actionPerformed(ActionEvent event) {
+				String rua = textFieldRua.getText();
+				String numero = textFieldNumero.getText();
+				String bairro = textFieldBairro.getText();
+				String complemento = textFieldComplemento.getText();
+				String cidade = textFieldCidade.getText();
+				String estado = (String) comboBoxEstado.getSelectedItem();
+				String pais = textFieldPais.getText();
+				String cep = (String)textFieldCep.getValue();
+				try {
+					e = new Endereco(rua, bairro, complemento, numero, cep,
+							cidade, estado, pais);
+					Container parent = panel.getParent();
+					CardLayout cl = (CardLayout) parent.getLayout();
+					cl.show(parent, "CadastrarPedido");
+				} catch (ParametroException e1) {
+					showMensagemErro(e1.getMessage());
+				}
+
 			}
 		});
 		add(btnOk, "cell 0 5 4 1,alignx right");
@@ -155,28 +169,13 @@ public class TelaEnderecoEntregaPedido extends JPanel {
 	}
 
 	public Endereco getEnderecoEntrega() {
-		String rua = textFieldRua.getText();
-		String numero = textFieldNumero.getText();
-		String bairro = textFieldBairro.getText();
-		String complemento = textFieldComplemento.getText();
-		String cidade = textFieldCidade.getText();
-		String estado = (String) comboBoxEstado.getSelectedItem();
-		String pais = textFieldPais.getText();
-		String cep = textFieldCep.getText();
-
-		Endereco e = null;
-		if (rua != null && !rua.isEmpty()) {
-			try {
-				e = new Endereco(rua, bairro, complemento, numero, cep, cidade,
-						estado, pais);
-			} catch (ParametroException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		} else {
-			e = null;
-		}
 		return e;
+	}
+
+	@Override
+	public void limparCampos() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
