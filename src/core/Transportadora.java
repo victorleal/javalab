@@ -9,7 +9,7 @@ import exceptions.Validadores;
 public class Transportadora extends PersistentObject {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String cnpj;
 	private String nomeFantasia;
 	private String razaoSocial;
@@ -93,7 +93,8 @@ public class Transportadora extends PersistentObject {
 	public Transportadora(String cnpj, String nomeFantasia, String razaoSocial,
 			int prazoEntrega, double taxaEntrega, Endereco endereco)
 			throws ParametroException {
-		super("Transportadora", cnpj.replace("/", "-"));
+		// Substitui a barra / por # para evitar problemas na persistencia
+		super("Transportadora", cnpj.replace("/", "#"));
 		setCnpj(cnpj);
 		setRazaoSocial(razaoSocial);
 		setNomeFantasia(nomeFantasia);

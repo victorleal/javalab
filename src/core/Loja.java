@@ -3,6 +3,7 @@ package core;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,7 +40,8 @@ public class Loja {
 		itensPedidoTemp = new HashMap<Produto, Integer>();
 		idPedido = 1;
 		idProduto = 1;
-		create();
+		//create();
+		load();
 	}
 
 	/**********
@@ -405,14 +407,44 @@ public class Loja {
 		fileManager.writeObject(o);
 	}
 
-	public void readObjects(PersistentObject o) {
+	public List<PersistentObject> readObjects(PersistentObject o) {
 		fileManager = new FileManager(o.getClassName());
-		fileManager.readList();
+		return fileManager.readList();
 	}
 	
 	public void delete(PersistentObject o) {
 		fileManager = new FileManager(o.getClassName());
 		fileManager.delete(o);
+	}
+	
+	public void load() {
+		// Carrega os clientes
+		List<PersistentObject> clientes = readObjects(new PersistentObject("Cliente"));
+		for(PersistentObject p : clientes){
+			Cliente cliente = (Cliente) p;
+			this.clientes.put(cliente.getCpf(), cliente);
+		}
+		
+		// Carrega as transportadoras
+		List<PersistentObject> transp = readObjects(new PersistentObject("Transportadora"));
+		for(PersistentObject p : transp){
+			Transportadora t = (Transportadora) p;
+			this.transportadoras.put(t.getCnpj(), t);
+		}
+		
+		// Carrega os produtos
+		List<PersistentObject> produtos = readObjects(new PersistentObject("Produto"));
+		for(PersistentObject p : produtos){
+			Produto prod = (Produto) p;
+			this.produtos.put(prod.getId(), prod);
+		}
+		
+		// Carrega os pedidos
+		List<PersistentObject> pedidos = readObjects(new PersistentObject("Pedido"));
+		for(PersistentObject p : pedidos){
+			Pedido pedido = (Pedido) p;
+			this.pedidos.put(pedido.getNumero(), pedido);
+		}
 	}
 
 	public void create() {
