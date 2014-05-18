@@ -5,8 +5,10 @@ import java.util.List;
 
 import exceptions.ParametroException;
 
-public class Produto {
+public class Produto extends PersistentObject {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private String categoria;
 	private String conteudodaCaixa;
@@ -86,10 +88,10 @@ public class Produto {
 		}
 	}
 
-	public Produto(int id, String categoria, String conteudodaCaixa,
+	public Produto(Integer id, String categoria, String conteudodaCaixa,
 			String descricao, double peso, double valorUnitario, int qtdeEstoque)
 			throws ParametroException {
-		super();
+		super("Produto", id.toString());
 
 		setConteudodaCaixa(conteudodaCaixa);
 		setDescricao(descricao);
@@ -100,9 +102,6 @@ public class Produto {
 		this.id = id;
 		this.categoria = categoria;
 		this.pedidosProduto = new ArrayList<Pedido>();
-	}
-
-	public Produto() {
 	}
 
 	public List<Pedido> getPedidosProduto() {

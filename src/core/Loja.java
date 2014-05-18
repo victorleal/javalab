@@ -10,6 +10,8 @@ import exceptions.ParametroException;
 
 public class Loja {
 
+	private FileManager fileManager;
+
 	private Map<String, Cliente> clientes;
 	private Map<Integer, Pedido> pedidos;
 	private Map<String, Transportadora> transportadoras;
@@ -53,6 +55,7 @@ public class Loja {
 		try {
 			c = new Cliente(nome, cpf, email, telefone, celular, endereco,
 					isClienteFidelidade, programaFidelidade, numeroFidelidade);
+			persist(c);
 		} catch (ParametroException e) {
 			throw e;
 		}
@@ -121,6 +124,7 @@ public class Loja {
 					transportadora);
 			adicionaPedido(cliente, produtosPedido, transportadora, p);
 			pedidos.put(idPedido, p);
+			persist(p);
 			idPedido++;
 		} catch (ParametroException e) {
 			throw e;
@@ -170,6 +174,7 @@ public class Loja {
 					peso, valorUnitario, qtdeEstoque);
 			if (!produtos.containsKey(p.getId())) {
 				produtos.put(p.getId(), p);
+				persist(p);
 				idProduto++;
 			}
 		} catch (ParametroException e) {
@@ -249,6 +254,7 @@ public class Loja {
 		try {
 			t = new Transportadora(cnpj, nomeFantasia, razaoSocial,
 					prazoEntrega, taxaEntrega, endereco);
+			persist(t);
 		} catch (ParametroException e) {
 			throw e;
 		}
@@ -324,10 +330,10 @@ public class Loja {
 		double valorDevido = 0;
 		for (Pedido pedido : pedidos.values()) {
 			Transportadora t = pedido.getTransportadora();
-			//Pedido p = pedido.getValorTotal();
+			// Pedido p = pedido.getValorTotal();
 
 			if (t.getCnpj().equals(cnpj)) {
-				valorDevido += pedido.getValorTotal()/t.getTaxaEntrega();
+				valorDevido += pedido.getValorTotal() / t.getTaxaEntrega();
 			}
 		}
 		return valorDevido;
@@ -336,7 +342,8 @@ public class Loja {
 	public double getValorDevidoTotal() {
 		double valorDevido = 0;
 		for (Pedido p : pedidos.values()) {
-			valorDevido += p.getValorTotal()/p.getTransportadora().getTaxaEntrega();
+			valorDevido += p.getValorTotal()
+					/ p.getTransportadora().getTaxaEntrega();
 		}
 		return valorDevido;
 	}
@@ -390,6 +397,22 @@ public class Loja {
 		for (Produto prod : produtos) {
 			prod.removePedido(p);
 		}
+	}
+
+	/***** Metodos Persistencia *****/
+	public void persist(PersistentObject o) {
+		fileManager = new FileManager(o.getClassName());
+		fileManager.writeObject(o);
+	}
+
+	public void readObjects(PersistentObject o) {
+		fileManager = new FileManager(o.getClassName());
+		fileManager.readList();
+	}
+	
+	public void delete(PersistentObject o) {
+		fileManager = new FileManager(o.getClassName());
+		fileManager.delete(o);
 	}
 
 	public void create() {

@@ -6,8 +6,10 @@ import java.util.List;
 import exceptions.ParametroException;
 import exceptions.Validadores;
 
-public class Transportadora {
+public class Transportadora extends PersistentObject {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String cnpj;
 	private String nomeFantasia;
 	private String razaoSocial;
@@ -91,7 +93,7 @@ public class Transportadora {
 	public Transportadora(String cnpj, String nomeFantasia, String razaoSocial,
 			int prazoEntrega, double taxaEntrega, Endereco endereco)
 			throws ParametroException {
-		super();
+		super("Transportadora", cnpj.replace("/", "-"));
 		setCnpj(cnpj);
 		setRazaoSocial(razaoSocial);
 		setNomeFantasia(nomeFantasia);
@@ -99,9 +101,6 @@ public class Transportadora {
 		setTaxaEntrega(taxaEntrega);
 		setEndereco(endereco);
 		this.pedidosTransportadora = new ArrayList<Pedido>();
-	}
-
-	public Transportadora() {
 	}
 
 	public void adicionaPedido(Pedido pedido) {
