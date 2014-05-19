@@ -47,3 +47,7 @@ bin/core/Produto.class
 bin/core/Endereco.class
 
 bin/core/Transportadora.class
+
+.DS_Store
+
+*.bin
