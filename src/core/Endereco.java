@@ -1,9 +1,13 @@
 package core;
 
+import java.io.Serializable;
+
 import exceptions.ParametroException;
 
-public class Endereco {
+public class Endereco implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String rua;
 	private String bairro;
 	private String complemento;

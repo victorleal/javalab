@@ -5,8 +5,10 @@ import java.util.Map;
 
 import exceptions.ParametroException;
 
-public class Pedido {
+public class Pedido extends PersistentObject {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer numero;
 	private double valorTotal;
 	private String formaPagamento;
@@ -98,7 +100,7 @@ public class Pedido {
 			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
 			Cliente cliente, Map<Produto, Integer> produtosPedido,
 			Transportadora transportadora) throws ParametroException {
-		super();
+		super("Pedido", numero.toString());
 		this.numero = numero;
 		this.valorTotal = valorTotal;
 		if (produtosPedido == null) {

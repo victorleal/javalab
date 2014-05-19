@@ -3,8 +3,10 @@ package core;
 import exceptions.ParametroException;
 import exceptions.Validadores;
 
-public class Pessoa {
-
+public class Pessoa extends PersistentObject {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String nome;
 	private String cpf;
 	private String email;
@@ -85,11 +87,10 @@ public class Pessoa {
 	}
 
 	public Pessoa(String nome, String cpf, String email, String telefone,
-			String celular, Endereco endereco) throws ParametroException {
-		super();
+			String celular, Endereco endereco, String classeFilha) throws ParametroException {
+		super(classeFilha, cpf);
 		try {
 			setNome(nome);
-			//System.out.println(cpf);
 			setCpf(cpf);
 			setCelular(celular);
 			setTelefone(telefone);

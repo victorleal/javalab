@@ -3,12 +3,15 @@ package core;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import exceptions.ParametroException;
 
 public class Loja {
+
+	private FileManager fileManager;
 
 	private Map<String, Cliente> clientes;
 	private Map<Integer, Pedido> pedidos;
@@ -37,7 +40,8 @@ public class Loja {
 		itensPedidoTemp = new HashMap<Produto, Integer>();
 		idPedido = 1;
 		idProduto = 1;
-		create();
+		//create();
+		load();
 	}
 
 	/**********
@@ -53,6 +57,7 @@ public class Loja {
 		try {
 			c = new Cliente(nome, cpf, email, telefone, celular, endereco,
 					isClienteFidelidade, programaFidelidade, numeroFidelidade);
+			persist(c);
 		} catch (ParametroException e) {
 			throw e;
 		}
@@ -121,6 +126,7 @@ public class Loja {
 					transportadora);
 			adicionaPedido(cliente, produtosPedido, transportadora, p);
 			pedidos.put(idPedido, p);
+			persist(p);
 			idPedido++;
 		} catch (ParametroException e) {
 			throw e;
@@ -170,6 +176,7 @@ public class Loja {
 					peso, valorUnitario, qtdeEstoque);
 			if (!produtos.containsKey(p.getId())) {
 				produtos.put(p.getId(), p);
+				persist(p);
 				idProduto++;
 			}
 		} catch (ParametroException e) {
@@ -249,6 +256,7 @@ public class Loja {
 		try {
 			t = new Transportadora(cnpj, nomeFantasia, razaoSocial,
 					prazoEntrega, taxaEntrega, endereco);
+			persist(t);
 		} catch (ParametroException e) {
 			throw e;
 		}
@@ -324,10 +332,10 @@ public class Loja {
 		double valorDevido = 0;
 		for (Pedido pedido : pedidos.values()) {
 			Transportadora t = pedido.getTransportadora();
-			//Pedido p = pedido.getValorTotal();
+			// Pedido p = pedido.getValorTotal();
 
 			if (t.getCnpj().equals(cnpj)) {
-				valorDevido += pedido.getValorTotal()/t.getTaxaEntrega();
+				valorDevido += pedido.getValorTotal() / t.getTaxaEntrega();
 			}
 		}
 		return valorDevido;
@@ -336,7 +344,8 @@ public class Loja {
 	public double getValorDevidoTotal() {
 		double valorDevido = 0;
 		for (Pedido p : pedidos.values()) {
-			valorDevido += p.getValorTotal()/p.getTransportadora().getTaxaEntrega();
+			valorDevido += p.getValorTotal()
+					/ p.getTransportadora().getTaxaEntrega();
 		}
 		return valorDevido;
 	}
@@ -349,7 +358,6 @@ public class Loja {
 		Calendar dataAtual = Calendar.getInstance();
 		for (Pedido pedido : pedidos.values()) {
 			if (pedido.getDataEntrega().before(dataAtual)) {
-				System.out.println("REMOVED");
 				Cliente cliente = pedido.getCliente();
 				Transportadora transportadora = pedido.getTransportadora();
 				itensPedidoTemp = pedido.getProdutosPedido();
@@ -390,6 +398,52 @@ public class Loja {
 		t.removePedido(p);
 		for (Produto prod : produtos) {
 			prod.removePedido(p);
+		}
+	}
+
+	/***** Metodos Persistencia *****/
+	public void persist(PersistentObject o) {
+		fileManager = new FileManager(o.getClassName());
+		fileManager.writeObject(o);
+	}
+
+	public List<PersistentObject> readObjects(PersistentObject o) {
+		fileManager = new FileManager(o.getClassName());
+		return fileManager.readList();
+	}
+	
+	public void delete(PersistentObject o) {
+		fileManager = new FileManager(o.getClassName());
+		fileManager.delete(o);
+	}
+	
+	public void load() {
+		// Carrega os clientes
+		List<PersistentObject> clientes = readObjects(new PersistentObject("Cliente"));
+		for(PersistentObject p : clientes){
+			Cliente cliente = (Cliente) p;
+			this.clientes.put(cliente.getCpf(), cliente);
+		}
+		
+		// Carrega as transportadoras
+		List<PersistentObject> transp = readObjects(new PersistentObject("Transportadora"));
+		for(PersistentObject p : transp){
+			Transportadora t = (Transportadora) p;
+			this.transportadoras.put(t.getCnpj(), t);
+		}
+		
+		// Carrega os produtos
+		List<PersistentObject> produtos = readObjects(new PersistentObject("Produto"));
+		for(PersistentObject p : produtos){
+			Produto prod = (Produto) p;
+			this.produtos.put(prod.getId(), prod);
+		}
+		
+		// Carrega os pedidos
+		List<PersistentObject> pedidos = readObjects(new PersistentObject("Pedido"));
+		for(PersistentObject p : pedidos){
+			Pedido pedido = (Pedido) p;
+			this.pedidos.put(pedido.getNumero(), pedido);
 		}
 	}
 

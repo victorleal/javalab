@@ -7,6 +7,8 @@ import exceptions.ParametroException;
 
 public class Cliente extends Pessoa {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Boolean isClienteFidelidade;
 	private String programaFidelidade;
 	private String numeroFidelidade;
@@ -39,7 +41,7 @@ public class Cliente extends Pessoa {
 	public Cliente(String nome, String cpf, String email, String telefone,
 			String celular, Endereco endereco, Boolean isClienteFidelidade,
 			String programaFidelidade, String numeroFidelidade) throws ParametroException {
-		super(nome, cpf, email, telefone, celular, endereco);
+		super(nome, cpf, email, telefone, celular, endereco, "Cliente");
 		this.isClienteFidelidade = isClienteFidelidade;
 		this.programaFidelidade = programaFidelidade;
 		this.numeroFidelidade = numeroFidelidade;
