@@ -55,7 +55,14 @@ public class FileManager {
 		List<PersistentObject> files = new ArrayList<PersistentObject>();
 		File pasta = new File(this.classFolder);
 		for (File arquivo : pasta.listFiles()) {
-			files.add(readObject(arquivo.getPath()));
+			
+			// Do not read DS_STORE file (Thanks Mac OS!!!)
+			if (!arquivo.getName().equals("DS_Store")
+					&& !arquivo.getName().equals(".DS_Store")
+					&& !arquivo.getName().equals("DS_STORE")
+					&& !arquivo.getName().equals(".DS_STORE")) {
+				files.add(readObject(arquivo.getPath()));
+			}
 		}
 		return files;
 

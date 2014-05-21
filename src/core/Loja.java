@@ -40,8 +40,8 @@ public class Loja {
 		itensPedidoTemp = new HashMap<Produto, Integer>();
 		idPedido = 1;
 		idProduto = 1;
-		create();
-		//load();
+		//create();
+		load();
 	}
 
 	/**********
@@ -78,6 +78,7 @@ public class Loja {
 	public void removerCliente(String cpf) throws Exception {
 		if (clientes.containsKey(cpf)
 				&& clientes.get(cpf).getPedidosCliente().isEmpty()) {
+			delete(clientes.get(cpf));
 			clientes.remove(cpf);
 		} else {
 			throw new Exception("Cliente não encontrado");
@@ -98,6 +99,7 @@ public class Loja {
 			c.setNumeroFidelidade(numeroFidelidade);
 			c.setProgramaFidelidade(programaFidelidade);
 			c.setTelefone(telefone);
+			persist(c);
 		}
 	}
 
@@ -187,6 +189,7 @@ public class Loja {
 	public void removerProduto(Integer id) throws Exception {
 		if (produtos.containsKey(id)
 				&& produtos.get(id).getPedidosProduto().isEmpty()) {
+			delete(produtos.get(id));
 			produtos.remove(id);
 		} else {
 			throw new Exception("Produto não encontrado");
@@ -207,7 +210,7 @@ public class Loja {
 		if (produtos.containsKey(prod.getId())) {
 			p = produtos.get(prod.getId());
 			p.setValorUnitario(valor);
-
+			persist(p);
 		}
 	}
 
@@ -217,6 +220,7 @@ public class Loja {
 		if (produtos.containsKey(prod.getId())) {
 			p = produtos.get(prod.getId());
 			p.setQtdeEstoque(estoque);
+			persist(p);
 		}
 	}
 
@@ -270,6 +274,7 @@ public class Loja {
 		if (transportadoras.containsKey(cnpj)
 				&& transportadoras.get(cnpj).getPedidosTransportadora()
 						.isEmpty()) {
+			delete(transportadoras.get(cnpj));
 			transportadoras.remove(cnpj);
 		} else {
 			throw new Exception("Transportadora não encontrada");
@@ -291,6 +296,7 @@ public class Loja {
 			if (transportadoras.containsKey(transp.getCnpj())) {
 				t = transportadoras.get(transp.getCnpj());
 				t.setPrazoEntrega(prazo);
+				persist(t);
 			}
 		} catch (ParametroException e) {
 			throw e;
@@ -303,7 +309,7 @@ public class Loja {
 		if (transportadoras.containsKey(transp.getCnpj())) {
 			t = transportadoras.get(transp.getCnpj());
 			t.setTaxaEntrega(taxa);
-
+			persist(t);
 		}
 	}
 
