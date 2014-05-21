@@ -40,8 +40,8 @@ public class Loja {
 		itensPedidoTemp = new HashMap<Produto, Integer>();
 		idPedido = 1;
 		idProduto = 1;
-		//create();
-		load();
+		create();
+		//load();
 	}
 
 	/**********
