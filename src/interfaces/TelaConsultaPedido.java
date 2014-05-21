@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -86,6 +87,15 @@ public class TelaConsultaPedido extends GeneralPanel {
 			}
 		});
 		add(btnExcluir, "cell 1 2,alignx right");
+		
+		JButton btnVerDetalhes = new JButton("Ver Detalhes");
+		btnVerDetalhes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addTela(new TelaDetalhesPedido(loja), "DetalharPedido");
+				showTela("DetalharPedido");
+			}
+		});
+		add(btnVerDetalhes, "cell 1 2");
 
 	}
 
