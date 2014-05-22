@@ -30,6 +30,7 @@ import auxiliar.TableModel;
 import core.Cliente;
 import core.Endereco;
 import core.Loja;
+import core.Pedido;
 import core.Produto;
 import core.Transportadora;
 import exceptions.ParametroException;
@@ -97,6 +98,9 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	// Controla quantidade disponivel
 	int qtdeDisponivel = 0;
 
+	// Controla o Pedido
+	Pedido p;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -104,6 +108,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		super(l);
 		te = new TelaEnderecoEntregaPedido();
 		produtos = new HashMap<Produto, Integer>();
+		p = loja.getPedidoDetalhe();
 
 		setBorder(new TitledBorder(null, "Cadastrar Pedido",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
@@ -121,25 +126,26 @@ public class TelaDetalhesPedido extends GeneralPanel {
 
 		lblNumero = new JLabel("Número:");
 		add(lblNumero, "cell 0 1,alignx right");
-		Integer id = loja.getIdPedido();
-		String idPedido = id.toString();
+	//	Integer id = loja.getIdPedido();
+	//	String idPedido = id.toString();
 
 		textFieldNumero = new JTextField();
-		textFieldNumero.setText(idPedido);
+		textFieldNumero.setText(String.valueOf(new Integer(p
+				.getId())));;
 		textFieldNumero.setEditable(false);
 		add(textFieldNumero, "cell 1 1,growx");
 		textFieldNumero.setColumns(10);
 
 		lblCpfCliente = new JLabel("CPF Cliente:");
 		add(lblCpfCliente, "cell 2 1,alignx right");
-
 		textFieldCpfCliente = new JFormattedTextField(mascaraCpf);
+		textFieldCpfCliente.setText(c.getCpf());
 		textFieldCpfCliente.setEditable(false);
 		add(textFieldCpfCliente, "cell 3 1 2 1,growx");
 		textFieldCpfCliente.setColumns(10);
 
 
-		String cpf = ((String) textFieldCpfCliente.getValue());
+		//String cpf = ((String) textFieldCpfCliente.getValue());
 		//c = loja.consultarCliente(cpf);
 		textFieldNome.setText(c.getNome());
 		panelProdutos.setVisible(true);
@@ -195,7 +201,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		panelProdutos.add(lblValorTotal, "cell 3 4,alignx right");
 
 		textFieldValorTotal = new JTextField();
-		textFieldValorTotal.setText("0");
+		textFieldValorTotal.setText(String.valueOf(new Double(p.getValorTotal())));
 		textFieldValorTotal.setEditable(false);
 		panelProdutos.add(textFieldValorTotal, "cell 4 4,growx");
 		textFieldValorTotal.setColumns(10);
@@ -212,6 +218,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		panelTransportadora.add(lblDataDeEntrega, "cell 4 0,alignx right");
 
 		textFieldDataEntrega = new JFormattedTextField(mascaraData);
+		//textFieldDataEntrega = setText((String.valueOf(new Data(p.getDataEntrega());
 		textFieldDataEntrega.setEditable(false);
 		panelTransportadora.add(textFieldDataEntrega, "cell 5 0 2 1,growx");
 		textFieldDataEntrega.setColumns(10);
@@ -248,8 +255,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		btnCancelar = new JButton("Ok");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal();
-				
+				showTelaPrincipal();	
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 9 6 1,alignx right");

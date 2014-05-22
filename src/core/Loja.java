@@ -26,6 +26,7 @@ public class Loja {
 	// Controla objetos entre as telas de alteracao
 	private Cliente clienteAlteracao;
 	private Produto produtoAlteracao;
+	private Pedido pedidoDetalhe;
 	private Transportadora transportadoraAlteracao;
 
 	public enum Categorias {
@@ -234,6 +235,14 @@ public class Loja {
 
 	public Produto getProdutoAlteracao() {
 		return this.produtoAlteracao;
+	}
+	
+	public void setPedidoDetalhe(Pedido p) {
+		this.pedidoDetalhe = p;
+	}
+
+	public Pedido getPedidoDetalhe() {
+		return this.pedidoDetalhe;
 	}
 
 	public void atualizarEstoque(Produto p, int qtdeComprada) {

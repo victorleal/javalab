@@ -56,6 +56,8 @@ public class TelaConsultaPedido extends GeneralPanel {
 					JList<?> source = (JList<?>) event.getSource();
 					pedidoSelecionado = (Pedido) source
 							.getSelectedValue();
+					
+					loja.setPedidoDetalhe(pedidoSelecionado);
 				}
 			}
 		});
@@ -91,8 +93,12 @@ public class TelaConsultaPedido extends GeneralPanel {
 		JButton btnVerDetalhes = new JButton("Ver Detalhes");
 		btnVerDetalhes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (loja.getProdutoAlteracao() != null) {
 				addTela(new TelaDetalhesPedido(loja), "DetalharPedido");
 				showTela("DetalharPedido");
+				} else {
+					showMensagemErro("Nenhum produto selecionado");
+				}
 			}
 		});
 		add(btnVerDetalhes, "cell 1 2");
