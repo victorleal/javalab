@@ -64,7 +64,7 @@ public class Produto extends PersistentObject {
 	}
 
 	private void setPeso(double peso) throws ParametroException {
-		if (peso == 0) {
+		if (peso <= 0) {
 			throw new ParametroException("Peso");
 		} else {
 			this.peso = peso;
@@ -73,7 +73,7 @@ public class Produto extends PersistentObject {
 
 	public void setValorUnitario(double valorUnitario)
 			throws ParametroException {
-		if (valorUnitario == 0) {
+		if (valorUnitario <= 0) {
 			throw new ParametroException("Valor Unitário");
 		} else {
 			this.valorUnitario = valorUnitario;
@@ -81,7 +81,7 @@ public class Produto extends PersistentObject {
 	}
 
 	public void setQtdeEstoque(int qtdeEstoque) throws ParametroException {
-		if (qtdeEstoque == 0) {
+		if (qtdeEstoque <= 0) {
 			throw new ParametroException("Quantidade no Estoque");
 		} else {
 			this.qtdeEstoque = qtdeEstoque;

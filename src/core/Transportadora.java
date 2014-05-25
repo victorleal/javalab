@@ -43,7 +43,7 @@ public class Transportadora extends PersistentObject {
 	}
 
 	public void setPrazoEntrega(int prazoEntrega) throws ParametroException {
-		if (prazoEntrega == 0) {
+		if (prazoEntrega <= 0) {
 			throw new ParametroException("Prazo de Entrega");
 		} else {
 			this.prazoEntrega = prazoEntrega;
@@ -55,7 +55,7 @@ public class Transportadora extends PersistentObject {
 	}
 
 	public void setTaxaEntrega(double taxaEntrega) throws ParametroException {
-		if (taxaEntrega == 0) {
+		if (taxaEntrega <= 0) {
 			throw new ParametroException("Taxa de Entrega");
 		} else {
 			this.taxaEntrega = taxaEntrega;
