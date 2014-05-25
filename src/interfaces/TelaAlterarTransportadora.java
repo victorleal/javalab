@@ -141,7 +141,8 @@ public class TelaAlterarTransportadora extends GeneralPanel {
 				loja.alterarTransportadora(t, prazoEntrega);
 
 				showMensagemSucesso("Transportadora alterada com sucesso!");
-				showTelaPrincipal(); 
+				//showTelaPrincipal(); 
+				showTela("ConsultarTransportadora");
 			} catch (NumberFormatException nfe) {
 				showMensagemErro("Por favor verifique o preenchimento dos campos Prazo de Entrega e Taxa de Entrega!");
 			} catch (ParametroException exception) {

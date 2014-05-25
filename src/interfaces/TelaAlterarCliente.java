@@ -294,7 +294,8 @@ public class TelaAlterarCliente extends GeneralPanel {
 							numeroFidelidade, endereco);
 					
 					showMensagemSucesso("Cliente alterado com sucesso");
-					showTelaPrincipal();
+					//showTelaPrincipal();
+					showTela("ConsultarCliente");
 				} catch (ParametroException exception) {
 					showMensagemErro(exception.getMessage());
 				}

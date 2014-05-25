@@ -137,7 +137,8 @@ public class TelaAlterarProduto extends GeneralPanel {
 					loja.alterarProduto(p, qtdeEstoque);
 					loja.alterarProduto(p, valorUnitario);
 					showMensagemSucesso("Produto alterado com sucesso!");
-					showTelaPrincipal();
+					//showTelaPrincipal();
+					showTela("ConsultarProduto");
 				} catch (NumberFormatException nfe) {
 					showMensagemErro("Por favor verifique o preenchimento dos campos Valor Unitario ou Quantidade em Estoque!");
 				} catch (ParametroException e1) {

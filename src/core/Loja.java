@@ -143,6 +143,15 @@ public class Loja {
 			throw new Exception("Pedido não encontrado");
 		}
 	}
+	
+	public void setPedidoDetalhe(Pedido p) {
+		this.pedidoDetalhe = p;
+	}
+
+	public Pedido getPedidoDetalhe() {
+		return this.pedidoDetalhe;
+	}
+
 
 	public void cancelarPedido(Integer numero) throws ParametroException {
 		if (pedidos.containsKey(numero)) {
@@ -237,14 +246,6 @@ public class Loja {
 		return this.produtoAlteracao;
 	}
 	
-	public void setPedidoDetalhe(Pedido p) {
-		this.pedidoDetalhe = p;
-	}
-
-	public Pedido getPedidoDetalhe() {
-		return this.pedidoDetalhe;
-	}
-
 	public void atualizarEstoque(Produto p, int qtdeComprada) {
 		try {
 			p.setQtdeEstoque((p.getQtdeEstoque() - qtdeComprada));

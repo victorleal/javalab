@@ -93,11 +93,12 @@ public class TelaConsultaPedido extends GeneralPanel {
 		JButton btnVerDetalhes = new JButton("Ver Detalhes");
 		btnVerDetalhes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (loja.getProdutoAlteracao() != null) {
-				addTela(new TelaDetalhesPedido(loja), "DetalharPedido");
-				showTela("DetalharPedido");
+				if (loja.getPedidoDetalhe() != null) {
+					System.out.println();
+					addTela(new TelaDetalhesPedido(loja), "DetalharPedido");
+					showTela("DetalharPedido");
 				} else {
-					showMensagemErro("Nenhum produto selecionado");
+					showMensagemErro("Nenhum pedido selecionado");
 				}
 			}
 		});

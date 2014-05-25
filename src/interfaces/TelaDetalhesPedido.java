@@ -66,9 +66,6 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	private JComboBox<String> comboBoxFormaPagamento;
 	private JComboBox<Transportadora> comboBoxTransportadora;
 
-	// Buttons
-	private JButton buttonAdicionarProduto;
-	private JButton btnRemoverProduto;
 	private JButton btnCancelar;
 	private JButton btnCadastrar;
 	private JButton btnLimpar;
@@ -106,11 +103,12 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	 */
 	public TelaDetalhesPedido(Loja l) {
 		super(l);
+		p = loja.getPedidoDetalhe();
 		te = new TelaEnderecoEntregaPedido();
 		produtos = new HashMap<Produto, Integer>();
-		p = loja.getPedidoDetalhe();
+		
 
-		setBorder(new TitledBorder(null, "Cadastrar Pedido",
+		setBorder(new TitledBorder(null, "Detalhes do Pedido",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][][grow][][grow][67.00]",
 				"[][][][14.00][][][][][][grow,bottom]"));
@@ -136,7 +134,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		add(textFieldNumero, "cell 1 1,growx");
 		textFieldNumero.setColumns(10);
 
-		lblCpfCliente = new JLabel("CPF Cliente:");
+		/*lblCpfCliente = new JLabel("CPF Cliente:");
 		add(lblCpfCliente, "cell 2 1,alignx right");
 		textFieldCpfCliente = new JFormattedTextField(mascaraCpf);
 		textFieldCpfCliente.setText(c.getCpf());
@@ -147,7 +145,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 
 		//String cpf = ((String) textFieldCpfCliente.getValue());
 		//c = loja.consultarCliente(cpf);
-		textFieldNome.setText(c.getNome());
+		textFieldNome.setText(c.getNome());*/
 		panelProdutos.setVisible(true);
 		panelTransportadora.setVisible(true);
 		comboBoxFormaPagamento.setEnabled(true);
