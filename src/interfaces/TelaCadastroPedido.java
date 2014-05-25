@@ -91,9 +91,6 @@ public class TelaCadastroPedido extends GeneralPanel {
 	// Controla lista de produtos
 	Map<Produto, Integer> produtos;
 
-	// Controla produto recem adicionado
-	int produtosAdicionados = 0;
-
 	// Controla quantidade disponivel
 	int qtdeDisponivel = 0;
 
@@ -203,7 +200,6 @@ public class TelaCadastroPedido extends GeneralPanel {
 								.getText());
 						qtdeDisponivel = p.getQtdeEstoque() - qtde;
 						if (qtdeDisponivel >= 0) {
-							produtosAdicionados++;
 							TableModel model = (TableModel) table.getModel();
 							for (int i = 0; i < model.getRowCount(); i++) {
 								Produto temp = (Produto) model.getValueAt(i, 0);
@@ -269,12 +265,15 @@ public class TelaCadastroPedido extends GeneralPanel {
 		panelProdutos.add(textFieldValorTotal, "cell 4 4,growx");
 		textFieldValorTotal.setColumns(10);
 
+		// Remove produto da lista de produtos
 		btnRemoverProduto = new JButton("-");
 		btnRemoverProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TableModel model = (TableModel) table.getModel();
-				model.removeRow(produtosAdicionados - 1);
-				produtosAdicionados--;
+				Produto p = (Produto) model.getValueAt(table.getSelectedRow(),
+						0);
+				produtos.remove(p);
+				model.removeRow(table.getSelectedRow());
 				if (model.getRowCount() == 0) {
 					btnRemoverProduto.setEnabled(false);
 				}
