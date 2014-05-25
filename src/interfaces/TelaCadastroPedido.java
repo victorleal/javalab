@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -311,6 +313,27 @@ public class TelaCadastroPedido extends GeneralPanel {
 		textFieldDataEntrega = new JFormattedTextField(mascaraData);
 		panelTransportadora.add(textFieldDataEntrega, "cell 5 0 2 1,growx");
 		textFieldDataEntrega.setColumns(10);
+		// Implementacao calculo automatico data entrega
+		textFieldDataEntrega.addPropertyChangeListener("value",
+				new PropertyChangeListener() {
+					@Override
+					public void propertyChange(PropertyChangeEvent evt) {
+						if (evt.getNewValue() != null) {
+							String dataCompra = evt.getNewValue().toString();
+							if (!dataCompra.isEmpty()) {
+								SimpleDateFormat sdf = new SimpleDateFormat(
+										"dd/MM/yyyy");
+								Calendar cal = Calendar.getInstance();
+								try {
+									cal.setTime(sdf.parse(dataCompra));
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+					}
+				});
 
 		lblFormaDePagamento = new JLabel("Forma de Pagamento:");
 		add(lblFormaDePagamento, "cell 0 7,alignx right");

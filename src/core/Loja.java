@@ -20,8 +20,8 @@ public class Loja {
 
 	private Map<Produto, Integer> itensPedidoTemp;
 
-	private static int idPedido;
-	private static int idProduto;
+	private static int idPedido = 1;
+	private static int idProduto = 1;
 
 	// Controla objetos entre as telas de alteracao
 	private Cliente clienteAlteracao;
@@ -39,10 +39,10 @@ public class Loja {
 		transportadoras = new HashMap<String, Transportadora>();
 		produtos = new HashMap<Integer, Produto>();
 		itensPedidoTemp = new HashMap<Produto, Integer>();
-		idPedido = 1;
-		idProduto = 1;
-		create();
-		//load();
+		//create();
+		load();
+		idPedido++;
+		idProduto++;
 	}
 
 	/**********
@@ -452,6 +452,7 @@ public class Loja {
 		List<PersistentObject> produtos = readObjects(new PersistentObject("Produto"));
 		for(PersistentObject p : produtos){
 			Produto prod = (Produto) p;
+			idProduto = prod.getId();
 			this.produtos.put(prod.getId(), prod);
 		}
 		
@@ -459,6 +460,7 @@ public class Loja {
 		List<PersistentObject> pedidos = readObjects(new PersistentObject("Pedido"));
 		for(PersistentObject p : pedidos){
 			Pedido pedido = (Pedido) p;
+			idPedido = pedido.getNumero();
 			this.pedidos.put(pedido.getNumero(), pedido);
 		}
 	}
