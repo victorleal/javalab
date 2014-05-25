@@ -20,8 +20,8 @@ public class Loja {
 
 	private Map<Produto, Integer> itensPedidoTemp;
 
-	private static int idPedido = 1;
-	private static int idProduto = 1;
+	private static int idPedido = 0;
+	private static int idProduto = 0;
 
 	// Controla objetos entre as telas de alteracao
 	private Cliente clienteAlteracao;
@@ -41,8 +41,6 @@ public class Loja {
 		itensPedidoTemp = new HashMap<Produto, Integer>();
 		//create();
 		load();
-		idPedido++;
-		idProduto++;
 	}
 
 	/**********
@@ -463,6 +461,9 @@ public class Loja {
 			idPedido = pedido.getNumero();
 			this.pedidos.put(pedido.getNumero(), pedido);
 		}
+		
+		idPedido++;
+		idProduto++;
 	}
 
 	public void create() {
