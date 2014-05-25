@@ -128,8 +128,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	//	String idPedido = id.toString();
 
 		textFieldNumero = new JTextField();
-		textFieldNumero.setText(String.valueOf(new Integer(p
-				.getId())));;
+		textFieldNumero.setText(String.valueOf(new Integer(p.getId())));;
 		textFieldNumero.setEditable(false);
 		add(textFieldNumero, "cell 1 1,growx");
 		textFieldNumero.setColumns(10);
@@ -146,10 +145,10 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		//String cpf = ((String) textFieldCpfCliente.getValue());
 		//c = loja.consultarCliente(cpf);
 		textFieldNome.setText(c.getNome());*/
-		panelProdutos.setVisible(true);
+		/*panelProdutos.setVisible(true);
 		panelTransportadora.setVisible(true);
 		comboBoxFormaPagamento.setEnabled(true);
-		textFieldDataCompra.setEnabled(true);
+		textFieldDataCompra.setEnabled(true);*/
 
 
 		lblNome = new JLabel("Nome:");
@@ -166,7 +165,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		add(panelProdutos, "cell 0 3 6 2,grow");
 		panelProdutos.setLayout(new MigLayout("", "[][grow][grow][grow][grow]",
 				"[][][][][]"));
-		panelProdutos.setVisible(false);
+		panelProdutos.setVisible(true);
 
 		lblCdigoProduto = new JLabel("Código Produto:");
 		panelProdutos.add(lblCdigoProduto, "cell 0 0,alignx right");
