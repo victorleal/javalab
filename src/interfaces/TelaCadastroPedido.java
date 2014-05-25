@@ -93,7 +93,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 
 	// Controla produto recem adicionado
 	int produtosAdicionados = 0;
-	
+
 	// Controla quantidade disponivel
 	int qtdeDisponivel = 0;
 
@@ -195,6 +195,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (!textFieldCodigoProduto.getText().isEmpty()) {
 					Produto p;
+					boolean produtoInserido = false;
 					try {
 						p = loja.consultarProduto(Integer
 								.parseInt(textFieldCodigoProduto.getText()));
@@ -204,16 +205,32 @@ public class TelaCadastroPedido extends GeneralPanel {
 						if (qtdeDisponivel >= 0) {
 							produtosAdicionados++;
 							TableModel model = (TableModel) table.getModel();
-							model.addRow(new Object[] { p,
-									textFieldQtdeProduto.getText() });
-							Double valorTotal = Double
-									.parseDouble(textFieldValorTotal.getText());
-							valorTotal += (p.getValorUnitario() * qtde);
-							produtos.put(p, qtde);
-							textFieldValorTotal.setText(valorTotal.toString());
-							textFieldCodigoProduto.setText("");
-							textFieldQtdeProduto.setText("");
-							btnRemoverProduto.setEnabled(true);
+							for (int i = 0; i < model.getRowCount(); i++) {
+								Produto temp = (Produto) model.getValueAt(i, 0);
+								if (p.getId() == temp.getId()) {
+									produtoInserido = true;
+									break;
+								}
+							}
+
+							if (!produtoInserido) {
+								model.addRow(new Object[] { p,
+										textFieldQtdeProduto.getText() });
+								Double valorTotal = Double
+										.parseDouble(textFieldValorTotal
+												.getText());
+								valorTotal += (p.getValorUnitario() * qtde);
+								produtos.put(p, qtde);
+								textFieldValorTotal.setText(valorTotal
+										.toString());
+								textFieldCodigoProduto.setText("");
+								textFieldQtdeProduto.setText("");
+								btnRemoverProduto.setEnabled(true);
+							} else {
+								showMensagemErro("O produto "
+										+ p.getDescricao()
+										+ " já consta na lista. Não é possível inserí-lo novamente.");
+							}
 						} else {
 							showMensagemErro("A quantidade desejada é maior que a quantidade em estoque. \nQuantidade em estoque atual: "
 									+ p.getQtdeEstoque());
