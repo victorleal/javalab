@@ -192,7 +192,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 		buttonAdicionarProduto = new JButton("+");
 		buttonAdicionarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!textFieldCodigoProduto.getText().isEmpty()) {
+				if (!textFieldCodigoProduto.getText().isEmpty() && Integer.parseInt(textFieldQtdeProduto.getText()) > 0) {
 					Produto p;
 					boolean produtoInserido = false;
 					try {
