@@ -203,6 +203,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		panelProdutos.add(textFieldValorTotal, "cell 4 4,growx");
 		textFieldValorTotal.setColumns(10);
 
+		panelTransportadora = new JPanel();
 		lblNomeTransportadora = new JLabel("Nome:");
 		panelTransportadora.add(lblNomeTransportadora, "cell 0 0,alignx right");
 
