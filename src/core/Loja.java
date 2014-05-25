@@ -75,10 +75,14 @@ public class Loja {
 	}
 
 	public void removerCliente(String cpf) throws Exception {
-		if (clientes.containsKey(cpf)
-				&& clientes.get(cpf).getPedidosCliente().isEmpty()) {
-			delete(clientes.get(cpf));
-			clientes.remove(cpf);
+		if (clientes.containsKey(cpf)) {
+			if (clientes.get(cpf).getPedidosCliente().isEmpty()) {
+				delete(clientes.get(cpf));
+				clientes.remove(cpf);
+			} else {
+				throw new Exception(
+						"O cliente não pode ser removido pois ele ainda tem pedidos cadastrados!");
+			}
 		} else {
 			throw new Exception("Cliente não encontrado");
 		}
@@ -141,7 +145,7 @@ public class Loja {
 			throw new Exception("Pedido não encontrado");
 		}
 	}
-	
+
 	public void setPedidoDetalhe(Pedido p) {
 		this.pedidoDetalhe = p;
 	}
@@ -149,7 +153,6 @@ public class Loja {
 	public Pedido getPedidoDetalhe() {
 		return this.pedidoDetalhe;
 	}
-
 
 	public void cancelarPedido(Integer numero) throws ParametroException {
 		if (pedidos.containsKey(numero)) {
@@ -195,10 +198,14 @@ public class Loja {
 	}
 
 	public void removerProduto(Integer id) throws Exception {
-		if (produtos.containsKey(id)
-				&& produtos.get(id).getPedidosProduto().isEmpty()) {
-			delete(produtos.get(id));
-			produtos.remove(id);
+		if (produtos.containsKey(id)) {
+			if (produtos.get(id).getPedidosProduto().isEmpty()) {
+				delete(produtos.get(id));
+				produtos.remove(id);
+			} else {
+				throw new Exception(
+						"O produto não pode ser removido pois ele está presente em pedidos cadastrados!");
+			}
 		} else {
 			throw new Exception("Produto não encontrado");
 		}
@@ -243,7 +250,7 @@ public class Loja {
 	public Produto getProdutoAlteracao() {
 		return this.produtoAlteracao;
 	}
-	
+
 	public void atualizarEstoque(Produto p, int qtdeComprada) {
 		try {
 			p.setQtdeEstoque((p.getQtdeEstoque() - qtdeComprada));
@@ -279,11 +286,15 @@ public class Loja {
 	}
 
 	public void removerTransportadora(String cnpj) throws Exception {
-		if (transportadoras.containsKey(cnpj)
-				&& transportadoras.get(cnpj).getPedidosTransportadora()
-						.isEmpty()) {
-			delete(transportadoras.get(cnpj));
-			transportadoras.remove(cnpj);
+		if (transportadoras.containsKey(cnpj)) {
+			if (transportadoras.get(cnpj).getPedidosTransportadora()
+					.isEmpty()) {
+				delete(transportadoras.get(cnpj));
+				transportadoras.remove(cnpj);
+			} else {
+				throw new Exception(
+						"A transportadora não pode ser removida pois ela está presente em pedidos cadastrados!");
+			}
 		} else {
 			throw new Exception("Transportadora não encontrada");
 		}
@@ -425,43 +436,47 @@ public class Loja {
 		fileManager = new FileManager(o.getClassName());
 		return fileManager.readList();
 	}
-	
+
 	public void delete(PersistentObject o) {
 		fileManager = new FileManager(o.getClassName());
 		fileManager.delete(o);
 	}
-	
+
 	public void load() {
 		// Carrega os clientes
-		List<PersistentObject> clientes = readObjects(new PersistentObject("Cliente"));
-		for(PersistentObject p : clientes){
+		List<PersistentObject> clientes = readObjects(new PersistentObject(
+				"Cliente"));
+		for (PersistentObject p : clientes) {
 			Cliente cliente = (Cliente) p;
 			this.clientes.put(cliente.getCpf(), cliente);
 		}
-		
+
 		// Carrega as transportadoras
-		List<PersistentObject> transp = readObjects(new PersistentObject("Transportadora"));
-		for(PersistentObject p : transp){
+		List<PersistentObject> transp = readObjects(new PersistentObject(
+				"Transportadora"));
+		for (PersistentObject p : transp) {
 			Transportadora t = (Transportadora) p;
 			this.transportadoras.put(t.getCnpj(), t);
 		}
-		
+
 		// Carrega os produtos
-		List<PersistentObject> produtos = readObjects(new PersistentObject("Produto"));
-		for(PersistentObject p : produtos){
+		List<PersistentObject> produtos = readObjects(new PersistentObject(
+				"Produto"));
+		for (PersistentObject p : produtos) {
 			Produto prod = (Produto) p;
 			idProduto = prod.getId();
 			this.produtos.put(prod.getId(), prod);
 		}
-		
+
 		// Carrega os pedidos
-		List<PersistentObject> pedidos = readObjects(new PersistentObject("Pedido"));
-		for(PersistentObject p : pedidos){
+		List<PersistentObject> pedidos = readObjects(new PersistentObject(
+				"Pedido"));
+		for (PersistentObject p : pedidos) {
 			Pedido pedido = (Pedido) p;
 			idPedido = pedido.getNumero();
 			this.pedidos.put(pedido.getNumero(), pedido);
 		}
-		
+
 		idPedido++;
 		idProduto++;
 	}
@@ -469,6 +484,9 @@ public class Loja {
 	public void create() {
 		Endereco enderecoTransportadora = null;
 		Endereco enderecoCliente = null;
+		
+		idPedido++;
+		idProduto++;
 
 		try {
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "", "546",

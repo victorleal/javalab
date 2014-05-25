@@ -95,7 +95,7 @@ public class TelaConsultaCliente extends GeneralPanel {
 						showMensagemSucesso("Cliente removido com sucesso");
 						showTelaPrincipal();
 					} catch (Exception e) {
-						showMensagemErro("Cliente n�o encontrado");
+						showMensagemErro(e.getMessage());
 					}
 				} else {
 					showMensagemErro("Nenhum cliente selecionado");
