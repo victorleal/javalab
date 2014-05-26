@@ -9,6 +9,7 @@ import java.awt.event.ComponentEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,24 +44,18 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	private JLabel lblNumero;
 	private JLabel lblCpfCliente;
 	private JLabel lblNome;
-	private JLabel lblCdigoProduto;
-	private JLabel lblQuantidade;
 	private JLabel lblValorTotal;
 	private JLabel lblFormaDePagamento;
 	private JLabel lblDataDeCompra;
 	private JLabel lblNomeTransportadora;
 	private JLabel lblDataDeEntrega;
-
-	// TextFields
-	private JTextField textFieldCodigoProduto;
-	private JTextField textFieldQtdeProduto;
 	private JTextField textFieldNumero;
 	private JFormattedTextField textFieldCpfCliente;
 	private JTable table;
 	private JTextField textFieldValorTotal;
 	private JTextField textFieldNome;
-	private JFormattedTextField textFieldDataCompra;
-	private JFormattedTextField textFieldDataEntrega;
+	private JTextField textFieldDataCompra;
+	private JTextField textFieldDataEntrega;
 
 	// ComboBox
 	private JComboBox<String> comboBoxFormaPagamento;
@@ -107,7 +102,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		te = new TelaEnderecoEntregaPedido();
 		produtos = new HashMap<Produto, Integer>();
 		
-
+		
 		setBorder(new TitledBorder(null, "Detalhes do Pedido",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][][grow][][grow][67.00]",
@@ -124,42 +119,30 @@ public class TelaDetalhesPedido extends GeneralPanel {
 
 		lblNumero = new JLabel("Número:");
 		add(lblNumero, "cell 0 1,alignx right");
-	//	Integer id = loja.getIdPedido();
-	//	String idPedido = id.toString();
-
 		textFieldNumero = new JTextField();
 		textFieldNumero.setText(String.valueOf(new Integer(p.getId())));;
 		textFieldNumero.setEditable(false);
 		add(textFieldNumero, "cell 1 1,growx");
 		textFieldNumero.setColumns(10);
 
-		/*lblCpfCliente = new JLabel("CPF Cliente:");
+		lblCpfCliente = new JLabel("CPF Cliente:");
 		add(lblCpfCliente, "cell 2 1,alignx right");
 		textFieldCpfCliente = new JFormattedTextField(mascaraCpf);
-		textFieldCpfCliente.setText(c.getCpf());
+		textFieldCpfCliente.setText(p.getCliente().getCpf());
 		textFieldCpfCliente.setEditable(false);
 		add(textFieldCpfCliente, "cell 3 1 2 1,growx");
 		textFieldCpfCliente.setColumns(10);
 
-
-		//String cpf = ((String) textFieldCpfCliente.getValue());
-		//c = loja.consultarCliente(cpf);
-		textFieldNome.setText(c.getNome());*/
-		/*panelProdutos.setVisible(true);
-		panelTransportadora.setVisible(true);
-		comboBoxFormaPagamento.setEnabled(true);
-		textFieldDataCompra.setEnabled(true);*/
-
-
 		lblNome = new JLabel("Nome:");
 		add(lblNome, "cell 0 2,alignx right");
-
 		textFieldNome = new JTextField();
+		textFieldNome.setText(p.getCliente().getNome());
 		add(textFieldNome, "cell 1 2 4 1,growx");
 		textFieldNome.setColumns(10);
 		textFieldNome.setEditable(false);
 
 		panelProdutos = new JPanel();
+		panelProdutos.setVisible(true);
 		panelProdutos.setBorder(new TitledBorder(null, "Produtos",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(panelProdutos, "cell 0 3 6 2,grow");
@@ -167,22 +150,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 				"[][][][][]"));
 		panelProdutos.setVisible(true);
 
-		lblCdigoProduto = new JLabel("Código Produto:");
-		panelProdutos.add(lblCdigoProduto, "cell 0 0,alignx right");
-
-		textFieldCodigoProduto = new JTextField();
-		textFieldCodigoProduto.setEditable(false);
-		panelProdutos.add(textFieldCodigoProduto, "cell 1 0,growx");
-		textFieldCodigoProduto.setColumns(10);
-
-		lblQuantidade = new JLabel("Quantidade:");
-		panelProdutos.add(lblQuantidade, "cell 2 0,alignx right");
-
-		textFieldQtdeProduto = new JTextField();
-		textFieldQtdeProduto.setEditable(false);
-		panelProdutos.add(textFieldQtdeProduto, "cell 3 0,growx");
-		textFieldQtdeProduto.setColumns(10);
-
+		//HELP AQUI
 		String[] cabecalho = { "Produto", "Quantidade" };
 		int linhas = 0;
 		TableModel model = new TableModel(linhas, cabecalho);
@@ -196,7 +164,6 @@ public class TelaDetalhesPedido extends GeneralPanel {
 
 		lblValorTotal = new JLabel("Valor Total:");
 		panelProdutos.add(lblValorTotal, "cell 3 4,alignx right");
-
 		textFieldValorTotal = new JTextField();
 		textFieldValorTotal.setText(String.valueOf(new Double(p.getValorTotal())));
 		textFieldValorTotal.setEditable(false);
@@ -204,27 +171,41 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		textFieldValorTotal.setColumns(10);
 
 		panelTransportadora = new JPanel();
+		panelTransportadora.setBorder(new TitledBorder(null, "Transportadora",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		add(panelTransportadora, "cell 0 5 6 1,grow");
+		panelTransportadora.setLayout(new MigLayout("",
+				"[][grow][grow][grow][][45.00,grow][67.00]", "[]"));
+		panelTransportadora.setVisible(true);
 		lblNomeTransportadora = new JLabel("Nome:");
 		panelTransportadora.add(lblNomeTransportadora, "cell 0 0,alignx right");
 
 		comboBoxTransportadora = new JComboBox<Transportadora>();
-		comboBoxTransportadora
-				.setRenderer(new ComboBoxTransportadoraRenderer());
+		for (Transportadora trans : loja.getTransportadoras()) {
+			comboBoxTransportadora.addItem(trans);
+		}
+		comboBoxTransportadora.setRenderer(new ComboBoxTransportadoraRenderer());
+		comboBoxTransportadora.setVisible(true);
+		comboBoxTransportadora.setEnabled(false);
+		comboBoxTransportadora.setSelectedItem(p.getTransportadora());
+		//textFieldDataCompra.setEnabled(true);
 		panelTransportadora.add(comboBoxTransportadora, "cell 1 0 3 1,growx");
 
 		lblDataDeEntrega = new JLabel("Data de Entrega:");
 		panelTransportadora.add(lblDataDeEntrega, "cell 4 0,alignx right");
-
-		textFieldDataEntrega = new JFormattedTextField(mascaraData);
-		//textFieldDataEntrega = setText((String.valueOf(new Data(p.getDataEntrega());
+		textFieldDataEntrega = new JTextField();
+		int entDia = p.getDataEntrega().get(Calendar.DATE);
+		int entMes = p.getDataEntrega().get(Calendar.MONTH);
+		int entAno = p.getDataEntrega().get(Calendar.YEAR);
+		textFieldDataEntrega.setText(entDia + "/" + entMes + "/" + entAno);
 		textFieldDataEntrega.setEditable(false);
 		panelTransportadora.add(textFieldDataEntrega, "cell 5 0 2 1,growx");
 		textFieldDataEntrega.setColumns(10);
 
 		lblFormaDePagamento = new JLabel("Forma de Pagamento:");
 		add(lblFormaDePagamento, "cell 0 7,alignx right");
-
 		comboBoxFormaPagamento = new JComboBox<String>();
+		comboBoxFormaPagamento.setSelectedItem(p.getFormaPagamento());
 		comboBoxFormaPagamento.addItem("A vista");
 		comboBoxFormaPagamento.addItem("Cartão Crédito");
 		comboBoxFormaPagamento.addItem("Parcelamento");
@@ -233,13 +214,16 @@ public class TelaDetalhesPedido extends GeneralPanel {
 
 		lblDataDeCompra = new JLabel("Data de Compra:");
 		add(lblDataDeCompra, "cell 3 7,alignx right");
-
-		textFieldDataCompra = new JFormattedTextField(mascaraData);
+		textFieldDataCompra = new JTextField(); 
+		int comDia = p.getDataCompra().get(Calendar.DATE);
+		int comMes = p.getDataCompra().get(Calendar.MONTH);
+		int comAno = p.getDataCompra().get(Calendar.YEAR);
+		textFieldDataCompra.setText(comDia + "/" + comMes + "/" + comAno);
 		textFieldDataCompra.setEditable(false);
 		add(textFieldDataCompra, "cell 4 7 2 1,growx");
 		textFieldDataCompra.setColumns(10);
 
-		btnAdicionarEndereco = new JButton("Adicionar Endereço Entrega");
+		btnAdicionarEndereco = new JButton("Ver Endereço Entrega");
 		btnAdicionarEndereco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Container parent = panel.getParent();
