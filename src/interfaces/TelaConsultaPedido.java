@@ -94,7 +94,6 @@ public class TelaConsultaPedido extends GeneralPanel {
 		btnVerDetalhes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (loja.getPedidoDetalhe() != null) {
-					System.out.println();
 					addTela(new TelaDetalhesPedido(loja), "DetalharPedido");
 					showTela("DetalharPedido");
 				} else {

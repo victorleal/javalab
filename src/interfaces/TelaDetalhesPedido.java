@@ -65,7 +65,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	private JButton btnCadastrar;
 	private JButton btnLimpar;
 	private JButton btnBuscaCliente;
-	private JButton btnAdicionarEndereco;
+	private JButton btnVerEndereco;
 
 	// Mascaras
 	private MaskFormatter mascaraCpf;
@@ -79,7 +79,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	private Cliente c;
 
 	// Controla TelaEnderecoEntrega
-	private TelaEnderecoEntregaPedido te;
+	private TelaVerEnderecoEntregaPedido te;
 
 	// Controla lista de produtos
 	Map<Produto, Integer> produtos;
@@ -99,7 +99,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	public TelaDetalhesPedido(Loja l) {
 		super(l);
 		p = loja.getPedidoDetalhe();
-		te = new TelaEnderecoEntregaPedido();
+		te = new TelaVerEnderecoEntregaPedido(l);
 		produtos = new HashMap<Produto, Integer>();
 		
 		
@@ -223,8 +223,8 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		add(textFieldDataCompra, "cell 4 7 2 1,growx");
 		textFieldDataCompra.setColumns(10);
 
-		btnAdicionarEndereco = new JButton("Ver Endereço Entrega");
-		btnAdicionarEndereco.addActionListener(new ActionListener() {
+		btnVerEndereco = new JButton("Ver Endereço Entrega");
+		btnVerEndereco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Container parent = panel.getParent();
 				parent.add(te, "EnderecoEntrega");
@@ -232,12 +232,13 @@ public class TelaDetalhesPedido extends GeneralPanel {
 				cl.show(parent, "EnderecoEntrega");
 			}
 		});
-		add(btnAdicionarEndereco, "cell 3 8 3 1,growx");
+		add(btnVerEndereco, "cell 3 8 3 1,growx");
 
-		btnCancelar = new JButton("Ok");
+		btnCancelar = new JButton("Voltar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showTelaPrincipal();	
+				addTela(new TelaConsultaPedido(loja), "ConsultarPedido");
+				showTela("ConsultarPedido");
 			}
 		});
 		add(btnCancelar, "flowx,cell 0 9 6 1,alignx right");

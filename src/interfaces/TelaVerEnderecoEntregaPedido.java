@@ -65,8 +65,6 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 	// Controla o panel
 	private JPanel panel;
 
-	// Controla o endereco
-	private Endereco e;
 	
 	// Controla o Pedido
 		Pedido p;
@@ -90,6 +88,7 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 
 		textFieldRua = new JTextField();
 		textFieldRua.setText(p.getEndereco().getRua());
+		textFieldRua.setEditable(false);
 		add(textFieldRua, "cell 1 0,growx");
 		textFieldRua.setColumns(10);
 
@@ -97,7 +96,8 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 		add(lblNumero, "cell 2 0,alignx trailing");
 
 		textFieldNumero = new JTextField();
-		textFieldRua.setText(p.getEndereco().getNumero());
+		textFieldNumero.setEditable(false);
+		textFieldNumero.setText(p.getEndereco().getNumero());
 		add(textFieldNumero, "cell 3 0,growx");
 		textFieldNumero.setColumns(10);
 
@@ -105,7 +105,8 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 		add(lblBairro, "cell 0 1,alignx trailing");
 
 		textFieldBairro = new JTextField();
-		textFieldRua.setText(p.getEndereco().getBairro());
+		textFieldBairro.setEditable(false);
+		textFieldBairro.setText(p.getEndereco().getBairro());
 		add(textFieldBairro, "cell 1 1,growx");
 		textFieldBairro.setColumns(10);
 
@@ -113,7 +114,8 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 		add(lblCidade, "cell 0 2,alignx trailing");
 
 		textFieldCidade = new JTextField();
-		textFieldRua.setText(p.getEndereco().getCidade());
+		textFieldCidade.setEditable(false);
+		textFieldCidade.setText(p.getEndereco().getCidade());
 		add(textFieldCidade, "cell 1 2,growx");
 		textFieldCidade.setColumns(10);
 
@@ -121,13 +123,16 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 		add(lblEstado, "cell 2 2,alignx trailing");
 
 		comboBoxEstado = new JComboBox<String>(this.estados);
-		comboBoxEstado.setEnabled(true);
+		comboBoxEstado.setSelectedItem(p.getEndereco().getEstado());
+		comboBoxEstado.setEnabled(false);
 		add(comboBoxEstado, "cell 3 2,growx");
 
 		lblPas = new JLabel("Pa\u00EDs:");
 		add(lblPas, "cell 0 3,alignx trailing");
 
 		textFieldPais = new JTextField();
+		textFieldPais.setEditable(false);
+		textFieldPais.setText(p.getEndereco().getPais());
 		add(textFieldPais, "cell 1 3,growx");
 		textFieldPais.setColumns(10);
 
@@ -135,6 +140,8 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 		add(lblComplemento, "cell 0 4,alignx trailing");
 
 		textFieldComplemento = new JTextField();
+		textFieldComplemento.setEditable(false);
+		textFieldComplemento.setText(p.getEndereco().getComplemento());
 		add(textFieldComplemento, "cell 1 4,growx");
 		textFieldComplemento.setColumns(10);
 
@@ -142,22 +149,19 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 		add(lblCep, "cell 2 4,alignx trailing");
 
 		textFieldCep = new JFormattedTextField(mascaraCEP);
+		textFieldCep.setEditable(false);
+		textFieldCep.setText(p.getEndereco().getCep());
 		add(textFieldCep, "cell 3 4,growx");
 		textFieldCep.setColumns(10);
 
-		btnOk = new JButton("OK");
+		btnOk = new JButton("Voltar");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-			
-
+				showTela("DetalharPedido");
 			}
 		});
 		add(btnOk, "cell 0 5 4 1,alignx right");
 
-	}
-
-	public Endereco getEnderecoEntrega() {
-		return e;
 	}
 
 	@Override
