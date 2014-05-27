@@ -1,25 +1,19 @@
 package interfaces;
 
-import java.awt.CardLayout;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 import net.miginfocom.swing.MigLayout;
-import core.Endereco;
 import core.Loja;
 import core.Pedido;
-import exceptions.ParametroException;
 
 public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 	/**
@@ -62,12 +56,8 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 	// Button
 	private JButton btnOk;
 
-	// Controla o panel
-	private JPanel panel;
-
-	
 	// Controla o Pedido
-		Pedido p;
+	Pedido p;
 
 	/**
 	 * Create the panel.
@@ -81,7 +71,6 @@ public class TelaVerEnderecoEntregaPedido extends GeneralPanel {
 
 		setLayout(new MigLayout("", "[45.00][222.00,grow][63.00][grow]",
 				"[][][][][][grow,bottom]"));
-
 
 		lblRua = new JLabel("Rua:");
 		add(lblRua, "cell 0 0,alignx trailing");

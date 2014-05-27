@@ -194,47 +194,59 @@ public class TelaCadastroPedido extends GeneralPanel {
 		buttonAdicionarProduto = new JButton("+");
 		buttonAdicionarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!textFieldCodigoProduto.getText().isEmpty()
-						&& Integer.parseInt(textFieldQtdeProduto.getText()) > 0) {
-					Produto p;
-					boolean produtoInserido = false;
-					try {
-						p = loja.consultarProduto(Integer
-								.parseInt(textFieldCodigoProduto.getText()));
-						int qtde = Integer.parseInt(textFieldQtdeProduto
-								.getText());
-						qtdeDisponivel = p.getQtdeEstoque() - qtde;
-						if (qtdeDisponivel >= 0) {
-							TableModel model = (TableModel) table.getModel();
-							for (int i = 0; i < model.getRowCount(); i++) {
-								Produto temp = (Produto) model.getValueAt(i, 0);
-								if (p.getId() == temp.getId()) {
-									produtoInserido = true;
-									break;
-								}
-							}
+				int qtde = 0;
+				Produto p;
+				boolean produtoInserido = false;
 
-							if (!produtoInserido) {
-								model.addRow(new Object[] { p,
-										textFieldQtdeProduto.getText() });
-								Double valorTotal = Double
-										.parseDouble(textFieldValorTotal
-												.getText());
-								valorTotal += (p.getValorUnitario() * qtde);
-								produtos.put(p, qtde);
-								textFieldValorTotal.setText(valorTotal
-										.toString());
-								textFieldCodigoProduto.setText("");
-								textFieldQtdeProduto.setText("");
-								btnRemoverProduto.setEnabled(true);
+				if (!textFieldCodigoProduto.getText().isEmpty()) {
+					try {
+						// Pega a quantidade informada
+						qtde = Integer.parseInt(textFieldQtdeProduto.getText());
+
+						if (qtde > 0) {
+							// Busca o produto
+							p = loja.consultarProduto(Integer
+									.parseInt(textFieldCodigoProduto.getText()));
+
+							// Verifica se tem estoque suficiente
+							qtdeDisponivel = p.getQtdeEstoque() - qtde;
+							if (qtdeDisponivel >= 0) {
+								TableModel model = (TableModel) table
+										.getModel();
+								for (int i = 0; i < model.getRowCount(); i++) {
+									Produto temp = (Produto) model.getValueAt(
+											i, 0);
+									if (p.getId() == temp.getId()) {
+										produtoInserido = true;
+										break;
+									}
+								}
+
+								// Verifica se produto ja nao foi inserido
+								if (!produtoInserido) {
+									model.addRow(new Object[] { p,
+											textFieldQtdeProduto.getText() });
+									Double valorTotal = Double
+											.parseDouble(textFieldValorTotal
+													.getText());
+									valorTotal += (p.getValorUnitario() * qtde);
+									produtos.put(p, qtde);
+									textFieldValorTotal.setText(valorTotal
+											.toString());
+									textFieldCodigoProduto.setText("");
+									textFieldQtdeProduto.setText("");
+									btnRemoverProduto.setEnabled(true);
+								} else {
+									showMensagemErro("O produto "
+											+ p.getDescricao()
+											+ " já consta na lista. Não é possível inserí-lo novamente.");
+								}
 							} else {
-								showMensagemErro("O produto "
-										+ p.getDescricao()
-										+ " já consta na lista. Não é possível inserí-lo novamente.");
+								showMensagemErro("A quantidade desejada é maior que a quantidade em estoque. \nQuantidade em estoque atual: "
+										+ p.getQtdeEstoque());
 							}
 						} else {
-							showMensagemErro("A quantidade desejada é maior que a quantidade em estoque. \nQuantidade em estoque atual: "
-									+ p.getQtdeEstoque());
+							showMensagemErro("A quantidade não pode ser igual a zero");
 						}
 					} catch (NumberFormatException nfe) {
 						// Essa excecao so sera lancada para o parametro
@@ -333,7 +345,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 		});
 		panelTransportadora.add(comboBoxTransportadora, "cell 1 0 3 1,growx");
 
-		lblDataDeEntrega = new JLabel("Data de Entrega:");
+		lblDataDeEntrega = new JLabel("Data de Compra:");
 		panelTransportadora.add(lblDataDeEntrega, "cell 4 0,alignx right");
 
 		textFieldDataEntrega = new JFormattedTextField(mascaraData);
@@ -350,7 +362,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 		add(comboBoxFormaPagamento, "cell 1 7 2 1,growx");
 		comboBoxFormaPagamento.setEnabled(false);
 
-		lblDataDeCompra = new JLabel("Data de Compra:");
+		lblDataDeCompra = new JLabel("Data de Entrega:");
 		add(lblDataDeCompra, "cell 3 7,alignx right");
 
 		textFieldDataCompra = new JFormattedTextField(mascaraData);

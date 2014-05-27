@@ -17,7 +17,6 @@ import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
 import core.Loja;
-import core.Produto;
 import core.Transportadora;
 
 public class TelaConsultaTransportadora extends GeneralPanel {

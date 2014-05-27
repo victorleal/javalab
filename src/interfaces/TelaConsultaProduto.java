@@ -16,7 +16,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
-import core.Cliente;
 import core.Loja;
 import core.Produto;
 
@@ -91,7 +90,7 @@ public class TelaConsultaProduto extends GeneralPanel {
 						showMensagemSucesso("Produto removido com sucesso");
 						showTelaPrincipal();
 					} catch (Exception e1) {
-						showMensagemErro("Produto não encontrado");
+						showMensagemErro("Produto nï¿½o encontrado");
 					}
 				} else {
 					showMensagemErro("Nenhum produto selecionado");

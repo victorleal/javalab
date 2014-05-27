@@ -170,6 +170,7 @@ public class Loja {
 				}
 			}
 			removePedido(cliente, itensPedidoTemp.keySet(), transportadora, p);
+			delete(p);
 			pedidos.remove(numero);
 		}
 	}
@@ -494,13 +495,13 @@ public class Loja {
 			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "", "78",
 					"13000-000", "Campinas", "SP", "Brasil");
 			cadastrarCliente("Victor Leal", "594.521.307-17",
-					"victor@email.com", "3232-3232", "9999-9898", true,
+					"victor@email.com", "(19)3232-3232", "(19)99999-9898", true,
 					"Normal", "1234", enderecoCliente);
 			cadastrarCliente("Paulo Paraluppi", "785.441.267-74",
-					"paulo@email.com", "3232-3232", "9999-9898", true, "Gold",
+					"paulo@email.com", "(19)3232-3232", "(19)99999-9898", true, "Gold",
 					"1234", enderecoCliente);
 			cadastrarCliente("Guilherme Nogueira", "325.841.021-61",
-					"guilherme@email.com", "3232-3232", "9999-9898", true,
+					"guilherme@email.com", "(19)3232-3232", "(19)99999-9898", true,
 					"Gold", "1234", enderecoCliente);
 			cadastrarTransportadora("86.866.847/0001-79",
 					"Transportadora Java", "JSE Transportes", 90, 125.00,

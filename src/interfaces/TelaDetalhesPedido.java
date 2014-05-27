@@ -4,12 +4,8 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,13 +24,10 @@ import net.miginfocom.swing.MigLayout;
 import auxiliar.ComboBoxTransportadoraRenderer;
 import auxiliar.TabelaPedidosCellRenderer;
 import auxiliar.TableModel;
-import core.Cliente;
-import core.Endereco;
 import core.Loja;
 import core.Pedido;
 import core.Produto;
 import core.Transportadora;
-import exceptions.ParametroException;
 
 public class TelaDetalhesPedido extends GeneralPanel {
 	/**
@@ -62,9 +55,6 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	private JComboBox<Transportadora> comboBoxTransportadora;
 
 	private JButton btnCancelar;
-	private JButton btnCadastrar;
-	private JButton btnLimpar;
-	private JButton btnBuscaCliente;
 	private JButton btnVerEndereco;
 
 	// Mascaras
@@ -75,9 +65,6 @@ public class TelaDetalhesPedido extends GeneralPanel {
 	private JPanel panelProdutos;
 	private JPanel panelTransportadora;
 
-	// Controla cliente
-	private Cliente c;
-
 	// Controla TelaEnderecoEntrega
 	private TelaVerEnderecoEntregaPedido te;
 
@@ -86,13 +73,13 @@ public class TelaDetalhesPedido extends GeneralPanel {
 
 	// Controla produto recem adicionado
 	int produtosAdicionados = 0;
-	
+
 	// Controla quantidade disponivel
 	int qtdeDisponivel = 0;
 
 	// Controla o Pedido
 	Pedido p;
-	
+
 	/**
 	 * Create the panel.
 	 */
@@ -100,9 +87,8 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		super(l);
 		p = loja.getPedidoDetalhe();
 		te = new TelaVerEnderecoEntregaPedido(l);
-		produtos = new HashMap<Produto, Integer>();
-		
-		
+		produtos = p.getProdutosPedido();
+
 		setBorder(new TitledBorder(null, "Detalhes do Pedido",
 				TitledBorder.LEADING, TitledBorder.TOP, this.fonte));
 		setLayout(new MigLayout("", "[][][grow][][grow][67.00]",
@@ -120,7 +106,8 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		lblNumero = new JLabel("Número:");
 		add(lblNumero, "cell 0 1,alignx right");
 		textFieldNumero = new JTextField();
-		textFieldNumero.setText(String.valueOf(new Integer(p.getId())));;
+		textFieldNumero.setText(String.valueOf(new Integer(p.getId())));
+		;
 		textFieldNumero.setEditable(false);
 		add(textFieldNumero, "cell 1 1,growx");
 		textFieldNumero.setColumns(10);
@@ -150,7 +137,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 				"[][][][][]"));
 		panelProdutos.setVisible(true);
 
-		//HELP AQUI
+		// HELP AQUI
 		String[] cabecalho = { "Produto", "Quantidade" };
 		int linhas = 0;
 		TableModel model = new TableModel(linhas, cabecalho);
@@ -159,13 +146,16 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		table.getColumn("Produto").setCellRenderer(
 				new TabelaPedidosCellRenderer());
 		JScrollPane scrollPane = new JScrollPane(table);
-		// table.setFillsViewportHeight(true);
+		for (Produto p : produtos.keySet()) {
+			model.addRow(new Object[] { p, produtos.get(p) });
+		}
 		panelProdutos.add(scrollPane, "cell 0 1 5 3,grow");
 
 		lblValorTotal = new JLabel("Valor Total:");
 		panelProdutos.add(lblValorTotal, "cell 3 4,alignx right");
 		textFieldValorTotal = new JTextField();
-		textFieldValorTotal.setText(String.valueOf(new Double(p.getValorTotal())));
+		textFieldValorTotal
+				.setText(String.valueOf(new Double(p.getValorTotal())));
 		textFieldValorTotal.setEditable(false);
 		panelProdutos.add(textFieldValorTotal, "cell 4 4,growx");
 		textFieldValorTotal.setColumns(10);
@@ -184,11 +174,12 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		for (Transportadora trans : loja.getTransportadoras()) {
 			comboBoxTransportadora.addItem(trans);
 		}
-		comboBoxTransportadora.setRenderer(new ComboBoxTransportadoraRenderer());
+		comboBoxTransportadora
+				.setRenderer(new ComboBoxTransportadoraRenderer());
 		comboBoxTransportadora.setVisible(true);
 		comboBoxTransportadora.setEnabled(false);
 		comboBoxTransportadora.setSelectedItem(p.getTransportadora());
-		//textFieldDataCompra.setEnabled(true);
+		// textFieldDataCompra.setEnabled(true);
 		panelTransportadora.add(comboBoxTransportadora, "cell 1 0 3 1,growx");
 
 		lblDataDeEntrega = new JLabel("Data de Entrega:");
@@ -214,7 +205,7 @@ public class TelaDetalhesPedido extends GeneralPanel {
 
 		lblDataDeCompra = new JLabel("Data de Compra:");
 		add(lblDataDeCompra, "cell 3 7,alignx right");
-		textFieldDataCompra = new JTextField(); 
+		textFieldDataCompra = new JTextField();
 		int comDia = p.getDataCompra().get(Calendar.DATE);
 		int comMes = p.getDataCompra().get(Calendar.MONTH);
 		int comAno = p.getDataCompra().get(Calendar.YEAR);
@@ -243,12 +234,11 @@ public class TelaDetalhesPedido extends GeneralPanel {
 		});
 		add(btnCancelar, "flowx,cell 0 9 6 1,alignx right");
 
-
 	}
 
 	@Override
 	public void limparCampos() {
 		// TODO Auto-generated method stub
-		
-	}	
+
+	}
 }
