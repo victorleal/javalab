@@ -1,5 +1,4 @@
 import interfaces.TelaPrincipal;
-import core.PersistentObject;
 
 
 public class Principal {

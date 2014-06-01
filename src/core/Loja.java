@@ -9,6 +9,10 @@ import java.util.Set;
 
 import exceptions.ParametroException;
 
+/*
+ * @author Victor Leal
+ * This class handles the core operations of the system
+ */
 public class Loja {
 
 	private FileManager fileManager;
