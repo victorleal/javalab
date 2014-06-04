@@ -14,20 +14,22 @@ import exceptions.ParametroException;
 public class Threadness implements Runnable {
 
 	private Loja loja;
-	private int operacao;
 
 	private Endereco enderecoTransportadora;
 	private Endereco enderecoCliente;
 
-	public Threadness(Loja l, int operacao) {
+	public Threadness(Loja l, int i) {
 		this.loja = l;
-		this.operacao = operacao;
 
 		try {
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "", "546",
-					"78445-989", "Limeira", "São Paulo", "Brasil");
-			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "", "78",
+					"78445-989", "Limeira", "Sao Paulo", "Brasil");
+			enderecoCliente = new Endereco("Rua X", "Vl. Chapeco", "", "78",
 					"13000-000", "Campinas", "SP", "Brasil");
+			insereProduto1();
+			insereProduto2();
+			insereCliente();
+			insereTransportadora();
 		} catch (ParametroException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,49 +38,25 @@ public class Threadness implements Runnable {
 
 	@Override
 	public void run() {
-		switch (operacao) {
-		case 1:
-			insereProduto1();
-			break;
-		case 2:
-			insereProduto2();
-			break;
-		case 3:
-			insereCliente();
-			break;
-		case 4:
-			insereTransportadora();
-			break;
-		case 5:
-			inserePedido();
-			break;
-		case 6:
-			alteraProduto();
-			break;
-		case 7:
-			excluiTransportadora();
-			break;
-		default:
-			System.out.println("Opcao errada");
-		}
+		inserePedido();
 	}
 
-	public void insereProduto1() {System.out.println("THREAD PROD 1");
+	public void insereProduto1() {
 		try {
 			loja.cadastrarProduto(Categorias.TABLETS.name(),
 					"Tablet e carregador", "Tablet Samsung Galaxy Note", 500,
-					798.00, 10);
+					798.00, 100);
 		} catch (ParametroException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void insereProduto2() {System.out.println("THREAD PROD 2");
+	public void insereProduto2() {
 		try {
 			loja.cadastrarProduto(Categorias.TELEFONIA.name(),
 					"Celular e carregador", "Smartphone iPhone 5S 32GB", 450,
-					2500.00, 10);
+					2500.00, 100);
 		} catch (ParametroException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,17 +102,21 @@ public class Threadness implements Runnable {
 		Cliente[] listaClientes = {};
 		Cliente[] clientes = (Cliente[]) loja.getClientes().toArray(
 				listaClientes);
-		
+
 		Transportadora[] listaTransportadoras = {};
 		Transportadora[] transportadoras = (Transportadora[]) loja
 				.getTransportadoras().toArray(listaTransportadoras);
 		try {
 			loja.cadastrarPedido((produtos[0].getValorUnitario() * 2),
-					"A vista", compra, entrega, enderecoCliente,
-					clientes[0], itensPedido, transportadoras[0]);
-		} catch (ParametroException e) {
+					"A vista", compra, entrega, enderecoCliente, clientes[0],
+					itensPedido, transportadoras[0]);
+			if (produtos[0].getQtdeEstoque() <= 0) {
+				System.out.println("AE CARALHO FUDEU TUDO " + produtos[0].getQtdeEstoque());
+			}
+
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 	}
 

@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import core.Loja;
 
 /*
- * Conjunto de operações
+ * Conjunto de operaï¿½ï¿½es
  * 
  * Criar produto;
  * Criar produto;
@@ -24,7 +24,7 @@ public class ThreadMain {
 
 		// Rodando sem thread
 		Threadless threadless = new Threadless(loja);
-		threadless.run();
+		//threadless.run();
 
 		// Rodando com threads
 		runningThreads();
@@ -32,15 +32,16 @@ public class ThreadMain {
 
 	public static void runningThreads() {
 		Loja loja = new Loja();
-		Threadness[] threads = new Threadness[7];
+		int totalThreads = 105;
+		Threadness[] threads = new Threadness[totalThreads];
 		ExecutorService executor = Executors.newCachedThreadPool();
 		
-		for (int i = 0; i < 7; i++) {
-			threads[i] = new Threadness(loja, i + 1);
+		for (int i = 0; i < totalThreads; i++) {
+			threads[i] = new Threadness(loja, i+1);
 		}
 		
 		// Run threads
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < totalThreads; i++) {
 			executor.execute(threads[i]);
 		}
 		

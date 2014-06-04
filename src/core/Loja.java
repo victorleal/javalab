@@ -43,8 +43,8 @@ public class Loja {
 		transportadoras = new HashMap<String, Transportadora>();
 		produtos = new HashMap<Integer, Produto>();
 		itensPedidoTemp = new HashMap<Produto, Integer>();
-		//create();
-		load();
+		// create();
+		// load();
 	}
 
 	/**********
@@ -52,10 +52,11 @@ public class Loja {
 	 * 
 	 * @throws ParametroException
 	 **********/
-	public void cadastrarCliente(String nome, String cpf, String email,
-			String telefone, String celular, boolean isClienteFidelidade,
-			String programaFidelidade, String numeroFidelidade,
-			Endereco endereco) throws ParametroException {
+	public synchronized void cadastrarCliente(String nome, String cpf,
+			String email, String telefone, String celular,
+			boolean isClienteFidelidade, String programaFidelidade,
+			String numeroFidelidade, Endereco endereco)
+			throws ParametroException {
 		Cliente c;
 		try {
 			c = new Cliente(nome, cpf, email, telefone, celular, endereco,
@@ -78,7 +79,7 @@ public class Loja {
 		}
 	}
 
-	public void removerCliente(String cpf) throws Exception {
+	public synchronized void removerCliente(String cpf) throws Exception {
 		if (clientes.containsKey(cpf)) {
 			if (clientes.get(cpf).getPedidosCliente().isEmpty()) {
 				delete(clientes.get(cpf));
@@ -92,10 +93,11 @@ public class Loja {
 		}
 	}
 
-	public void alterarCliente(String nome, String cpf, String email,
-			String telefone, String celular, boolean isClienteFidelidade,
-			String programaFidelidade, String numeroFidelidade,
-			Endereco endereco) throws ParametroException {
+	public synchronized void alterarCliente(String nome, String cpf,
+			String email, String telefone, String celular,
+			boolean isClienteFidelidade, String programaFidelidade,
+			String numeroFidelidade, Endereco endereco)
+			throws ParametroException {
 		if (clientes.containsKey(cpf)) {
 			Cliente c = clientes.get(cpf);
 			c.setCelular(celular);
@@ -123,20 +125,32 @@ public class Loja {
 	}
 
 	/********** PEDIDOS **********/
-	public void cadastrarPedido(double valorTotal, String formaPagamento,
-			Calendar dataCompra, Calendar dataEntrega, Endereco endereco,
-			Cliente cliente, Map<Produto, Integer> produtosPedido,
-			Transportadora transportadora) throws ParametroException {
+	public synchronized void cadastrarPedido(double valorTotal,
+			String formaPagamento, Calendar dataCompra, Calendar dataEntrega,
+			Endereco endereco, Cliente cliente,
+			Map<Produto, Integer> produtosPedido, Transportadora transportadora)
+			throws ParametroException {
 		Pedido p;
 
 		try {
-			p = new Pedido(idPedido, valorTotal, formaPagamento, dataCompra,
-					dataEntrega, endereco, cliente, produtosPedido,
-					transportadora);
-			adicionaPedido(cliente, produtosPedido, transportadora, p);
-			pedidos.put(idPedido, p);
-			persist(p);
-			idPedido++;
+			boolean produtosQtdeEstoqueSuficiente = true;
+			for (Produto p1 : produtosPedido.keySet()) {
+				if (this.verificaQuantidadeDisponivel(p1,
+						produtosPedido.get(p1)) <= 0) {
+					produtosQtdeEstoqueSuficiente = false;
+					break;
+				}
+			}
+
+			if (produtosQtdeEstoqueSuficiente) {
+				p = new Pedido(idPedido, valorTotal, formaPagamento,
+						dataCompra, dataEntrega, endereco, cliente,
+						produtosPedido, transportadora);
+				adicionaPedido(cliente, produtosPedido, transportadora, p);
+				pedidos.put(idPedido, p);
+				persist(p);
+				idPedido++;
+			}
 		} catch (ParametroException e) {
 			throw e;
 		}
@@ -292,8 +306,7 @@ public class Loja {
 
 	public void removerTransportadora(String cnpj) throws Exception {
 		if (transportadoras.containsKey(cnpj)) {
-			if (transportadoras.get(cnpj).getPedidosTransportadora()
-					.isEmpty()) {
+			if (transportadoras.get(cnpj).getPedidosTransportadora().isEmpty()) {
 				delete(transportadoras.get(cnpj));
 				transportadoras.remove(cnpj);
 			} else {
@@ -350,6 +363,10 @@ public class Loja {
 	}
 
 	/********** METODOS ADICIONAIS **********/
+	public int verificaQuantidadeDisponivel(Produto p, int qtde) {
+		return p.getQtdeEstoque() - qtde;
+	}
+
 	public double getFaturamentoBruto() {
 		double faturamento = 0;
 		for (Pedido pedido : pedidos.values()) {
@@ -433,8 +450,10 @@ public class Loja {
 
 	/***** Metodos Persistencia *****/
 	public void persist(PersistentObject o) {
-		fileManager = new FileManager(o.getClassName());
-		fileManager.writeObject(o);
+		/*
+		 * fileManager = new FileManager(o.getClassName());
+		 * fileManager.writeObject(o);
+		 */
 	}
 
 	public List<PersistentObject> readObjects(PersistentObject o) {
@@ -489,7 +508,7 @@ public class Loja {
 	public void create() {
 		Endereco enderecoTransportadora = null;
 		Endereco enderecoCliente = null;
-		
+
 		idPedido++;
 		idProduto++;
 
@@ -499,14 +518,14 @@ public class Loja {
 			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "", "78",
 					"13000-000", "Campinas", "SP", "Brasil");
 			cadastrarCliente("Victor Leal", "594.521.307-17",
-					"victor@email.com", "(19)3232-3232", "(19)99999-9898", true,
-					"Normal", "1234", enderecoCliente);
+					"victor@email.com", "(19)3232-3232", "(19)99999-9898",
+					true, "Normal", "1234", enderecoCliente);
 			cadastrarCliente("Paulo Paraluppi", "785.441.267-74",
-					"paulo@email.com", "(19)3232-3232", "(19)99999-9898", true, "Gold",
-					"1234", enderecoCliente);
-			cadastrarCliente("Guilherme Nogueira", "325.841.021-61",
-					"guilherme@email.com", "(19)3232-3232", "(19)99999-9898", true,
+					"paulo@email.com", "(19)3232-3232", "(19)99999-9898", true,
 					"Gold", "1234", enderecoCliente);
+			cadastrarCliente("Guilherme Nogueira", "325.841.021-61",
+					"guilherme@email.com", "(19)3232-3232", "(19)99999-9898",
+					true, "Gold", "1234", enderecoCliente);
 			cadastrarTransportadora("86.866.847/0001-79",
 					"Transportadora Java", "JSE Transportes", 90, 125.00,
 					enderecoTransportadora);

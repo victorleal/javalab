@@ -207,9 +207,9 @@ public class TelaCadastroPedido extends GeneralPanel {
 							// Busca o produto
 							p = loja.consultarProduto(Integer
 									.parseInt(textFieldCodigoProduto.getText()));
-
-							// Verifica se tem estoque suficiente
-							qtdeDisponivel = p.getQtdeEstoque() - qtde;
+							
+							qtdeDisponivel = loja.verificaQuantidadeDisponivel(p, qtde);
+							
 							if (qtdeDisponivel >= 0) {
 								TableModel model = (TableModel) table
 										.getModel();
@@ -344,7 +344,7 @@ public class TelaCadastroPedido extends GeneralPanel {
 			}
 		});
 		panelTransportadora.add(comboBoxTransportadora, "cell 1 0 3 1,growx");
-
+		
 		lblDataDeEntrega = new JLabel("Data de Compra:");
 		panelTransportadora.add(lblDataDeEntrega, "cell 4 0,alignx right");
 

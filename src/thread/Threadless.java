@@ -25,8 +25,8 @@ public class Threadless {
 		Endereco enderecoCliente;
 		try {
 			enderecoTransportadora = new Endereco("Rua r", "Bairro", "", "546",
-					"78445-989", "Limeira", "São Paulo", "Brasil");
-			enderecoCliente = new Endereco("Rua X", "Vl. Chapecó", "", "78",
+					"78445-989", "Limeira", "Sï¿½o Paulo", "Brasil");
+			enderecoCliente = new Endereco("Rua X", "Vl. Chapecï¿½", "", "78",
 					"13000-000", "Campinas", "SP", "Brasil");
 
 			loja.cadastrarProduto(Categorias.TABLETS.name(),
@@ -58,14 +58,17 @@ public class Threadless {
 			Cliente[] listaClientes = {};
 			Cliente[] clientes = (Cliente[]) loja.getClientes().toArray(
 					listaClientes);
-			
+
 			Transportadora[] listaTransportadoras = {};
 			Transportadora[] transportadoras = (Transportadora[]) loja
 					.getTransportadoras().toArray(listaTransportadoras);
-			
-			loja.cadastrarPedido((produtos[0].getValorUnitario() * 2),
-					"A vista", compra, entrega, enderecoCliente,
-					clientes[0], itensPedido, transportadoras[0]);
+
+			for (int i = 0; i < 100; i++) {
+				loja.cadastrarPedido((produtos[0].getValorUnitario() * 2),
+						"A vista", compra, entrega, enderecoCliente,
+						clientes[0], itensPedido, transportadoras[0]);
+			}
+			System.out.println(produtos[0].getQtdeEstoque());
 		} catch (ParametroException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
