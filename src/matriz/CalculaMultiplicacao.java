@@ -1,4 +1,5 @@
 package matriz;
+
 public class CalculaMultiplicacao implements Runnable {
 
 	int[][] A;
@@ -6,6 +7,8 @@ public class CalculaMultiplicacao implements Runnable {
 	int[][] C;
 
 	int n = 0;
+
+	int qtdeThreads = 0;
 
 	boolean isPar;
 
@@ -18,12 +21,25 @@ public class CalculaMultiplicacao implements Runnable {
 		this.isPar = isPar;
 	}
 
+	public CalculaMultiplicacao(int[][] A, int[][] B, int[][] C, int max,
+			int qtdeThreads) {
+		n = max;
+		this.A = A;
+		this.B = B;
+		this.C = C;
+		this.qtdeThreads = qtdeThreads;
+	}
+
 	@Override
 	public void run() {
-		if (isPar) {
-			realizaMultiplicacaoPar();
+		if (qtdeThreads != 0) {
+			realizaMultiplicacaoPorThread();
 		} else {
-			realizaMultiplicacaoImpar();
+			if (isPar) {
+				realizaMultiplicacaoPar();
+			} else {
+				realizaMultiplicacaoImpar();
+			}
 		}
 	}
 
@@ -41,6 +57,18 @@ public class CalculaMultiplicacao implements Runnable {
 
 	public void realizaMultiplicacaoImpar() {
 		for (int i = 1; i < n; i = i + 2) {
+			for (int j = 0; j < n; j++) {
+				C[i][j] = 0;
+				for (int k = 0; k < n; k++) {
+					C[i][j] += A[i][k] * B[k][j];
+				}
+			}
+
+		}
+	}
+
+	public void realizaMultiplicacaoPorThread() {
+		for (int i = 1; i < n; i = i + qtdeThreads) {
 			for (int j = 0; j < n; j++) {
 				C[i][j] = 0;
 				for (int k = 0; k < n; k++) {

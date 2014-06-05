@@ -7,10 +7,13 @@ public class MultiplicaMatriz {
 
 	public static void main(String[] args) {
 		final Random generator = new Random();
-		int n = 5;
+		int n = 1702;
+		int qtdeThreads = 3;
 		int[][] A = new int[n][n];
 		int[][] B = new int[n][n];
 		int[][] C = new int[n][n];
+		
+		ExecutorService executor = Executors.newCachedThreadPool();
 
 		for (int a = 0; a < n; a++) {
 			for (int b = 0; b < n; b++) {
@@ -19,15 +22,18 @@ public class MultiplicaMatriz {
 			}
 		}
 		
-		CalculaMultiplicacao par = new CalculaMultiplicacao(A, B, C, n, true);
+		/*CalculaMultiplicacao par = new CalculaMultiplicacao(A, B, C, n, true);
 		CalculaMultiplicacao impar = new CalculaMultiplicacao(A, B, C, n, false);
 		
-		ExecutorService executor = Executors.newCachedThreadPool();
+		executor.execute(par);
+		executor.execute(impar);*/
 
 		long tempoInicial = System.currentTimeMillis();
 		
-		executor.execute(par);
-		executor.execute(impar);
+		for (int i =0 ; i < qtdeThreads; i++) {
+			CalculaMultiplicacao cm = new CalculaMultiplicacao(A,B,C,n,qtdeThreads);
+			executor.execute(cm);
+		}
 		
 		executor.shutdown();
 		
@@ -35,12 +41,6 @@ public class MultiplicaMatriz {
 
 		long tempoFinal = System.currentTimeMillis();
 		System.out.println("Segundos: " + ((tempoFinal - tempoInicial)/1000));
-		
-		for (int a = 0; a < n; a++) {
-			for (int b = 0; b < n; b++) {
-				System.out.println(C[a][b]);
-			}
-		}
 
 	}
 }
