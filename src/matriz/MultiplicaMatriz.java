@@ -8,7 +8,7 @@ public class MultiplicaMatriz {
 	public static void main(String[] args) {
 		final Random generator = new Random();
 		int n = 1702;
-		int qtdeThreads = 3;
+		int qtdeThreads = 4;
 		int[][] A = new int[n][n];
 		int[][] B = new int[n][n];
 		int[][] C = new int[n][n];
