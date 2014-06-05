@@ -52,7 +52,7 @@ public class Loja {
 	 * 
 	 * @throws ParametroException
 	 **********/
-	public synchronized void cadastrarCliente(String nome, String cpf,
+	public void cadastrarCliente(String nome, String cpf,
 			String email, String telefone, String celular,
 			boolean isClienteFidelidade, String programaFidelidade,
 			String numeroFidelidade, Endereco endereco)
@@ -125,7 +125,7 @@ public class Loja {
 	}
 
 	/********** PEDIDOS **********/
-	public synchronized void cadastrarPedido(double valorTotal,
+	public void cadastrarPedido(double valorTotal,
 			String formaPagamento, Calendar dataCompra, Calendar dataEntrega,
 			Endereco endereco, Cliente cliente,
 			Map<Produto, Integer> produtosPedido, Transportadora transportadora)

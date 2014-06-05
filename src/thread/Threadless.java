@@ -6,7 +6,6 @@ import java.util.HashMap;
 import core.Cliente;
 import core.Endereco;
 import core.Loja;
-import core.Loja.Categorias;
 import core.Produto;
 import core.Transportadora;
 import exceptions.ParametroException;
@@ -28,13 +27,6 @@ public class Threadless {
 					"78445-989", "Limeira", "S�o Paulo", "Brasil");
 			enderecoCliente = new Endereco("Rua X", "Vl. Chapec�", "", "78",
 					"13000-000", "Campinas", "SP", "Brasil");
-
-			loja.cadastrarProduto(Categorias.TABLETS.name(),
-					"Tablet e carregador", "Tablet Samsung Galaxy Note", 500,
-					798.00, 10);
-			loja.cadastrarProduto(Categorias.TELEFONIA.name(),
-					"Celular e carregador", "Smartphone iPhone 5S 32GB", 450,
-					2500.00, 10);
 
 			loja.cadastrarCliente("Guilherme Nogueira", "325.841.021-61",
 					"guilherme@email.com", "(19)3232-3232", "(19)99999-9898",
