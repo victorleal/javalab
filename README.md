@@ -13,11 +13,11 @@ Estrutura de pastas necessária para rodar o programa
 
     |_ src (código-fonte)
     
-        |_ arquivos
-    
-          |_ Cliente
-          |_ Pedido
-          |_ Produto
-          |_ Transportadora
+    |_ arquivos
+
+      |_ Cliente
+      |_ Pedido
+      |_ Produto
+      |_ Transportadora
 
 As pastas Cliente, Pedido, Produto e Transportadora se encontram dentro da pasta arquivos que está paralela à pasta src.
